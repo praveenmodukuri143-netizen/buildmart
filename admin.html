@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BuildMart Admin Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      color: #222;
+    }
+
+    header {
+      background: #0b1f3a;
+      color: white;
+      padding: 22px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    .website-btn {
+      background: #ff7a00;
+      color: white;
+      padding: 11px 18px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      width: 88%;
+      max-width: 1200px;
+      margin: 35px auto;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .stat-card h3 {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card p {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0b1f3a;
+    }
+
+    .search-box {
+      margin-bottom: 25px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .orders-title {
+      margin-bottom: 18px;
+      color: #0b1f3a;
+    }
+
+    .order-card {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+      margin-bottom: 18px;
+    }
+
+    .order-header h3 {
+      color: #0b1f3a;
+      margin-bottom: 5px;
+    }
+
+    .order-header small {
+      color: #777;
+    }
+
+    .order-header select {
+      padding: 9px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    .customer-details {
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .order-products {
+      background: #f7f8fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+    }
+
+    .order-products h4 {
+      margin-bottom: 10px;
+      color: #0b1f3a;
+    }
+
+    .order-products div {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .order-total {
+      text-align: right;
+      font-size: 19px;
+      color: #0b1f3a;
+      margin-bottom: 15px;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .delete-btn:hover {
+      background: #b52a37;
+    }
+
+    .empty-orders {
+      background: white;
+      padding: 40px;
+      text-align: center;
+      border-radius: 12px;
+    }
+
+    .empty-orders h3 {
+      color: #0b1f3a;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 700px) {
+
+      header {
+        padding: 18px;
+      }
+
+      header h1 {
+        font-size: 21px;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .order-header select {
+        width: 100%;
+      }
+
+      .order-products div {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>BuildMart Admin</h1>
+
+    <a href="index.html" class="website-btn">
+      View Website
+    </a>
+  </header>
+
+
+  <!-- MAIN -->
+  <div class="container">
+
+    <!-- STATS -->
+    <div class="stats">
+
+      <div class="stat-card">
+        <h3>Total Orders</h3>
+        <p id="totalOrders">0</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Total Sales</h3>
+        <p id="totalSales">₹0</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Pending Orders</h3>
+        <p id="pendingOrders">0</p>
+      </div>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchOrders"
+        placeholder="Search by Order ID, Customer Name or Phone..."
+      >
+    </div>
+
+
+    <h2 class="orders-title">Customer Orders</h2>
+
+    <div id="ordersContainer">
+      <div class="empty-orders">
+        <h3>Loading Orders...</h3>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+
+  <!-- ADMIN JAVASCRIPT -->
+  <script>
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
+      authDomain: "buildmart-f394b.firebaseapp.com",
+      projectId: "buildmart-f394b",
+      storageBucket: "buildmart-f394b.firebasestorage.app",
+      messagingSenderId: "255269056106",
+      appId: "1:255269056106:web:60ba9cf4696ea2717ce413",
+      measurementId: "G-JVRDZ49BC0"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.firestore();
+
+    let orders = [];
+
+
+    // LOAD ORDERS
+    async function loadOrders() {
+
+      try {
+
+        const snapshot = await db
+          .collection("orders")
+          .get();
+
+        orders = [];
+
+        snapshot.forEach(doc => {
+          orders.push(doc.data());
+        });
+
+        updateDashboard();
+        displayOrders();
+
+      } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("ordersContainer").innerHTML = `
+          <div class="empty-orders">
+            <h3>Unable to Load Orders</h3>
+            <p>Check Firebase connection.</p>
+          </div>
+        `;
+      }
+    }
+
+
+    // DASHBOARD
+    function updateDashboard() {
+
+      document.getElementById("totalOrders").textContent =
+        orders.length;
+
+      const sales = orders.reduce(
+        (sum, order) => sum + Number(order.total || 0),
+        0
+      );
+
+      document.getElementById("totalSales").textContent =
+        "₹" + sales.toLocaleString("en-IN");
+
+
+      const pending = orders.filter(order =>
+        order.status !== "Delivered" &&
+        order.status !== "Cancelled"
+      ).length;
+
+      document.getElementById("pendingOrders").textContent =
+        pending;
+    }
+
+
+    // DISPLAY ORDERS
+    function displayOrders(list = orders) {
+
+      const container =
+        document.getElementById("ordersContainer");
+
+      if (list.length === 0) {
+
+        container.innerHTML = `
+          <div class="empty-orders">
+            <h3>No Orders Found</h3>
+            <p>Customer orders will appear here.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      container.innerHTML = "";
+
+
+      list.forEach(order => {
+
+        const itemsHTML = (order.items || [])
+          .map(item => `
+            <div>
+              <span>
+                ${item.name} × ${item.quantity}
+              </span>
+
+              <span>
+                ₹${item.price * item.quantity}
+              </span>
+            </div>
+          `)
+          .join("");
+
+
+        container.innerHTML += `
+
+          <div class="order-card">
+
+            <div class="order-header">
+
+              <div>
+                <h3>
+                  Order #${order.orderId}
+                </h3>
+
+                <small>
+                  ${order.date || ""}
+                </small>
+              </div>
+
+
+              <select
+                onchange="changeStatus('${order.orderId}', this.value)"
+              >
+
+                <option value="Order Received"
+                  ${order.status === "Order Received" ? "selected" : ""}>
+                  Order Received
+                </option>
+
+                <option value="Processing"
+                  ${order.status === "Processing" ? "selected" : ""}>
+                  Processing
+                </option>
+
+                <option value="Out for Delivery"
+                  ${order.status === "Out for Delivery" ? "selected" : ""}>
+                  Out for Delivery
+                </option>
+
+                <option value="Delivered"
+                  ${order.status === "Delivered" ? "selected" : ""}>
+                  Delivered
+                </option>
+
+                <option value="Cancelled"
+                  ${order.status === "Cancelled" ? "selected" : ""}>
+                  Cancelled
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="customer-details">
+
+              <p>
+                <strong>Customer:</strong>
+                ${order.customerName}
+              </p>
+
+              <p>
+                <strong>Phone:</strong>
+                ${order.phone}
+              </p>
+
+              <p>
+                <strong>Address:</strong>
+                ${order.address}
+              </p>
+
+              <p>
+                <strong>Location:</strong>
+                ${order.location}
+              </p>
+
+              <p>
+                <strong>Payment:</strong>
+                ${order.payment}
+              </p>
+
+            </div>
+
+
+            <div class="order-products">
+
+              <h4>Products</h4>
+
+              ${itemsHTML}
+
+            </div>
+
+
+            <div class="order-total">
+
+              Total:
+              ₹${Number(order.total || 0).toLocaleString("en-IN")}
+
+            </div>
+
+
+            <button
+              class="delete-btn"
+              onclick="deleteOrder('${order.orderId}')"
+            >
+              Delete Order
+            </button>
+
+          </div>
+        `;
+      });
+    }
+
+
+    // CHANGE STATUS
+    async function changeStatus(orderId, newStatus) {
+
+      try {
+
+        await db
+          .collection("orders")
+          .doc(orderId)
+          .update({
+            status: newStatus
+          });
+
+
+        const order =
+          orders.find(o => o.orderId === orderId);
+
+        if (order) {
+          order.status = newStatus;
+        }
+
+        updateDashboard();
+
+        alert("Order status updated!");
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert("Status update failed.");
+      }
+    }
+
+
+    // DELETE ORDER
+    async function deleteOrder(orderId) {
+
+      const confirmDelete =
+        confirm("Are you sure you want to delete this order?");
+
+      if (!confirmDelete) {
+        return;
+      }
+
+
+      try {
+
+        await db
+          .collection("orders")
+          .doc(orderId)
+          .delete();
+
+
+        orders = orders.filter(
+          order => order.orderId !== orderId
+        );
+
+
+        updateDashboard();
+        displayOrders();
+
+        alert("Order deleted successfully!");
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert("Order delete failed.");
+      }
+    }
+
+
+    // SEARCH
+    function searchOrders() {
+
+      const value =
+        document
+          .getElementById("searchOrders")
+          .value
+          .toLowerCase();
+
+
+      const filtered = orders.filter(order =>
+
+        String(order.orderId)
+          .toLowerCase()
+          .includes(value)
+
+        ||
+
+        String(order.customerName)
+          .toLowerCase()
+          .includes(value)
+
+        ||
+
+        String(order.phone)
+          .toLowerCase()
+          .includes(value)
+
+      );
+
+
+      displayOrders(filtered);
+    }
+
+
+    // START
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        document
+          .getElementById("searchOrders")
+          .addEventListener(
+            "input",
+            searchOrders
+          );
+
+        loadOrders();
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>

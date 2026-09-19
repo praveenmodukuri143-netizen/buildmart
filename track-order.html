@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Track Order - BuildMart</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #0b1f3a;
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #ff7a00;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #0b1f3a;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #ff7a00;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e66d00;
+    }
+
+    #result {
+      margin-top: 30px;
+    }
+
+    .order-card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .order-id {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0b1f3a;
+      margin-bottom: 15px;
+    }
+
+    .status {
+      display: inline-block;
+      background: #fff1e5;
+      color: #e66d00;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .details {
+      line-height: 1.9;
+    }
+
+    .items {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .total {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #0b1f3a;
+    }
+
+    .error {
+      text-align: center;
+      color: #d32f2f;
+      padding: 15px;
+      background: #ffeaea;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .search-box {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .container {
+        margin: 25px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      Build<span>Mart</span>
+    </div>
+
+    <a href="index.html">← Back to Website</a>
+  </header>
+
+  <div class="container">
+
+    <div class="box">
+
+      <h1>Track Your Order</h1>
+
+      <p class="subtitle">
+        Enter your BuildMart Order ID
+      </p>
+
+      <div class="search-box">
+        <input
+          type="text"
+          id="orderIdInput"
+          placeholder="Example: BM12345678"
+        >
+
+        <button onclick="trackOrder()">
+          Track Order
+        </button>
+      </div>
+
+      <div id="result"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+
+  <script>
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
+      authDomain: "buildmart-f394b.firebaseapp.com",
+      projectId: "buildmart-f394b",
+      storageBucket: "buildmart-f394b.firebasestorage.app",
+      messagingSenderId: "255269056106",
+      appId: "1:255269056106:web:60ba9cf4696ea2717ce413",
+      measurementId: "G-JVRDZ49BC0"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.firestore();
+
+
+    function trackOrder() {
+
+      const orderId = document
+        .getElementById("orderIdInput")
+        .value
+        .trim()
+        .toUpperCase();
+
+      const result = document.getElementById("result");
+
+      if (!orderId) {
+
+        result.innerHTML = `
+          <div class="error">
+            Please enter your Order ID.
+          </div>
+        `;
+
+        return;
+      }
+
+      result.innerHTML = `
+        <p style="text-align:center;">
+          🔍 Searching your order...
+        </p>
+      `;
+
+
+      db.collection("orders")
+        .doc(orderId)
+        .get()
+        .then((doc) => {
+
+          if (!doc.exists) {
+
+            result.innerHTML = `
+              <div class="error">
+                ❌ Order not found.<br>
+                Please check your Order ID.
+              </div>
+            `;
+
+            return;
+          }
+
+
+          const order = doc.data();
+
+
+          let itemsHTML = "";
+
+          if (order.items) {
+
+            order.items.forEach(item => {
+
+              itemsHTML += `
+                <div>
+                  ${item.name} × ${item.quantity}
+                </div>
+              `;
+
+            });
+
+          }
+
+
+          result.innerHTML = `
+
+            <div class="order-card">
+
+              <div class="order-id">
+                Order ID: ${order.orderId}
+              </div>
+
+              <div class="status">
+                📦 ${order.status}
+              </div>
+
+              <div class="details">
+
+                <strong>Customer:</strong>
+                ${order.customerName}
+                <br>
+
+                <strong>Phone:</strong>
+                ${order.phone}
+                <br>
+
+                <strong>Address:</strong>
+                ${order.address}
+                <br>
+
+                <strong>Payment:</strong>
+                ${order.payment}
+                <br>
+
+                <strong>Order Date:</strong>
+                ${order.date}
+
+              </div>
+
+
+              <div class="items">
+
+                <strong>Items:</strong>
+
+                ${itemsHTML}
+
+              </div>
+
+
+              <div class="total">
+
+                Total: ₹${order.total}
+
+              </div>
+
+            </div>
+
+          `;
+
+        })
+
+        .catch((error) => {
+
+          console.error(error);
+
+          result.innerHTML = `
+            <div class="error">
+              Something went wrong. Please try again.
+            </div>
+          `;
+
+        });
+
+    }
+
+  </script>
+
+</body>
+</html>
