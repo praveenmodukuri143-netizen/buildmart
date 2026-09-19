@@ -61,7 +61,8 @@
       text-align: center;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 14px;
       margin-bottom: 15px;
@@ -201,6 +202,138 @@
       color: #777;
     }
 
+    /* DELIVERY SETTINGS */
+
+    .settings-card {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+    }
+
+    .settings-card h2 {
+      margin-bottom: 8px;
+    }
+
+    .settings-description {
+      color: #777;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .delivery-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .delivery-form input {
+      margin-bottom: 0;
+    }
+
+    .add-btn {
+      background: #ff8a00;
+      color: white;
+      border: none;
+      padding: 14px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .slab-card {
+      background: #f7f8fa;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .slab-info strong {
+      font-size: 17px;
+    }
+
+    .slab-info span {
+      display: block;
+      margin-top: 5px;
+      color: #555;
+    }
+
+    .slab-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .edit-btn {
+      background: #0b2342;
+      color: white;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .slab-delete-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .no-slabs {
+      background: #f7f8fa;
+      padding: 20px;
+      border-radius: 8px;
+      color: #777;
+      text-align: center;
+    }
+
+    .free-delivery-box {
+      margin-top: 20px;
+      padding: 18px;
+      background: #fff8ef;
+      border-radius: 10px;
+      border: 1px solid #ffe0bd;
+    }
+
+    .free-delivery-box h3 {
+      margin-bottom: 12px;
+    }
+
+    .free-delivery-box input {
+      max-width: 300px;
+      margin-bottom: 10px;
+    }
+
+    .save-btn {
+      background: #198754;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    @media (max-width: 900px) {
+      .delivery-form {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .add-btn {
+        width: 100%;
+      }
+    }
+
     @media (max-width: 768px) {
       .stats {
         grid-template-columns: 1fr;
@@ -223,6 +356,23 @@
       .container {
         width: 94%;
       }
+
+      .delivery-form {
+        grid-template-columns: 1fr;
+      }
+
+      .slab-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .slab-actions {
+        width: 100%;
+      }
+
+      .slab-actions button {
+        flex: 1;
+      }
     }
   </style>
 </head>
@@ -233,6 +383,7 @@
   <div id="loginSection">
 
     <div class="login-box">
+
       <h2>🔐 BuildMart Admin Login</h2>
 
       <input
@@ -247,11 +398,18 @@
         placeholder="Password"
       >
 
-      <button class="login-btn" onclick="adminLogin()">
+      <button
+        class="login-btn"
+        onclick="adminLogin()"
+      >
         Login
       </button>
 
-      <div id="loginError" class="error"></div>
+      <div
+        id="loginError"
+        class="error"
+      ></div>
+
     </div>
 
   </div>
@@ -261,53 +419,182 @@
   <div id="dashboard">
 
     <header>
+
       <h1>BuildMart Admin</h1>
 
-      <button class="logout-btn" onclick="logout()">
+      <button
+        class="logout-btn"
+        onclick="logout()"
+      >
         Logout
       </button>
+
     </header>
+
 
     <div class="container">
 
       <!-- STATS -->
+
       <div class="stats">
 
         <div class="stat-card">
+
           <h3>Total Orders</h3>
-          <p id="totalOrders">0</p>
+
+          <p id="totalOrders">
+            0
+          </p>
+
         </div>
 
+
         <div class="stat-card">
+
           <h3>Total Sales</h3>
-          <p id="totalSales">₹0</p>
+
+          <p id="totalSales">
+            ₹0
+          </p>
+
         </div>
 
+
         <div class="stat-card">
+
           <h3>Pending Orders</h3>
-          <p id="pendingOrders">0</p>
+
+          <p id="pendingOrders">
+            0
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- DELIVERY SETTINGS -->
+
+      <div class="settings-card">
+
+        <h2>
+          🚚 Delivery Settings
+        </h2>
+
+        <p class="settings-description">
+          Add distance-based delivery charges. You can change or delete them anytime.
+        </p>
+
+
+        <div class="delivery-form">
+
+          <input
+            type="number"
+            id="deliveryMinKm"
+            placeholder="From KM"
+            min="0"
+            step="0.1"
+          >
+
+          <input
+            type="number"
+            id="deliveryMaxKm"
+            placeholder="To KM"
+            min="0"
+            step="0.1"
+          >
+
+          <input
+            type="number"
+            id="deliveryCharge"
+            placeholder="Charge ₹"
+            min="0"
+            step="1"
+          >
+
+          <button
+            class="add-btn"
+            onclick="addDeliverySlab()"
+          >
+            ➕ Add Slab
+          </button>
+
+        </div>
+
+
+        <div id="deliverySlabsContainer">
+
+          <div class="no-slabs">
+            Loading delivery settings...
+          </div>
+
+        </div>
+
+
+        <!-- FREE DELIVERY -->
+
+        <div class="free-delivery-box">
+
+          <h3>
+            🎁 Free Delivery
+          </h3>
+
+          <p
+            style="
+              color:#666;
+              margin-bottom:12px;
+            "
+          >
+            Orders above this amount can get free delivery.
+          </p>
+
+          <input
+            type="number"
+            id="freeDeliveryAbove"
+            placeholder="Example: 5000"
+            min="0"
+            step="1"
+          >
+
+          <br>
+
+          <button
+            class="save-btn"
+            onclick="saveFreeDelivery()"
+          >
+            Save Free Delivery
+          </button>
+
         </div>
 
       </div>
 
 
       <!-- SEARCH -->
+
       <div class="search">
+
         <input
           type="text"
           id="searchInput"
           placeholder="Search by Order ID, Customer Name or Phone..."
           oninput="filterOrders()"
         >
+
       </div>
 
 
-      <h2 class="orders-title">Customer Orders</h2>
+      <h2 class="orders-title">
+        Customer Orders
+      </h2>
+
 
       <div id="ordersContainer">
+
         <div class="empty">
           Loading orders...
         </div>
+
       </div>
 
     </div>
@@ -316,57 +603,107 @@
 
 
   <!-- FIREBASE -->
+
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 
 
   <script>
 
+    // =========================================
+    // FIREBASE
+    // =========================================
+
     const firebaseConfig = {
-      apiKey: "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
-      authDomain: "buildmart-f394b.firebaseapp.com",
-      projectId: "buildmart-f394b",
-      storageBucket: "buildmart-f394b.firebasestorage.app",
-      messagingSenderId: "255269056106",
-      appId: "1:255269056106:web:60ba9cf4696ea2717ce413",
-      measurementId: "G-JVRDZ49BC0"
+
+      apiKey:
+        "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
+
+      authDomain:
+        "buildmart-f394b.firebaseapp.com",
+
+      projectId:
+        "buildmart-f394b",
+
+      storageBucket:
+        "buildmart-f394b.firebasestorage.app",
+
+      messagingSenderId:
+        "255269056106",
+
+      appId:
+        "1:255269056106:web:60ba9cf4696ea2717ce413",
+
+      measurementId:
+        "G-JVRDZ49BC0"
+
     };
 
-    firebase.initializeApp(firebaseConfig);
 
-    const db = firebase.firestore();
-    const auth = firebase.auth();
+    firebase.initializeApp(
+      firebaseConfig
+    );
+
+
+    const db =
+      firebase.firestore();
+
+    const auth =
+      firebase.auth();
+
 
     let allOrders = [];
 
+    let deliverySlabs = [];
 
-    // LOGIN
+    let editingSlabIndex = -1;
+
+
+    // =========================================
+    // ADMIN LOGIN
+    // =========================================
+
     async function adminLogin() {
 
       const email =
-        document.getElementById("email").value.trim();
+        document
+          .getElementById("email")
+          .value
+          .trim();
 
       const password =
-        document.getElementById("password").value;
+        document
+          .getElementById("password")
+          .value;
 
       const errorBox =
-        document.getElementById("loginError");
+        document
+          .getElementById("loginError");
+
 
       errorBox.textContent = "";
 
+
       if (!email || !password) {
+
         errorBox.textContent =
           "Please enter email and password.";
+
         return;
+
       }
+
 
       try {
 
-        await auth.signInWithEmailAndPassword(
-          email,
-          password
-        );
+        await auth
+          .signInWithEmailAndPassword(
+            email,
+            password
+          );
 
       } catch (error) {
 
@@ -380,49 +717,78 @@
     }
 
 
+    // =========================================
     // AUTH STATE
-    auth.onAuthStateChanged(async (user) => {
+    // =========================================
 
-      if (user) {
+    auth.onAuthStateChanged(
+      async (user) => {
 
-        if (
-          user.email !==
-          "praveenmodukuri143@gmail.com"
-        ) {
+        if (user) {
 
-          alert("Access denied.");
+          if (
+            user.email !==
+            "praveenmodukuri143@gmail.com"
+          ) {
 
-          await auth.signOut();
+            alert(
+              "Access denied."
+            );
 
-          return;
+            await auth.signOut();
+
+            return;
+
+          }
+
+
+          document
+            .getElementById(
+              "loginSection"
+            )
+            .style.display =
+            "none";
+
+
+          document
+            .getElementById(
+              "dashboard"
+            )
+            .style.display =
+            "block";
+
+
+          loadOrders();
+
+          loadDeliverySettings();
+
+        } else {
+
+          document
+            .getElementById(
+              "loginSection"
+            )
+            .style.display =
+            "block";
+
+
+          document
+            .getElementById(
+              "dashboard"
+            )
+            .style.display =
+            "none";
+
         }
 
-        document.getElementById(
-          "loginSection"
-        ).style.display = "none";
-
-        document.getElementById(
-          "dashboard"
-        ).style.display = "block";
-
-        loadOrders();
-
-      } else {
-
-        document.getElementById(
-          "loginSection"
-        ).style.display = "block";
-
-        document.getElementById(
-          "dashboard"
-        ).style.display = "none";
-
       }
+    );
 
-    });
 
-
+    // =========================================
     // LOGOUT
+    // =========================================
+
     async function logout() {
 
       await auth.signOut();
@@ -430,16 +796,22 @@
     }
 
 
+    // =========================================
     // LOAD ORDERS
+    // =========================================
+
     async function loadOrders() {
 
       const container =
-        document.getElementById(
-          "ordersContainer"
-        );
+        document
+          .getElementById(
+            "ordersContainer"
+          );
+
 
       container.innerHTML =
         '<div class="empty">Loading orders...</div>';
+
 
       try {
 
@@ -448,31 +820,48 @@
             .collection("orders")
             .get();
 
+
         allOrders = [];
 
-        snapshot.forEach(doc => {
 
-          allOrders.push({
-            id: doc.id,
-            ...doc.data()
-          });
+        snapshot.forEach(
+          (doc) => {
 
-        });
+            allOrders.push({
 
-        allOrders.sort((a, b) => {
+              id: doc.id,
 
-          const dateA =
-            a.createdAt?.toMillis?.() || 0;
+              ...doc.data()
 
-          const dateB =
-            b.createdAt?.toMillis?.() || 0;
+            });
 
-          return dateB - dateA;
+          }
+        );
 
-        });
+
+        allOrders.sort(
+          (a, b) => {
+
+            const dateA =
+              a.createdAt
+                ?.toMillis?.() || 0;
+
+            const dateB =
+              b.createdAt
+                ?.toMillis?.() || 0;
+
+            return dateB - dateA;
+
+          }
+        );
+
 
         updateStats();
-        renderOrders(allOrders);
+
+        renderOrders(
+          allOrders
+        );
+
 
       } catch (error) {
 
@@ -481,11 +870,22 @@
           error
         );
 
+
         container.innerHTML = `
+
           <div class="empty">
-            <h3>Unable to Load Orders</h3>
-            <p>Check Firebase connection or admin permissions.</p>
+
+            <h3>
+              Unable to Load Orders
+            </h3>
+
+            <p>
+              Check Firebase connection
+              or admin permissions.
+            </p>
+
           </div>
+
         `;
 
       }
@@ -493,209 +893,420 @@
     }
 
 
+    // =========================================
     // STATS
+    // =========================================
+
     function updateStats() {
 
       const total =
         allOrders.length;
 
+
       let sales = 0;
+
       let pending = 0;
 
-      allOrders.forEach(order => {
 
-        sales +=
-          Number(order.total || 0);
+      allOrders.forEach(
+        (order) => {
 
-        const status =
-          order.status || "Order Received";
+          sales +=
+            Number(
+              order.total || 0
+            );
 
-        if (
-          status === "Order Received" ||
-          status === "Payment Pending" ||
-          status === "Processing"
-        ) {
-          pending++;
+
+          const status =
+            order.status ||
+            "Order Received";
+
+
+          if (
+
+            status ===
+              "Order Received"
+
+            ||
+
+            status ===
+              "Payment Pending"
+
+            ||
+
+            status ===
+              "Processing"
+
+          ) {
+
+            pending++;
+
+          }
+
         }
+      );
 
-      });
 
-      document.getElementById(
-        "totalOrders"
-      ).textContent = total;
+      document
+        .getElementById(
+          "totalOrders"
+        )
+        .textContent =
+        total;
 
-      document.getElementById(
-        "totalSales"
-      ).textContent =
-        "₹" + sales.toLocaleString("en-IN");
 
-      document.getElementById(
-        "pendingOrders"
-      ).textContent = pending;
+      document
+        .getElementById(
+          "totalSales"
+        )
+        .textContent =
+        "₹" +
+        sales.toLocaleString(
+          "en-IN"
+        );
+
+
+      document
+        .getElementById(
+          "pendingOrders"
+        )
+        .textContent =
+        pending;
 
     }
 
 
+    // =========================================
     // RENDER ORDERS
-    function renderOrders(orders) {
+    // =========================================
+
+    function renderOrders(
+      orders
+    ) {
 
       const container =
-        document.getElementById(
-          "ordersContainer"
-        );
+        document
+          .getElementById(
+            "ordersContainer"
+          );
+
 
       if (!orders.length) {
 
         container.innerHTML = `
+
           <div class="empty">
+
             No orders found.
+
           </div>
+
         `;
 
         return;
 
       }
 
-      container.innerHTML = "";
 
-      orders.forEach(order => {
-
-        const items =
-          Array.isArray(order.items)
-            ? order.items
-            : [];
-
-        const itemHTML =
-          items.map(item => `
-            <div class="item-row">
-              <span>
-                ${item.name || "Product"}
-                × ${item.quantity || 1}
-              </span>
-
-              <span>
-                ₹${(
-                  Number(item.price || 0) *
-                  Number(item.quantity || 1)
-                ).toLocaleString("en-IN")}
-              </span>
-            </div>
-          `).join("");
+      container.innerHTML =
+        "";
 
 
-        const card =
-          document.createElement("div");
+      orders.forEach(
+        (order) => {
 
-        card.className = "order-card";
-
-        card.innerHTML = `
-
-          <div class="order-top">
-
-            <div class="order-id">
-              Order ID: ${order.id}
-            </div>
-
-            <select
-              onchange="changeStatus('${order.id}', this.value)"
-            >
-
-              <option value="Order Received"
-                ${order.status === "Order Received" ? "selected" : ""}>
-                Order Received
-              </option>
-
-              <option value="Payment Pending"
-                ${order.status === "Payment Pending" ? "selected" : ""}>
-                Payment Pending
-              </option>
-
-              <option value="Processing"
-                ${order.status === "Processing" ? "selected" : ""}>
-                Processing
-              </option>
-
-              <option value="Shipped"
-                ${order.status === "Shipped" ? "selected" : ""}>
-                Shipped
-              </option>
-
-              <option value="Delivered"
-                ${order.status === "Delivered" ? "selected" : ""}>
-                Delivered
-              </option>
-
-              <option value="Cancelled"
-                ${order.status === "Cancelled" ? "selected" : ""}>
-                Cancelled
-              </option>
-
-            </select>
-
-          </div>
+          const items =
+            Array.isArray(
+              order.items
+            )
+              ? order.items
+              : [];
 
 
-          <div class="customer-info">
+          const itemHTML =
+            items
+              .map(
+                (item) => `
 
-            <strong>Customer:</strong>
-            ${order.customerName || "-"}
-            <br>
+                  <div class="item-row">
 
-            <strong>Phone:</strong>
-            ${order.customerPhone || "-"}
-            <br>
+                    <span>
 
-            <strong>Address:</strong>
-            ${order.customerAddress || "-"}
-            <br>
+                      ${item.name || "Product"}
 
-            <strong>Location:</strong>
-            ${order.customerLocation || "-"}
+                      ×
+                      ${item.quantity || 1}
 
-          </div>
+                    </span>
 
 
-          <div class="items">
+                    <span>
 
-            <strong>Items</strong>
+                      ₹${(
 
-            ${itemHTML}
+                        Number(
+                          item.price || 0
+                        )
 
-          </div>
+                        *
+
+                        Number(
+                          item.quantity || 1
+                        )
+
+                      ).toLocaleString(
+                        "en-IN"
+                      )}
+
+                    </span>
+
+                  </div>
+
+                `
+              )
+              .join("");
 
 
-          <div class="order-bottom">
+          const card =
+            document.createElement(
+              "div"
+            );
 
-            <div>
-              <div class="total">
-                ₹${Number(order.total || 0).toLocaleString("en-IN")}
+
+          card.className =
+            "order-card";
+
+
+          card.innerHTML = `
+
+            <div class="order-top">
+
+              <div class="order-id">
+
+                Order ID:
+                ${order.id}
+
               </div>
+
+
+              <select
+                onchange="
+                  changeStatus(
+                    '${order.id}',
+                    this.value
+                  )
+                "
+              >
+
+                <option
+                  value="Order Received"
+
+                  ${
+                    order.status ===
+                    "Order Received"
+                      ? "selected"
+                      : ""
+                  }
+                >
+
+                  Order Received
+
+                </option>
+
+
+                <option
+                  value="Payment Pending"
+
+                  ${
+                    order.status ===
+                    "Payment Pending"
+                      ? "selected"
+                      : ""
+                  }
+                >
+
+                  Payment Pending
+
+                </option>
+
+
+                <option
+                  value="Processing"
+
+                  ${
+                    order.status ===
+                    "Processing"
+                      ? "selected"
+                      : ""
+                  }
+                >
+
+                  Processing
+
+                </option>
+
+
+                <option
+                  value="Shipped"
+
+                  ${
+                    order.status ===
+                    "Shipped"
+                      ? "selected"
+                      : ""
+                  }
+                >
+
+                  Shipped
+
+                </option>
+
+
+                <option
+                  value="Delivered"
+
+                  ${
+                    order.status ===
+                    "Delivered"
+                      ? "selected"
+                      : ""
+                  }
+                >
+
+                  Delivered
+
+                </option>
+
+
+                <option
+                  value="Cancelled"
+
+                  ${
+                    order.status ===
+                    "Cancelled"
+                      ? "selected"
+                      : ""
+                  }
+                >
+
+                  Cancelled
+
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="customer-info">
+
+              <strong>
+                Customer:
+              </strong>
+
+              ${order.customerName || "-"}
+
+              <br>
+
+
+              <strong>
+                Phone:
+              </strong>
+
+              ${order.customerPhone || "-"}
+
+              <br>
+
+
+              <strong>
+                Address:
+              </strong>
+
+              ${order.customerAddress || "-"}
+
+              <br>
+
+
+              <strong>
+                Location:
+              </strong>
+
+              ${order.customerLocation || "-"}
+
+            </div>
+
+
+            <div class="items">
+
+              <strong>
+                Items
+              </strong>
+
+              ${itemHTML}
+
+            </div>
+
+
+            <div class="order-bottom">
 
               <div>
-                Payment:
-                ${order.paymentMethod || "-"}
+
+                <div class="total">
+
+                  ₹${Number(
+                    order.total || 0
+                  ).toLocaleString(
+                    "en-IN"
+                  )}
+
+                </div>
+
+
+                <div>
+
+                  Payment:
+                  ${order.paymentMethod || "-"}
+
+                </div>
+
               </div>
+
+
+              <button
+
+                class="delete-btn"
+
+                onclick="
+                  deleteOrder(
+                    '${order.id}'
+                  )
+                "
+
+              >
+
+                Delete
+
+              </button>
+
             </div>
 
-            <button
-              class="delete-btn"
-              onclick="deleteOrder('${order.id}')"
-            >
-              Delete
-            </button>
+          `;
 
-          </div>
 
-        `;
+          container.appendChild(
+            card
+          );
 
-        container.appendChild(card);
-
-      });
+        }
+      );
 
     }
 
 
-    // CHANGE STATUS
+    // =========================================
+    // CHANGE ORDER STATUS
+    // =========================================
+
     async function changeStatus(
       orderId,
       newStatus
@@ -707,7 +1318,10 @@
           .collection("orders")
           .doc(orderId)
           .update({
-            status: newStatus
+
+            status:
+              newStatus
+
           });
 
 
@@ -715,7 +1329,10 @@
           .collection("publicOrders")
           .doc(orderId)
           .update({
-            status: newStatus
+
+            status:
+              newStatus
+
           });
 
 
@@ -723,11 +1340,16 @@
           "Order status updated successfully."
         );
 
+
         loadOrders();
+
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
+
 
         alert(
           "Failed to update order status: " +
@@ -739,15 +1361,23 @@
     }
 
 
+    // =========================================
     // DELETE ORDER
-    async function deleteOrder(orderId) {
+    // =========================================
+
+    async function deleteOrder(
+      orderId
+    ) {
 
       const confirmDelete =
         confirm(
           "Are you sure you want to delete this order?"
         );
 
-      if (!confirmDelete) return;
+
+      if (!confirmDelete)
+        return;
+
 
       try {
 
@@ -763,13 +1393,20 @@
           .delete();
 
 
-        alert("Order deleted.");
+        alert(
+          "Order deleted."
+        );
+
 
         loadOrders();
 
+
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
+
 
         alert(
           "Failed to delete order: " +
@@ -781,40 +1418,668 @@
     }
 
 
+    // =========================================
     // SEARCH
+    // =========================================
+
     function filterOrders() {
 
       const search =
         document
-          .getElementById("searchInput")
+          .getElementById(
+            "searchInput"
+          )
           .value
           .toLowerCase()
           .trim();
 
+
       const filtered =
-        allOrders.filter(order => {
+        allOrders.filter(
+          (order) => {
 
-          return (
-            String(order.id || "")
-              .toLowerCase()
-              .includes(search)
+            return (
 
-            ||
+              String(
+                order.id || ""
+              )
+                .toLowerCase()
+                .includes(search)
 
-            String(order.customerName || "")
-              .toLowerCase()
-              .includes(search)
+              ||
 
-            ||
+              String(
+                order.customerName || ""
+              )
+                .toLowerCase()
+                .includes(search)
 
-            String(order.customerPhone || "")
-              .toLowerCase()
-              .includes(search)
+              ||
+
+              String(
+                order.customerPhone || ""
+              )
+                .toLowerCase()
+                .includes(search)
+
+            );
+
+          }
+        );
+
+
+      renderOrders(
+        filtered
+      );
+
+    }
+
+
+    // =========================================
+    // DELIVERY SETTINGS
+    // =========================================
+
+    async function loadDeliverySettings() {
+
+      const container =
+        document
+          .getElementById(
+            "deliverySlabsContainer"
           );
+
+
+      try {
+
+        const doc =
+          await db
+            .collection("settings")
+            .doc("store")
+            .get();
+
+
+        if (doc.exists) {
+
+          const data =
+            doc.data();
+
+
+          deliverySlabs =
+            Array.isArray(
+              data.deliverySlabs
+            )
+              ? data.deliverySlabs
+              : [];
+
+
+          const freeDelivery =
+            data.freeDeliveryAbove;
+
+
+          if (
+            freeDelivery !==
+            undefined
+          ) {
+
+            document
+              .getElementById(
+                "freeDeliveryAbove"
+              )
+              .value =
+              freeDelivery;
+
+          }
+
+        } else {
+
+          deliverySlabs = [];
+
+        }
+
+
+        renderDeliverySlabs();
+
+
+      } catch (error) {
+
+        console.error(
+          "Delivery settings error:",
+          error
+        );
+
+
+        container.innerHTML = `
+
+          <div class="no-slabs">
+
+            Unable to load
+            delivery settings.
+
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+    // =========================================
+    // RENDER DELIVERY SLABS
+    // =========================================
+
+    function renderDeliverySlabs() {
+
+      const container =
+        document
+          .getElementById(
+            "deliverySlabsContainer"
+          );
+
+
+      if (!deliverySlabs.length) {
+
+        container.innerHTML = `
+
+          <div class="no-slabs">
+
+            No delivery slabs added yet.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        deliverySlabs
+          .map(
+            (slab, index) => `
+
+              <div class="slab-card">
+
+                <div class="slab-info">
+
+                  <strong>
+
+                    ${slab.minKm}
+                    –
+                    ${slab.maxKm}
+                    km
+
+                  </strong>
+
+
+                  <span>
+
+                    Delivery Charge:
+                    ₹${Number(
+                      slab.charge || 0
+                    ).toLocaleString(
+                      "en-IN"
+                    )}
+
+                  </span>
+
+                </div>
+
+
+                <div class="slab-actions">
+
+                  <button
+
+                    class="edit-btn"
+
+                    onclick="
+                      editDeliverySlab(
+                        ${index}
+                      )
+                    "
+
+                  >
+
+                    Edit
+
+                  </button>
+
+
+                  <button
+
+                    class="slab-delete-btn"
+
+                    onclick="
+                      deleteDeliverySlab(
+                        ${index}
+                      )
+                    "
+
+                  >
+
+                    Delete
+
+                  </button>
+
+                </div>
+
+              </div>
+
+            `
+          )
+          .join("");
+
+    }
+
+
+    // =========================================
+    // ADD DELIVERY SLAB
+    // =========================================
+
+    async function addDeliverySlab() {
+
+      const minKm =
+        Number(
+          document
+            .getElementById(
+              "deliveryMinKm"
+            )
+            .value
+        );
+
+
+      const maxKm =
+        Number(
+          document
+            .getElementById(
+              "deliveryMaxKm"
+            )
+            .value
+        );
+
+
+      const charge =
+        Number(
+          document
+            .getElementById(
+              "deliveryCharge"
+            )
+            .value
+        );
+
+
+      if (
+        !Number.isFinite(minKm) ||
+        !Number.isFinite(maxKm) ||
+        !Number.isFinite(charge)
+      ) {
+
+        alert(
+          "Please enter all delivery details."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        minKm < 0 ||
+        maxKm <= minKm
+      ) {
+
+        alert(
+          "Please enter a valid distance range."
+        );
+
+        return;
+
+      }
+
+
+      if (charge < 0) {
+
+        alert(
+          "Delivery charge cannot be negative."
+        );
+
+        return;
+
+      }
+
+
+      // EDIT EXISTING SLAB
+
+      if (
+        editingSlabIndex >= 0
+      ) {
+
+        deliverySlabs[
+          editingSlabIndex
+        ] = {
+
+          minKm:
+            minKm,
+
+          maxKm:
+            maxKm,
+
+          charge:
+            charge
+
+        };
+
+
+        editingSlabIndex =
+          -1;
+
+      } else {
+
+        // ADD NEW SLAB
+
+        deliverySlabs.push({
+
+          minKm:
+            minKm,
+
+          maxKm:
+            maxKm,
+
+          charge:
+            charge
 
         });
 
-      renderOrders(filtered);
+      }
+
+
+      try {
+
+        await db
+          .collection("settings")
+          .doc("store")
+          .set(
+
+            {
+              deliverySlabs:
+                deliverySlabs
+            },
+
+            {
+              merge:
+                true
+            }
+
+          );
+
+
+        document
+          .getElementById(
+            "deliveryMinKm"
+          )
+          .value = "";
+
+
+        document
+          .getElementById(
+            "deliveryMaxKm"
+          )
+          .value = "";
+
+
+        document
+          .getElementById(
+            "deliveryCharge"
+          )
+          .value = "";
+
+
+        document
+          .querySelector(
+            ".add-btn"
+          )
+          .textContent =
+          "➕ Add Slab";
+
+
+        renderDeliverySlabs();
+
+
+        alert(
+          "Delivery settings saved successfully."
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        alert(
+          "Failed to save delivery settings: " +
+          error.message
+        );
+
+      }
+
+    }
+
+
+    // =========================================
+    // EDIT DELIVERY SLAB
+    // =========================================
+
+    function editDeliverySlab(
+      index
+    ) {
+
+      const slab =
+        deliverySlabs[
+          index
+        ];
+
+
+      if (!slab)
+        return;
+
+
+      document
+        .getElementById(
+          "deliveryMinKm"
+        )
+        .value =
+        slab.minKm;
+
+
+      document
+        .getElementById(
+          "deliveryMaxKm"
+        )
+        .value =
+        slab.maxKm;
+
+
+      document
+        .getElementById(
+          "deliveryCharge"
+        )
+        .value =
+        slab.charge;
+
+
+      editingSlabIndex =
+        index;
+
+
+      document
+        .querySelector(
+          ".add-btn"
+        )
+        .textContent =
+        "💾 Update Slab";
+
+
+      window.scrollTo({
+
+        top:
+          document
+            .getElementById(
+              "deliveryMinKm"
+            )
+            .getBoundingClientRect()
+            .top
+          +
+          window.scrollY
+          -
+          150,
+
+        behavior:
+          "smooth"
+
+      });
+
+    }
+
+
+    // =========================================
+    // DELETE DELIVERY SLAB
+    // =========================================
+
+    async function deleteDeliverySlab(
+      index
+    ) {
+
+      const confirmDelete =
+        confirm(
+          "Delete this delivery slab?"
+        );
+
+
+      if (!confirmDelete)
+        return;
+
+
+      deliverySlabs.splice(
+        index,
+        1
+      );
+
+
+      try {
+
+        await db
+          .collection("settings")
+          .doc("store")
+          .set(
+
+            {
+              deliverySlabs:
+                deliverySlabs
+            },
+
+            {
+              merge:
+                true
+            }
+
+          );
+
+
+        renderDeliverySlabs();
+
+
+        alert(
+          "Delivery slab deleted."
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        alert(
+          "Failed to delete delivery slab: " +
+          error.message
+        );
+
+      }
+
+    }
+
+
+    // =========================================
+    // SAVE FREE DELIVERY
+    // =========================================
+
+    async function saveFreeDelivery() {
+
+      const value =
+        Number(
+          document
+            .getElementById(
+              "freeDeliveryAbove"
+            )
+            .value
+        );
+
+
+      if (
+        !Number.isFinite(value) ||
+        value < 0
+      ) {
+
+        alert(
+          "Please enter a valid amount."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        await db
+          .collection("settings")
+          .doc("store")
+          .set(
+
+            {
+              freeDeliveryAbove:
+                value
+            },
+
+            {
+              merge:
+                true
+            }
+
+          );
+
+
+        alert(
+          "Free delivery setting saved successfully."
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        alert(
+          "Failed to save free delivery setting: " +
+          error.message
+        );
+
+      }
 
     }
 
