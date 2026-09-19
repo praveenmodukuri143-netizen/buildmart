@@ -1,1521 +1,1345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>BuildMart | Construction Materials</title>
+  <title>BuildMart - Construction Materials</title>
 
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f6f8;
-      color: #172033;
+      background: #f5f5f5;
+      color: #222;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    /* =========================
+       HEADER
+    ========================= */
 
-    button,
-    input,
-    textarea {
-      font-family: inherit;
-    }
-
-    .container {
-      width: min(1180px, 92%);
-      margin: auto;
-    }
-
-    /* ================= HEADER ================= */
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.97);
-      border-bottom: 1px solid #e5e7eb;
-      backdrop-filter: blur(10px);
-    }
-
-    .header-inner {
-      min-height: 72px;
+    header {
+      background: #111827;
+      color: white;
+      padding: 15px 6%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .logo {
-      font-size: 26px;
-      font-weight: 800;
-      color: #111827;
-    }
-
-    .logo span {
+      font-size: 25px;
+      font-weight: bold;
       color: #f59e0b;
     }
 
-    .nav-menu {
+    nav {
       display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .nav-menu a {
-      padding: 10px 13px;
-      border-radius: 9px;
-      color: #4b5563;
-      font-size: 14px;
-      font-weight: 600;
-      transition: 0.2s;
-    }
-
-    .nav-menu a:hover {
-      background: #fff7e6;
-      color: #d97706;
-    }
-
-    #cartLink {
-      background: #111827;
-      color: white;
-    }
-
-    #cartLink:hover {
-      background: #f59e0b;
-      color: #111827;
-    }
-
-    /* ================= HERO ================= */
-
-    .hero {
-      min-height: 590px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      background: #111827;
-    }
-
-    .hero-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.42;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(10,15,25,0.95) 0%,
-          rgba(10,15,25,0.82) 45%,
-          rgba(10,15,25,0.25) 100%
-        );
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 90px 0;
-      color: white;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 30px;
-      background: rgba(245,158,11,0.15);
-      border: 1px solid rgba(245,158,11,0.45);
-      color: #fbbf24;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      max-width: 720px;
-      font-size: clamp(44px, 6vw, 72px);
-      line-height: 1.02;
-      letter-spacing: -2px;
-      margin-bottom: 22px;
-    }
-
-    .hero h1 span {
-      color: #f59e0b;
-    }
-
-    .hero p {
-      max-width: 610px;
-      color: #d1d5db;
-      font-size: 18px;
-      line-height: 1.7;
-      margin-bottom: 32px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 13px;
-      flex-wrap: wrap;
-    }
-
-    .hero-button {
-      display: inline-block;
-      padding: 14px 24px;
-      border-radius: 10px;
-      background: #f59e0b;
-      color: #111827;
-      font-weight: 800;
-      transition: 0.2s;
-    }
-
-    .hero-button:hover {
-      background: #fbbf24;
-      transform: translateY(-2px);
-    }
-
-    .hero-track {
-      display: inline-block;
-      padding: 14px 24px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.4);
-      color: white;
-      font-weight: 700;
-    }
-
-    .hero-track:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    /* ================= TRUST ================= */
-
-    .trust-section {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .trust-grid {
-      min-height: 90px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       align-items: center;
     }
 
-    .trust-item {
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .cart-btn {
+      background: #f59e0b;
+      color: #111;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 430px;
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.55),
+          rgba(0,0,0,0.55)
+        ),
+        url("https://pub-a8ebad8b0a19407a910fcded3dcc2ace.r2.dev/uploads-2026/04/1775623198823-3vqoyd.png");
+
+      background-size: cover;
+      background-position: center;
+
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #374151;
+      padding: 50px 7%;
+      color: white;
     }
 
-    .trust-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      background: #fff7e6;
-      border-radius: 10px;
-      font-size: 20px;
+    .hero-content {
+      max-width: 650px;
     }
 
-    /* ================= PRODUCTS ================= */
-
-    .products-section {
-      padding: 90px 0;
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
     }
 
-    .section-heading {
-      text-align: center;
-      margin-bottom: 45px;
+    .hero p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 25px;
     }
 
-    .section-label {
-      color: #d97706;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 9px;
+    .hero-btn {
+      background: #f59e0b;
+      color: #111;
+      padding: 13px 22px;
+      border: none;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .section-heading h2 {
-      font-size: 38px;
-      color: #111827;
-      margin-bottom: 10px;
-    }
+    /* =========================
+       TRUST BAR
+    ========================= */
 
-    .section-heading p {
-      color: #6b7280;
-    }
-
-    .products-grid {
+    .trust-bar {
+      background: white;
+      padding: 18px 6%;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 15px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .trust-item {
+      font-weight: bold;
+    }
+
+    /* =========================
+       PRODUCTS
+    ========================= */
+
+    .products-section {
+      padding: 55px 6%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+      gap: 22px;
     }
 
     .product-card {
       background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 18px;
-      overflow: hidden;
-      box-shadow: 0 7px 25px rgba(15,23,42,0.05);
-      transition: 0.25s;
-    }
-
-    .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.12);
-      border-color: #f3c46b;
-    }
-
-    .product-image {
-      height: 190px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg,#f9fafb,#fff7e6);
-      font-size: 72px;
-      margin-bottom: 19px;
-    }
-
-    .product-card h3 {
-      color: #111827;
-      font-size: 20px;
-      margin-bottom: 8px;
-    }
-
-    .product-card p {
-      color: #6b7280;
-      font-size: 14px;
-      min-height: 48px;
-      margin-bottom: 18px;
-    }
-
-    .product-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      border-top: 1px solid #edf0f3;
-      padding-top: 16px;
-    }
-
-    .product-bottom strong {
-      font-size: 21px;
-      color: #111827;
-    }
-
-    .product-bottom button {
-      border: none;
-      border-radius: 9px;
-      padding: 11px 14px;
-      background: #111827;
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       transition: 0.2s;
     }
 
-    .product-bottom button:hover {
-      background: #f59e0b;
-      color: #111827;
+    .product-card:hover {
+      transform: translateY(-4px);
     }
 
-    /* ================= ABOUT ================= */
+    .product-icon {
+      height: 150px;
+      background: #f3f4f6;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+      margin-bottom: 15px;
+    }
 
-    .about-section {
+    .product-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .product-price {
+      color: #d97706;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    .add-btn {
+      width: 100%;
+      padding: 11px;
+      border: none;
       background: #111827;
       color: white;
-      padding: 85px 0;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
+    .add-btn:hover {
+      background: #f59e0b;
+      color: #111;
     }
 
-    .about-section h2 {
-      font-size: 40px;
-      line-height: 1.2;
-      margin-bottom: 18px;
+    /* =========================
+       ABOUT
+    ========================= */
+
+    .about {
+      background: #111827;
+      color: white;
+      padding: 55px 7%;
+      text-align: center;
     }
 
-    .about-section p {
-      color: #d1d5db;
-      line-height: 1.8;
+    .about h2 {
+      margin-bottom: 15px;
     }
 
-    .about-boxes {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 15px;
+    .about p {
+      max-width: 750px;
+      margin: auto;
+      line-height: 1.7;
     }
 
-    .about-box {
-      padding: 25px;
-      border-radius: 14px;
-      background: #1f2937;
-      border: 1px solid #374151;
-    }
-
-    .about-box strong {
-      display: block;
-      color: #fbbf24;
-      font-size: 28px;
-    }
-
-    .about-box span {
-      color: #d1d5db;
-      font-size: 13px;
-    }
-
-    /* ================= FOOTER ================= */
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
-      background: #080d18;
-      color: #9ca3af;
+      background: #080b11;
+      color: white;
       text-align: center;
       padding: 25px;
-      font-size: 13px;
     }
 
-    /* ================= MODALS ================= */
+    /* =========================
+       MODALS
+    ========================= */
 
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      z-index: 5000;
-      background: rgba(15,23,42,0.75);
-      backdrop-filter: blur(5px);
+      background: rgba(0,0,0,0.65);
+      z-index: 2000;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     .modal-content {
-      width: min(560px,100%);
+      background: white;
+      width: 100%;
+      max-width: 550px;
       max-height: 90vh;
       overflow-y: auto;
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      position: relative;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.3);
-    }
-
-    .modal-content h2 {
-      color: #111827;
-      margin-bottom: 8px;
-    }
-
-    .modal-content > p {
-      color: #6b7280;
-      margin-bottom: 20px;
-    }
-
-    .close-button {
-      position: absolute;
-      right: 17px;
-      top: 15px;
-      width: 38px;
-      height: 38px;
-      border: none;
-      border-radius: 50%;
-      background: #f3f4f6;
-      font-size: 25px;
-      cursor: pointer;
-    }
-
-    .close-button:hover {
-      background: #e5e7eb;
-    }
-
-    /* ================= CART ================= */
-
-    .cart-items {
-      margin: 20px 0;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      padding: 15px 0;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .cart-item-info strong {
-      color: #111827;
-    }
-
-    .cart-item-info p {
-      color: #6b7280;
-      font-size: 13px;
-    }
-
-    .cart-item-actions {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .cart-item-actions button {
-      width: 30px;
-      height: 30px;
-      border: none;
-      border-radius: 7px;
-      background: #f3f4f6;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .cart-item-actions button:hover {
-      background: #f59e0b;
-    }
-
-    .cart-summary {
-      background: #f9fafb;
-      padding: 18px;
       border-radius: 12px;
+      padding: 25px;
+      position: relative;
     }
 
-    .cart-summary p {
+    .close-btn {
+      position: absolute;
+      right: 18px;
+      top: 15px;
+      font-size: 25px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    /* =========================
+       CART
+    ========================= */
+
+    .cart-total-box {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+    }
+
+    .total-row {
       display: flex;
       justify-content: space-between;
       margin: 8px 0;
-      color: #4b5563;
     }
 
-    .grand-total {
-      font-size: 19px;
-      color: #111827 !important;
-    }
-
-    .checkout-button,
-    .place-order-button,
-    .close-success-button,
-    .upi-pay-button {
+    .checkout-btn {
       width: 100%;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
       margin-top: 18px;
-      font-size: 15px;
-      font-weight: 800;
+      padding: 13px;
+      border: none;
+      background: #f59e0b;
+      color: #111;
+      border-radius: 7px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .checkout-button,
-    .place-order-button,
-    .upi-pay-button {
-      background: #f59e0b;
-      color: #111827;
+    /* =========================
+       CHECKOUT FORM
+    ========================= */
+
+    .form-group {
+      margin-bottom: 14px;
     }
 
-    .checkout-button:hover,
-    .place-order-button:hover,
-    .upi-pay-button:hover {
-      background: #d97706;
-      color: white;
-    }
-
-    .close-success-button {
-      background: #111827;
-      color: white;
-    }
-
-    /* ================= CHECKOUT ================= */
-
-    .checkout-content label {
+    .form-group label {
       display: block;
-      margin-top: 15px;
       margin-bottom: 6px;
-      color: #374151;
-      font-size: 13px;
-      font-weight: 700;
+      font-weight: bold;
     }
 
-    .checkout-content input,
-    .checkout-content textarea {
+    .form-group input,
+    .form-group textarea {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      outline: none;
+      padding: 11px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
       font-size: 14px;
     }
 
-    .checkout-content input:focus,
-    .checkout-content textarea:focus {
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
-    }
-
-    .checkout-content textarea {
-      min-height: 90px;
+    .form-group textarea {
+      min-height: 80px;
       resize: vertical;
     }
 
-    .payment-heading {
-      margin-top: 24px;
-      margin-bottom: 10px;
+    .payment-methods {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f7f7f7;
+      border-radius: 8px;
     }
 
-    .payment-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    .payment-option {
+      margin: 10px 0;
     }
 
-    .payment-options label {
-      margin: 0;
-      padding: 13px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+    /* =========================
+       UPI BOX
+    ========================= */
 
-    .payment-options input {
-      width: auto;
-      margin-right: 6px;
-    }
-
-    .checkout-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 22px;
-      padding: 17px;
-      border-radius: 12px;
-      background: #111827;
-      color: white;
-    }
-
-    .checkout-total strong {
-      color: #fbbf24;
-      font-size: 21px;
-    }
-
-    /* ================= SUCCESS ================= */
-
-    .success-content {
-      text-align: center;
-    }
-
-    .success-icon {
-      width: 70px;
-      height: 70px;
-      margin: auto auto 18px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: #ecfdf5;
-      font-size: 36px;
-    }
-
-    .order-details {
-      margin-top: 22px;
+    #upiPaymentBox {
+      display: none;
+      margin-top: 15px;
       padding: 18px;
-      background: #f9fafb;
-      border-radius: 12px;
-      text-align: left;
+      background: #fff8e7;
+      border: 1px solid #f59e0b;
+      border-radius: 10px;
     }
 
-    .order-details p {
-      display: flex;
-      justify-content: space-between;
-      padding: 7px 0;
-      color: #6b7280;
-      gap: 15px;
-    }
-
-    .order-details strong {
+    #upiPaymentBox h4 {
+      margin-bottom: 12px;
       color: #111827;
     }
 
-    .upi-box {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #fff7e6;
-      border: 1px solid #f3c46b;
+    .upi-id-box {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 12px;
+      border-radius: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
     }
 
-    .upi-note {
-      color: #6b7280;
-      font-size: 12px;
-      margin-top: 8px;
+    .upi-id-text {
+      font-weight: bold;
+      color: #111827;
+      word-break: break-all;
     }
 
-    .empty-cart {
+    .copy-upi-btn {
+      background: #111827;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .copy-upi-btn:hover {
+      background: #f59e0b;
+      color: #111;
+    }
+
+    .upi-pay-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      background: #16a34a;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* =========================
+       SUCCESS
+    ========================= */
+
+    .success-box {
       text-align: center;
-      padding: 40px 15px;
-      color: #6b7280;
+      padding: 20px;
     }
 
-    .empty-cart-icon {
-      font-size: 50px;
+    .success-icon {
+      font-size: 55px;
+      margin-bottom: 10px;
     }
 
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 900px) {
-
-      .products-grid {
-        grid-template-columns: repeat(2,1fr);
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav-menu a {
-        font-size: 12px;
-        padding: 8px;
-      }
+    .success-box h2 {
+      margin-bottom: 10px;
     }
 
-    @media (max-width: 650px) {
+    .success-box p {
+      margin: 8px 0;
+    }
 
-      .header-inner {
-        flex-direction: column;
-        padding: 14px 0;
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      header {
+        padding: 13px 4%;
       }
 
-      .nav-menu {
-        flex-wrap: wrap;
-        justify-content: center;
+      nav a {
+        display: none;
       }
 
       .hero {
-        min-height: 540px;
-      }
-
-      .hero-content {
-        text-align: center;
-        padding: 70px 0;
+        min-height: 400px;
+        padding: 40px 6%;
       }
 
       .hero h1 {
-        font-size: 43px;
-        letter-spacing: -1px;
+        font-size: 36px;
       }
 
-      .hero p {
-        font-size: 16px;
-      }
-
-      .hero-buttons {
-        justify-content: center;
-      }
-
-      .trust-grid {
-        grid-template-columns: 1fr;
-        padding: 20px 0;
-        gap: 12px;
-      }
-
-      .products-grid {
+      .trust-bar {
         grid-template-columns: 1fr;
       }
 
       .products-section {
-        padding: 65px 0;
+        padding: 40px 5%;
       }
 
-      .section-heading h2 {
-        font-size: 30px;
-      }
-
-      .about-boxes {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .payment-options {
-        grid-template-columns: 1fr;
-      }
-
-      .cart-item {
+      .upi-id-box {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
       }
 
-      .cart-item-actions {
-        justify-content: flex-start;
+      .copy-upi-btn {
+        width: 100%;
       }
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
+  <!-- =========================
+       HEADER
+  ========================= -->
 
-  <header class="site-header">
+  <header>
 
-    <div class="container header-inner">
-
-      <a href="#home" class="logo">
-        🏗️ Build<span>Mart</span>
-      </a>
-
-      <nav class="nav-menu">
-
-        <a href="#home">Home</a>
-
-        <a href="#products">Products</a>
-
-        <a href="#about">About</a>
-
-        <a href="#" id="cartLink">
-          🛒 Cart (0)
-        </a>
-
-        <a href="track-order.html">
-          📦 Track Orders
-        </a>
-
-      </nav>
-
+    <div class="logo">
+      BuildMart
     </div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+
+      <button
+        class="cart-btn"
+        onclick="openCart()"
+      >
+        🛒 Cart
+        (<span id="cartCount">0</span>)
+      </button>
+    </nav>
 
   </header>
 
 
-  <!-- ================= HERO ================= -->
+  <!-- =========================
+       HERO
+  ========================= -->
 
-  <section id="home" class="hero">
+  <section
+    class="hero"
+    id="home"
+  >
 
-    <img
-      class="hero-image"
-      src="https://pub-a8ebad8b0a19407a910fcded3dcc2ace.r2.dev/uploads-2026/04/1775623198823-3vqoyd.png"
-      alt="Construction site with cement, steel, bricks and building materials"
-    >
-
-    <div class="hero-overlay"></div>
-
-    <div class="container hero-content">
-
-      <div class="hero-badge">
-        🏗️ QUALITY CONSTRUCTION MATERIALS
-      </div>
+    <div class="hero-content">
 
       <h1>
-        Build Strong.<br>
-        Build <span>Better.</span>
+        Build Strong.
+        Build Smart.
       </h1>
 
       <p>
-        Shop quality cement, steel, bricks, sand,
-        aggregates and construction materials —
-        all in one place.
+        Quality construction materials delivered
+        straight to your doorstep.
       </p>
 
-      <div class="hero-buttons">
-
-        <a href="#products" class="hero-button">
-          Shop Materials →
-        </a>
-
-        <a
-          href="track-order.html"
-          class="hero-track">
-          Track Your Order
-        </a>
-
-      </div>
+      <button
+        class="hero-btn"
+        onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"
+      >
+        Shop Materials
+      </button>
 
     </div>
 
   </section>
 
 
-  <!-- ================= TRUST ================= -->
+  <!-- =========================
+       TRUST BAR
+  ========================= -->
 
-  <section class="trust-section">
+  <section class="trust-bar">
 
-    <div class="container trust-grid">
+    <div class="trust-item">
+      🚚 Fast Delivery
+    </div>
 
-      <div class="trust-item">
+    <div class="trust-item">
+      🏗️ Quality Materials
+    </div>
 
-        <div class="trust-icon">
-          ✓
-        </div>
-
-        <span>
-          Quality Materials
-        </span>
-
-      </div>
-
-
-      <div class="trust-item">
-
-        <div class="trust-icon">
-          🚚
-        </div>
-
-        <span>
-          Reliable Delivery
-        </span>
-
-      </div>
-
-
-      <div class="trust-item">
-
-        <div class="trust-icon">
-          🔒
-        </div>
-
-        <span>
-          Secure Ordering
-        </span>
-
-      </div>
-
+    <div class="trust-item">
+      🔒 Secure Ordering
     </div>
 
   </section>
 
 
-  <!-- ================= PRODUCTS ================= -->
+  <!-- =========================
+       PRODUCTS
+  ========================= -->
 
   <section
+    class="products-section"
     id="products"
-    class="products-section">
+  >
 
-    <div class="container">
+    <div class="section-title">
 
-      <div class="section-heading">
+      <h2>
+        Construction Materials
+      </h2>
 
-        <div class="section-label">
-          Our Materials
+      <p>
+        Everything you need to build your project.
+      </p>
+
+    </div>
+
+
+    <div class="products">
+
+
+      <!-- Cement -->
+
+      <div class="product-card">
+
+        <div class="product-icon">
+          🧱
         </div>
 
-        <h2>
-          Everything You Need to Build
-        </h2>
+        <h3>
+          UltraTech Cement
+        </h3>
 
         <p>
-          Quality construction materials
-          for every project.
+          High-quality construction cement.
         </p>
 
+        <div class="product-price">
+          ₹450
+        </div>
+
+        <button
+          class="add-btn"
+          onclick="addToCart('UltraTech Cement',450)"
+        >
+          Add to Cart
+        </button>
+
       </div>
 
 
-      <div class="products-grid">
+      <!-- Steel -->
 
+      <div class="product-card">
 
-        <!-- CEMENT -->
-
-        <div class="product-card">
-
-          <div class="product-image">
-            🧱
-          </div>
-
-          <h3>
-            UltraTech Cement
-          </h3>
-
-          <p>
-            Premium quality cement for
-            strong and durable construction.
-          </p>
-
-          <div class="product-bottom">
-
-            <strong>
-              ₹450
-            </strong>
-
-            <button
-              type="button"
-              onclick="addToCart('UltraTech Cement', 450)">
-              Add to Cart
-            </button>
-
-          </div>
-
+        <div class="product-icon">
+          🔩
         </div>
 
+        <h3>
+          TMT Steel Rod
+        </h3>
 
-        <!-- STEEL -->
+        <p>
+          Strong TMT steel for construction.
+        </p>
 
-        <div class="product-card">
-
-          <div class="product-image">
-            🔩
-          </div>
-
-          <h3>
-            TMT Steel Rod
-          </h3>
-
-          <p>
-            High-strength TMT steel for
-            durable structural construction.
-          </p>
-
-          <div class="product-bottom">
-
-            <strong>
-              ₹5,500
-            </strong>
-
-            <button
-              type="button"
-              onclick="addToCart('TMT Steel Rod', 5500)">
-              Add to Cart
-            </button>
-
-          </div>
-
+        <div class="product-price">
+          ₹5,500
         </div>
 
-
-        <!-- BRICKS -->
-
-        <div class="product-card">
-
-          <div class="product-image">
-            🧱
-          </div>
-
-          <h3>
-            Red Bricks
-          </h3>
-
-          <p>
-            Strong and reliable bricks
-            for walls and construction.
-          </p>
-
-          <div class="product-bottom">
-
-            <strong>
-              ₹10
-            </strong>
-
-            <button
-              type="button"
-              onclick="addToCart('Red Bricks', 10)">
-              Add to Cart
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- SAND -->
-
-        <div class="product-card">
-
-          <div class="product-image">
-            🏖️
-          </div>
-
-          <h3>
-            River Sand
-          </h3>
-
-          <p>
-            Quality sand suitable for
-            concrete and construction work.
-          </p>
-
-          <div class="product-bottom">
-
-            <strong>
-              ₹1,500
-            </strong>
-
-            <button
-              type="button"
-              onclick="addToCart('River Sand', 1500)">
-              Add to Cart
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- AGGREGATE -->
-
-        <div class="product-card">
-
-          <div class="product-image">
-            🪨
-          </div>
-
-          <h3>
-            20mm Aggregate
-          </h3>
-
-          <p>
-            Quality aggregate for concrete,
-            foundations and structural work.
-          </p>
-
-          <div class="product-bottom">
-
-            <strong>
-              ₹1,800
-            </strong>
-
-            <button
-              type="button"
-              onclick="addToCart('20mm Aggregate', 1800)">
-              Add to Cart
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- BLOCKS -->
-
-        <div class="product-card">
-
-          <div class="product-image">
-            🧱
-          </div>
-
-          <h3>
-            Concrete Blocks
-          </h3>
-
-          <p>
-            Durable blocks for walls
-            and building projects.
-          </p>
-
-          <div class="product-bottom">
-
-            <strong>
-              ₹55
-            </strong>
-
-            <button
-              type="button"
-              onclick="addToCart('Concrete Blocks', 55)">
-              Add to Cart
-            </button>
-
-          </div>
-
-        </div>
-
+        <button
+          class="add-btn"
+          onclick="addToCart('TMT Steel Rod',5500)"
+        >
+          Add to Cart
+        </button>
 
       </div>
+
+
+      <!-- Bricks -->
+
+      <div class="product-card">
+
+        <div class="product-icon">
+          🧱
+        </div>
+
+        <h3>
+          Red Bricks
+        </h3>
+
+        <p>
+          Durable red bricks for building.
+        </p>
+
+        <div class="product-price">
+          ₹10
+        </div>
+
+        <button
+          class="add-btn"
+          onclick="addToCart('Red Bricks',10)"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+
+
+      <!-- Sand -->
+
+      <div class="product-card">
+
+        <div class="product-icon">
+          🏖️
+        </div>
+
+        <h3>
+          River Sand
+        </h3>
+
+        <p>
+          Quality sand for construction work.
+        </p>
+
+        <div class="product-price">
+          ₹1,500
+        </div>
+
+        <button
+          class="add-btn"
+          onclick="addToCart('River Sand',1500)"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+
+
+      <!-- Aggregate -->
+
+      <div class="product-card">
+
+        <div class="product-icon">
+          🪨
+        </div>
+
+        <h3>
+          20mm Aggregate
+        </h3>
+
+        <p>
+          Premium quality construction aggregate.
+        </p>
+
+        <div class="product-price">
+          ₹1,800
+        </div>
+
+        <button
+          class="add-btn"
+          onclick="addToCart('20mm Aggregate',1800)"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+
+
+      <!-- Blocks -->
+
+      <div class="product-card">
+
+        <div class="product-icon">
+          🧱
+        </div>
+
+        <h3>
+          Concrete Blocks
+        </h3>
+
+        <p>
+          Strong and durable concrete blocks.
+        </p>
+
+        <div class="product-price">
+          ₹55
+        </div>
+
+        <button
+          class="add-btn"
+          onclick="addToCart('Concrete Blocks',55)"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+
 
     </div>
 
   </section>
 
 
-  <!-- ================= ABOUT ================= -->
+  <!-- =========================
+       ABOUT
+  ========================= -->
 
   <section
+    class="about"
     id="about"
-    class="about-section">
+  >
 
-    <div class="container about-grid">
+    <h2>
+      About BuildMart
+    </h2>
 
-      <div>
-
-        <div class="section-label">
-          About BuildMart
-        </div>
-
-        <h2>
-          Construction materials,
-          made simple.
-        </h2>
-
-        <p>
-          BuildMart makes it easy to purchase
-          essential construction materials online.
-          Select your materials, place your order
-          and track it from anywhere.
-        </p>
-
-      </div>
-
-
-      <div class="about-boxes">
-
-        <div class="about-box">
-          <strong>6+</strong>
-          <span>Construction Products</span>
-        </div>
-
-        <div class="about-box">
-          <strong>₹0</strong>
-          <span>Delivery above ₹5,000</span>
-        </div>
-
-        <div class="about-box">
-          <strong>24/7</strong>
-          <span>Online Ordering</span>
-        </div>
-
-        <div class="about-box">
-          <strong>100%</strong>
-          <span>Order Tracking</span>
-        </div>
-
-      </div>
-
-    </div>
+    <p>
+      BuildMart makes it simple to purchase
+      quality construction materials online.
+      From cement and steel to bricks, sand and
+      aggregates, we aim to make construction
+      material ordering easier and faster.
+    </p>
 
   </section>
 
 
-  <!-- ================= FOOTER ================= -->
+  <!-- =========================
+       FOOTER
+  ========================= -->
 
   <footer>
 
-    © 2026 BuildMart.
-    Quality materials for stronger construction.
+    <p>
+      © 2026 BuildMart. All rights reserved.
+    </p>
 
   </footer>
 
 
-  <!-- ================= CART MODAL ================= -->
+  <!-- =========================
+       CART MODAL
+  ========================= -->
 
   <div
+    class="modal"
     id="cartModal"
-    class="modal">
+  >
 
     <div class="modal-content">
 
       <button
-        type="button"
-        class="close-button"
-        onclick="closeCart()">
+        class="close-btn"
+        onclick="closeCart()"
+      >
         ×
       </button>
 
       <h2>
-        🛒 Your Cart
+        Your Cart
       </h2>
 
       <div
         id="cartItems"
-        class="cart-items">
-      </div>
+        style="margin-top:20px;"
+      ></div>
 
-      <div class="cart-summary">
 
-        <p>
-          <span>Subtotal</span>
+      <div class="cart-total-box">
+
+        <div class="total-row">
+
+          <span>
+            Subtotal
+          </span>
+
           <strong id="cartSubtotal">
-            ₹0
+            ₹0.00
           </strong>
-        </p>
 
-        <p>
-          <span>Delivery</span>
+        </div>
+
+
+        <div class="total-row">
+
+          <span>
+            Delivery
+          </span>
+
           <strong id="deliveryCharge">
-            ₹0
-          </strong>
-        </p>
-
-        <hr>
-
-        <p class="grand-total">
-
-          <span>Total</span>
-
-          <strong id="grandTotal">
-            ₹0
+            ₹0.00
           </strong>
 
-        </p>
+        </div>
+
+
+        <div
+          class="total-row"
+          style="font-size:20px;"
+        >
+
+          <strong>
+            Total
+          </strong>
+
+          <strong id="cartTotal">
+            ₹0.00
+          </strong>
+
+        </div>
+
+
+        <button
+          class="checkout-btn"
+          onclick="openCheckout()"
+        >
+          Proceed to Checkout
+        </button>
 
       </div>
-
-      <button
-        type="button"
-        class="checkout-button"
-        onclick="openCheckout()">
-        Proceed to Checkout →
-      </button>
 
     </div>
 
   </div>
 
 
-  <!-- ================= CHECKOUT ================= -->
+  <!-- =========================
+       CHECKOUT MODAL
+  ========================= -->
 
   <div
+    class="modal"
     id="checkoutModal"
-    class="modal">
+  >
 
-    <div
-      class="modal-content checkout-content">
+    <div class="modal-content">
 
       <button
-        type="button"
-        class="close-button"
-        onclick="closeCheckout()">
+        class="close-btn"
+        onclick="closeCheckout()"
+      >
         ×
       </button>
 
       <h2>
-        📦 Checkout
+        Checkout
       </h2>
-
-      <p>
-        Enter your delivery details.
-      </p>
-
-
-      <label for="customerName">
-        Full Name
-      </label>
-
-      <input
-        type="text"
-        id="customerName"
-        placeholder="Enter your name">
-
-
-      <label for="customerPhone">
-        Phone Number
-      </label>
-
-      <input
-        type="tel"
-        id="customerPhone"
-        placeholder="Enter phone number">
-
-
-      <label for="customerAddress">
-        Delivery Address
-      </label>
-
-      <textarea
-        id="customerAddress"
-        placeholder="Enter full delivery address"></textarea>
-
-
-      <label for="customerLocation">
-        Location / City
-      </label>
-
-      <input
-        type="text"
-        id="customerLocation"
-        placeholder="Enter city / location">
-
-
-      <h3 class="payment-heading">
-        Payment Method
-      </h3>
-
-
-      <div class="payment-options">
-
-        <label>
-
-          <input
-            type="radio"
-            name="payment"
-            value="COD"
-            checked>
-
-          💵 Cash on Delivery
-
-        </label>
-
-
-        <label>
-
-          <input
-            type="radio"
-            name="payment"
-            value="UPI">
-
-          📱 UPI Payment
-
-        </label>
-
-      </div>
-
-
-      <div class="checkout-total">
-
-        <span>
-          Order Total
-        </span>
-
-        <strong id="checkoutTotal">
-          ₹0
-        </strong>
-
-      </div>
-
-
-      <button
-        type="button"
-        class="place-order-button"
-        onclick="placeOrder()">
-
-        🛍️ Place Order
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- ================= SUCCESS ================= -->
-
-  <div
-    id="successModal"
-    class="modal">
-
-    <div
-      class="modal-content success-content">
-
-      <div class="success-icon">
-        ✅
-      </div>
-
-      <h2>
-        Order Placed Successfully!
-      </h2>
-
-      <p>
-        Thank you for shopping with BuildMart.
-      </p>
-
-
-      <div class="order-details">
-
-        <p>
-          <span>Order ID</span>
-          <strong id="orderId"></strong>
-        </p>
-
-        <p>
-          <span>Customer</span>
-          <strong id="orderCustomer"></strong>
-        </p>
-
-        <p>
-          <span>Total</span>
-          <strong id="orderTotal"></strong>
-        </p>
-
-        <p>
-          <span>Payment</span>
-          <strong id="orderPayment"></strong>
-        </p>
-
-      </div>
 
 
       <div
-        id="upiPaymentBox"
-        class="upi-box"
-        style="display:none;">
+        style="margin-top:20px;"
+      >
 
-        <h3>
-          📱 Pay using UPI
-        </h3>
+        <!-- Name -->
 
-        <p>
-          Amount:
-          <strong id="upiAmount"></strong>
-        </p>
+        <div class="form-group">
 
-        <p>
-          UPI ID:
+          <label>
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="customerName"
+            placeholder="Enter your name"
+          />
+
+        </div>
+
+
+        <!-- Phone -->
+
+        <div class="form-group">
+
+          <label>
+            Phone Number
+          </label>
+
+          <input
+            type="tel"
+            id="customerPhone"
+            placeholder="Enter phone number"
+          />
+
+        </div>
+
+
+        <!-- Address -->
+
+        <div class="form-group">
+
+          <label>
+            Address
+          </label>
+
+          <textarea
+            id="customerAddress"
+            placeholder="Enter delivery address"
+          ></textarea>
+
+        </div>
+
+
+        <!-- Location -->
+
+        <div class="form-group">
+
+          <label>
+            Location
+          </label>
+
+          <input
+            type="text"
+            id="customerLocation"
+            placeholder="Enter city / village"
+          />
+
+        </div>
+
+
+        <!-- Payment -->
+
+        <div class="payment-methods">
+
           <strong>
-            9848676751@fam
+            Payment Method
           </strong>
-        </p>
+
+
+          <div class="payment-option">
+
+            <label>
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="COD"
+                checked
+              />
+
+              Cash on Delivery
+
+            </label>
+
+          </div>
+
+
+          <div class="payment-option">
+
+            <label>
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="UPI"
+              />
+
+              UPI Payment
+
+            </label>
+
+          </div>
+
+
+          <!-- =========================
+               UPI PAYMENT BOX
+          ========================= -->
+
+          <div
+            id="upiPaymentBox"
+          >
+
+            <h4>
+              📱 Pay using UPI
+            </h4>
+
+            <p>
+              Send payment to this UPI ID:
+            </p>
+
+
+            <div class="upi-id-box">
+
+              <span
+                class="upi-id-text"
+                id="upiIdDisplay"
+              >
+                9000158191@ibl
+              </span>
+
+
+              <button
+                type="button"
+                class="copy-upi-btn"
+                onclick="copyUPIId()"
+              >
+                Copy UPI ID
+              </button>
+
+            </div>
+
+
+            <p
+              style="
+                font-size:13px;
+                line-height:1.5;
+              "
+            >
+              You can pay using Google Pay,
+              PhonePe, Paytm, BHIM or another
+              supported UPI app.
+            </p>
+
+
+            <button
+              type="button"
+              class="upi-pay-btn"
+              onclick="payFromCheckout()"
+            >
+              💳 Pay Now with UPI
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Total -->
+
+        <div
+          style="
+            margin-top:18px;
+            padding:15px;
+            background:#f3f4f6;
+            border-radius:8px;
+          "
+        >
+
+          <div
+            style="
+              display:flex;
+              justify-content:space-between;
+            "
+          >
+
+            <strong>
+              Order Total
+            </strong>
+
+            <strong
+              id="checkoutTotal"
+            >
+              ₹0.00
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- Place Order -->
 
         <button
-          type="button"
-          onclick="payWithUPI()"
-          class="upi-pay-button">
-
-          💳 Pay Now with UPI
-
+          class="checkout-btn"
+          onclick="placeOrder()"
+        >
+          Place Order
         </button>
 
-        <p class="upi-note">
-          UPI app open ayyaka payment complete cheyyandi.
-        </p>
-
       </div>
-
-
-      <button
-        type="button"
-        class="close-success-button"
-        onclick="closeSuccess()">
-
-        Continue Shopping
-
-      </button>
 
     </div>
 
   </div>
 
 
-  <!-- ================= FIREBASE ================= -->
+  <!-- =========================
+       SUCCESS MODAL
+  ========================= -->
+
+  <div
+    class="modal"
+    id="successModal"
+  >
+
+    <div class="modal-content">
+
+      <div class="success-box">
+
+        <div class="success-icon">
+          ✅
+        </div>
+
+        <h2>
+          Order Confirmed!
+        </h2>
+
+        <p>
+          Thank you for your order.
+        </p>
+
+
+        <p>
+          <strong>
+            Order ID:
+          </strong>
+
+          <span id="orderId">
+          </span>
+        </p>
+
+
+        <p>
+          <strong>
+            Total:
+          </strong>
+
+          <span id="orderTotal">
+          </span>
+        </p>
+
+
+        <p>
+          <strong>
+            Payment:
+          </strong>
+
+          <span id="successPaymentMethod">
+          </span>
+        </p>
+
+
+        <button
+          class="checkout-btn"
+          onclick="closeSuccessModal()"
+        >
+          Continue Shopping
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       FIREBASE
+  ========================= -->
 
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 
-  <!-- ================= BUILDMART SCRIPT ================= -->
+  <!-- =========================
+       SCRIPT
+  ========================= -->
 
   <script src="./script.js"></script>
+
+
+  <!-- =========================
+       UPI EXTRA FUNCTIONS
+  ========================= -->
+
+  <script>
+
+    function copyUPIId() {
+
+      const upiId =
+        "9000158191@ibl";
+
+      if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+      ) {
+
+        navigator.clipboard
+          .writeText(upiId)
+          .then(function () {
+
+            alert(
+              "UPI ID copied!\n\n" +
+              upiId
+            );
+
+          })
+          .catch(function () {
+
+            alert(
+              "UPI ID:\n" +
+              upiId
+            );
+
+          });
+
+      } else {
+
+        alert(
+          "UPI ID:\n" +
+          upiId
+        );
+
+      }
+
+    }
+
+
+    function payFromCheckout() {
+
+      const totalElement =
+        document.getElementById(
+          "checkoutTotal"
+        );
+
+      if (!totalElement) {
+
+        alert(
+          "Order total not found."
+        );
+
+        return;
+      }
+
+
+      const totalText =
+        totalElement.textContent
+          .replace("₹", "")
+          .trim();
+
+
+      const amount =
+        Number(totalText);
+
+
+      if (
+        !amount ||
+        amount <= 0
+      ) {
+
+        alert(
+          "Invalid payment amount."
+        );
+
+        return;
+      }
+
+
+      const upiId =
+        "9000158191@ibl";
+
+
+      const upiUrl =
+        "upi://pay" +
+
+        "?pa=" +
+        encodeURIComponent(upiId) +
+
+        "&pn=" +
+        encodeURIComponent("BuildMart") +
+
+        "&am=" +
+        encodeURIComponent(
+          amount.toFixed(2)
+        ) +
+
+        "&cu=INR" +
+
+        "&tn=" +
+        encodeURIComponent(
+          "BuildMart Payment"
+        );
+
+
+      window.location.href =
+        upiUrl;
+
+    }
+
+  </script>
+
 
 </body>
 </html>
