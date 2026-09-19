@@ -2,2003 +2,398 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BuildMart Admin</title>
-
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f6f8;
-  color:#222;
-}
-
-.container{
-  width:95%;
-  max-width:1200px;
-  margin:25px auto;
-}
-
-h1,h2,h3{margin-top:0}
-
-.card{
-  background:#fff;
-  padding:22px;
-  margin-bottom:20px;
-  border-radius:14px;
-  box-shadow:0 3px 15px rgba(0,0,0,.08);
-}
-
-input,textarea,select{
-  width:100%;
-  padding:12px;
-  margin:7px 0 14px;
-  border:1px solid #ddd;
-  border-radius:8px;
-  font-size:15px;
-}
-
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-button{
-  border:0;
-  padding:11px 18px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-  margin:4px;
-}
-
-.primary{background:#ff7a00;color:#fff}
-.danger{background:#dc3545;color:#fff}
-.secondary{background:#333;color:#fff}
-.success{background:#198754;color:#fff}
-.info{background:#0d6efd;color:#fff}
-
-.hidden{display:none}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-}
-
-.product{
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:15px;
-  background:#fff;
-}
-
-.product img{
-  width:100%;
-  height:170px;
-  object-fit:cover;
-  border-radius:8px;
-  background:#eee;
-}
-
-.product h3{
-  margin:10px 0 5px;
-}
-
-.price{
-  font-size:20px;
-  font-weight:bold;
-  color:#e65f00;
-}
-
-.order{
-  border:1px solid #ddd;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:12px;
-}
-
-.login{
-  max-width:420px;
-  margin:80px auto;
-}
-
-.slab{
-  border:1px solid #ddd;
-  padding:14px;
-  border-radius:10px;
-  margin-bottom:10px;
-  background:#fafafa;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:15px;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.available{
-  background:#d1e7dd;
-  color:#0f5132;
-}
-
-.unavailable{
-  background:#f8d7da;
-  color:#842029;
-}
-
-.small{
-  color:#666;
-  font-size:13px;
-}
-
-hr{
-  border:0;
-  border-top:1px solid #ddd;
-  margin:20px 0;
-}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#17202a}
+.wrap{max-width:1100px;margin:auto;padding:20px}.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 3px 15px #00000012}
+h1,h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+input,textarea,select,button{width:100%;padding:12px;border:1px solid #ccd3da;border-radius:9px;font-size:15px}
+textarea{min-height:80px;resize:vertical}button{background:#1769aa;color:white;border:0;cursor:pointer;font-weight:700}
+button.secondary{background:#667085}button.danger{background:#c62828}button.green{background:#18864b}
+label{font-weight:700;display:block;margin:8px 0 5px}.product,.order,.slab{border:1px solid #ddd;border-radius:12px;padding:14px;margin-top:10px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.muted{color:#667085}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+#dashboard{display:none}.login{max-width:420px;margin:60px auto}.success{color:#18864b}.error{color:#c62828}
+.small{font-size:13px}.pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#eef2f6;margin:3px}
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage" class="login card">
-
-  <h1>🔐 BuildMart Admin</h1>
-
-  <input
-    id="email"
-    type="email"
-    placeholder="Admin Email">
-
-  <input
-    id="password"
-    type="password"
-    placeholder="Password">
-
-  <button
-    class="primary"
-    onclick="login()">
-    Login
-  </button>
-
-  <p id="loginError"></p>
-
+<div id="loginBox" class="wrap login">
+  <div class="card">
+    <h1>🔐 BuildMart Admin</h1>
+    <p class="muted">Admin login</p>
+    <label>Email</label>
+    <input id="loginEmail" type="email" value="praveenmodukuri143@gmail.com">
+    <label>Password</label>
+    <input id="loginPassword" type="password">
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
 </div>
 
-
-<!-- ADMIN -->
-<div id="adminPage" class="container hidden">
-
-  <!-- HEADER -->
-  <div class="card">
-
-    <h1>🏗️ BuildMart Admin Dashboard</h1>
-
-    <button
-      class="danger"
-      onclick="logout()">
-      Logout
-    </button>
-
+<div id="dashboard" class="wrap">
+  <div class="card top">
+    <div>
+      <h1>🧱 BuildMart Admin</h1>
+      <div class="muted">Products, delivery and orders</div>
+    </div>
+    <button class="secondary" style="width:auto" onclick="logout()">Logout</button>
   </div>
 
-
-  <!-- STATS -->
-  <div class="grid">
-
-    <div class="card">
-      <h3>📦 Orders</h3>
-      <h2 id="totalOrders">0</h2>
-    </div>
-
-    <div class="card">
-      <h3>💰 Sales</h3>
-      <h2 id="totalSales">₹0</h2>
-    </div>
-
-    <div class="card">
-      <h3>⏳ Pending</h3>
-      <h2 id="pendingOrders">0</h2>
-    </div>
-
-  </div>
-
-
-  <!-- PRODUCTS -->
   <div class="card">
-
     <h2>📦 Products / Materials</h2>
+    <p class="muted">Prices, stock, unit, image and availability can be changed here.</p>
 
-    <p class="small">
-      Ikada material details anni nee istam vachinattu add/edit cheyyachu.
-    </p>
-
-    <input
-      type="hidden"
-      id="productId">
-
-
-    <label>Material Name</label>
-
-    <input
-      id="productName"
-      placeholder="Example: UltraTech Cement">
-
-
-    <label>Price</label>
-
-    <input
-      id="productPrice"
-      type="number"
-      min="0"
-      placeholder="Example: 450">
-
-
-    <label>Unit</label>
-
-    <input
-      id="productUnit"
-      placeholder="Example: Bag / Ton / Piece / Kg">
-
-
-    <label>Image URL</label>
-
-    <input
-      id="productImage"
-      placeholder="Paste image URL">
-
-
-    <label>Category</label>
-
-    <input
-      id="productCategory"
-      placeholder="Example: Cement / Steel / Sand">
-
-
-    <label>Stock</label>
-
-    <input
-      id="productStock"
-      type="number"
-      min="0"
-      placeholder="Example: 100">
-
-
-    <label>Minimum Order</label>
-
-    <input
-      id="productMinOrder"
-      type="number"
-      min="1"
-      placeholder="Example: 1">
-
+    <div class="grid">
+      <div><label>Material Name</label><input id="productName" placeholder="Example: Ramco Cement"></div>
+      <div><label>Price</label><input id="productPrice" type="number" min="0" placeholder="Example: 310"></div>
+      <div><label>Unit</label><input id="productUnit" placeholder="Example: 50kg / Ton / Piece"></div>
+      <div><label>Image URL</label><input id="productImage" placeholder="Paste image URL"></div>
+      <div><label>Category</label><input id="productCategory" placeholder="Cement / Sand / Iron"></div>
+      <div><label>Stock</label><input id="productStock" type="number" min="0" placeholder="Example: 100"></div>
+      <div><label>Minimum Order</label><input id="productMinOrder" type="number" min="1" value="1"></div>
+      <div><label>Available</label>
+        <select id="productAvailable"><option value="true">Available</option><option value="false">Unavailable</option></select>
+      </div>
+    </div>
 
     <label>Description</label>
+    <textarea id="productDescription" placeholder="Material description"></textarea>
 
-    <textarea
-      id="productDescription"
-      placeholder="Material description"></textarea>
-
-
-    <label>Availability</label>
-
-    <select id="productAvailable">
-
-      <option value="true">
-        🟢 Available
-      </option>
-
-      <option value="false">
-        🔴 Unavailable
-      </option>
-
-    </select>
-
-
-    <button
-      class="primary"
-      onclick="saveProduct()">
-      💾 Save Product
-    </button>
-
-
-    <button
-      class="secondary"
-      onclick="clearProductForm()">
-      Clear
-    </button>
-
-  </div>
-
-
-  <!-- PRODUCT LIST -->
-  <div class="card">
-
-    <h2>🧱 Current Materials</h2>
-
-    <div
-      id="productsList"
-      class="grid">
-      Loading...
+    <div class="row">
+      <button onclick="saveProduct()">💾 Save Product</button>
+      <button class="secondary" onclick="clearProductForm()">Clear</button>
+      <button class="green" onclick="addDefaultProducts()">➕ Add 15 Default Products</button>
     </div>
+    <input type="hidden" id="productId">
 
-  </div>
-
-
-  <!-- DELIVERY -->
-  <div class="card">
-
-    <h2>🚚 Delivery Settings</h2>
-
-    <p class="small">
-      Delivery distance and charges nee istam vachinattu set cheyyachu.
+    <p class="small muted">
+      The button adds the 15 missing materials. Existing products are not duplicated.
+      Prices of new products start at ₹0 so you can set your own prices.
     </p>
 
-
-    <label>Free Delivery Above ₹</label>
-
-    <input
-      id="freeDeliveryAbove"
-      type="number"
-      min="0"
-      placeholder="Example: 5000">
-
-
-    <button
-      class="success"
-      onclick="saveFreeDelivery()">
-      🆓 Save Free Delivery
-    </button>
-
-
-    <hr>
-
-
-    <h3>➕ Add / Edit Delivery Slab</h3>
-
-    <input
-      id="fromKm"
-      type="number"
-      min="0"
-      placeholder="From KM">
-
-
-    <input
-      id="toKm"
-      type="number"
-      min="0"
-      placeholder="To KM">
-
-
-    <input
-      id="deliveryCharge"
-      type="number"
-      min="0"
-      placeholder="Delivery Charge ₹">
-
-
-    <button
-      id="deliverySaveButton"
-      class="primary"
-      onclick="saveDeliverySlab()">
-      ➕ Add Slab
-    </button>
-
-
-    <button
-      class="secondary"
-      onclick="clearDeliveryForm()">
-      Clear
-    </button>
-
-
-    <h3>Current Delivery Slabs</h3>
-
-    <div id="deliveryList">
-      Loading...
-    </div>
-
+    <div id="productsList"></div>
   </div>
 
-
-  <!-- ORDERS -->
   <div class="card">
-
-    <h2>🛒 Customer Orders</h2>
-
-    <input
-      id="searchOrder"
-      placeholder="Search customer / phone / order"
-      oninput="renderOrders()">
-
-    <div id="ordersList">
-      Loading...
+    <h2>🚚 Delivery Settings</h2>
+    <div class="grid">
+      <div><label>Free Delivery Above ₹</label><input id="freeDeliveryAbove" type="number" min="0"></div>
+      <div style="display:flex;align-items:end"><button onclick="saveFreeDelivery()">Save Free Delivery</button></div>
     </div>
-
+    <hr>
+    <h3>Distance Charge Slabs</h3>
+    <div class="grid">
+      <div><label>From KM</label><input id="fromKm" type="number" min="0"></div>
+      <div><label>To KM</label><input id="toKm" type="number" min="0"></div>
+      <div><label>Delivery Charge ₹</label><input id="deliveryCharge" type="number" min="0"></div>
+    </div>
+    <div class="row">
+      <button onclick="saveDeliverySlab()">Save Slab</button>
+      <button class="secondary" onclick="clearDeliveryForm()">Clear</button>
+    </div>
+    <input type="hidden" id="slabIndex" value="">
+    <div id="deliveryList"></div>
   </div>
 
+  <div class="card">
+    <h2>🛒 Orders</h2>
+    <input id="orderSearch" placeholder="Search order / customer / phone" oninput="renderOrders()">
+    <div id="ordersList"></div>
+  </div>
 </div>
-
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-
 <script>
-
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
-
-  authDomain:
-    "buildmart-f394b.firebaseapp.com",
-
-  projectId:
-    "buildmart-f394b",
-
-  storageBucket:
-    "buildmart-f394b.firebasestorage.app",
-
-  messagingSenderId:
-    "255269056106",
-
-  appId:
-    "1:255269056106:web:60ba9cf4696ea2717ce413",
-
-  measurementId:
-    "G-JVRDZ49BC0"
-
+const firebaseConfig={
+  apiKey:"AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
+  authDomain:"buildmart-f394b.firebaseapp.com",
+  projectId:"buildmart-f394b",
+  storageBucket:"buildmart-f394b.firebasestorage.app",
+  messagingSenderId:"255269056106",
+  appId:"1:255269056106:web:60ba9cf4696ea2717ce413",
+  measurementId:"G-JVRDZ49BC0"
 };
 
-
 firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.firestore();
+const ADMIN_EMAIL="praveenmodukuri143@gmail.com";
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+let products=[];
+let orders=[];
+let deliverySlabs=[];
 
-const ADMIN_EMAIL =
-  "praveenmodukuri143@gmail.com";
+const DEFAULT_PRODUCTS=[
+ ["Sand","Ton","Sand"],
+ ["Red Bricks","Piece","Bricks"],
+ ["Dust","Ton","Aggregates"],
+ ["Baby Chips","Ton","Aggregates"],
+ ["3/4 Stones","Ton","Aggregates"],
+ ["Iron - Light","Ton","Iron"],
+ ["Iron - Heavy","Ton","Iron"],
+ ["Iron 6mm","Ton","Iron"],
+ ["Iron 8mm","Ton","Iron"],
+ ["Iron 10mm","Ton","Iron"],
+ ["Iron 12mm","Ton","Iron"],
+ ["Cement Varra 30","Piece","Cement Varra"],
+ ["Cement Varra 33","Piece","Cement Varra"],
+ ["Cement Varra 36","Piece","Cement Varra"],
+ ["Cement Varra 39","Piece","Cement Varra"]
+];
 
-
-let deliverySlabs = [];
-let editingSlabIndex = -1;
-let allOrders = [];
-
-
-// ===============================
-// LOGIN
-// ===============================
-
-function login(){
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-
-  document.getElementById("loginError").innerText = "";
-
-
-  auth.signInWithEmailAndPassword(
-    email,
-    password
-  ).catch(error => {
-
-    document.getElementById("loginError").innerText =
-      error.message;
-
-  });
-
-}
-
-
-// ===============================
-// AUTH
-// ===============================
-
-auth.onAuthStateChanged(user => {
-
-  if(
-    user &&
-    user.email &&
-    user.email.toLowerCase() ===
-    ADMIN_EMAIL.toLowerCase()
-  ){
-
-    document
-      .getElementById("loginPage")
-      .classList.add("hidden");
-
-    document
-      .getElementById("adminPage")
-      .classList.remove("hidden");
-
-
+auth.onAuthStateChanged(user=>{
+  if(user && user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
+    loginBox.style.display="none";
+    dashboard.style.display="block";
     loadProducts();
     loadDeliverySettings();
     loadOrders();
-
+  }else{
+    dashboard.style.display="none";
+    loginBox.style.display="block";
   }
-
-  else{
-
-    document
-      .getElementById("loginPage")
-      .classList.remove("hidden");
-
-    document
-      .getElementById("adminPage")
-      .classList.add("hidden");
-
-  }
-
 });
 
-
-// ===============================
-// LOGOUT
-// ===============================
-
-function logout(){
-
-  auth.signOut();
-
+async function login(){
+  const email=loginEmail.value.trim();
+  const password=loginPassword.value;
+  loginMsg.textContent="";
+  try{
+    const cred=await auth.signInWithEmailAndPassword(email,password);
+    if(cred.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+      await auth.signOut();
+      throw new Error("Only BuildMart admin can login.");
+    }
+  }catch(e){loginMsg.className="error";loginMsg.textContent=e.message}
 }
+function logout(){auth.signOut()}
 
-
-// ===============================
-// PRODUCTS
-// ===============================
+async function addDefaultProducts(){
+  if(!confirm("Add the 15 missing default products? Existing products will not be duplicated.")) return;
+  try{
+    const snap=await db.collection("products").get();
+    const names=new Set(snap.docs.map(d=>String(d.data().name||"").trim().toLowerCase()));
+    let added=0;
+    for(const [name,unit,category] of DEFAULT_PRODUCTS){
+      if(names.has(name.toLowerCase())) continue;
+      await db.collection("products").add({
+        name,price:0,unit,image:"",description:"",
+        category,stock:0,available:true,minOrder:1,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+      added++;
+    }
+    alert("Done! "+added+" products added. Ramco Cement + these 15 = 16 products.");
+    loadProducts();
+  }catch(e){
+    alert("Could not add products: "+e.message);
+    console.error(e);
+  }
+}
 
 async function saveProduct(){
-
-  const id =
-    document.getElementById("productId").value.trim();
-
-
-  const name =
-    document.getElementById("productName").value.trim();
-
-
-  const price =
-    Number(
-      document.getElementById("productPrice").value
-    );
-
-
-  const unit =
-    document.getElementById("productUnit").value.trim();
-
-
-  const image =
-    document.getElementById("productImage").value.trim();
-
-
-  const category =
-    document.getElementById("productCategory").value.trim();
-
-
-  const stock =
-    Number(
-      document.getElementById("productStock").value || 0
-    );
-
-
-  const minOrder =
-    Number(
-      document.getElementById("productMinOrder").value || 1
-    );
-
-
-  const description =
-    document.getElementById("productDescription").value.trim();
-
-
-  const available =
-    document.getElementById("productAvailable").value === "true";
-
-
-  if(!name){
-
-    alert("Material name enter cheyyi ra.");
-    return;
-
-  }
-
-
-  if(price < 0 || isNaN(price)){
-
-    alert("Price correct ga enter cheyyi ra.");
-    return;
-
-  }
-
-
-  if(minOrder < 1){
-
-    alert("Minimum order 1 or more undali.");
-    return;
-
-  }
-
-
-  const data = {
-
-    name:name,
-
-    price:price,
-
-    unit:unit,
-
-    image:image,
-
-    category:category,
-
-    stock:stock,
-
-    minOrder:minOrder,
-
-    description:description,
-
-    available:available,
-
-    updatedAt:
-      firebase.firestore.FieldValue.serverTimestamp()
-
+  const id=productId.value;
+  const data={
+    name:productName.value.trim(),
+    price:Number(productPrice.value)||0,
+    unit:productUnit.value.trim(),
+    image:productImage.value.trim(),
+    category:productCategory.value.trim(),
+    stock:Number(productStock.value)||0,
+    minOrder:Math.max(1,Number(productMinOrder.value)||1),
+    description:productDescription.value.trim(),
+    available:productAvailable.value==="true",
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
   };
-
-
+  if(!data.name){alert("Enter material name");return}
   try{
-
-    if(id){
-
-      await db
-        .collection("products")
-        .doc(id)
-        .update(data);
-
-      alert("Product updated ✅");
-
-    }
-
-    else{
-
-      await db
-        .collection("products")
-        .add({
-
-          ...data,
-
-          createdAt:
-            firebase.firestore.FieldValue.serverTimestamp()
-
-        });
-
-      alert("Product added ✅");
-
-    }
-
-
-    clearProductForm();
-
-  }
-
-  catch(error){
-
-    alert(
-      "Product save error: " +
-      error.message
-    );
-
-  }
-
+    if(id) await db.collection("products").doc(id).update(data);
+    else await db.collection("products").add({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    clearProductForm(); loadProducts(); alert("Product saved.");
+  }catch(e){alert("Save failed: "+e.message)}
 }
-
-
-// ===============================
-// LOAD PRODUCTS
-// ===============================
-
-function loadProducts(){
-
-  db
-    .collection("products")
-    .onSnapshot(snapshot => {
-
-      const list =
-        document.getElementById("productsList");
-
-
-      list.innerHTML = "";
-
-
-      if(snapshot.empty){
-
-        list.innerHTML =
-          "<p>No materials added yet.</p>";
-
-        return;
-
-      }
-
-
-      const products = [];
-
-
-      snapshot.forEach(doc => {
-
-        products.push({
-
-          id:doc.id,
-          ...doc.data()
-
-        });
-
-      });
-
-
-      products.sort((a,b) =>
-        String(a.name || "")
-          .localeCompare(
-            String(b.name || "")
-          )
-      );
-
-
-      products.forEach(p => {
-
-        const image =
-          p.image ||
-          "https://via.placeholder.com/500x300?text=Material";
-
-
-        const availability =
-          p.available === true;
-
-
-        list.innerHTML += `
-
-          <div class="product">
-
-            <img
-              src="${escapeHtml(image)}"
-              onerror="
-                this.src='https://via.placeholder.com/500x300?text=Material'
-              "
-            >
-
-
-            <h3>
-              ${escapeHtml(p.name || "")}
-            </h3>
-
-
-            <div class="price">
-              ₹${Number(
-                p.price || 0
-              ).toLocaleString("en-IN")}
-            </div>
-
-
-            <p>
-              <b>Unit:</b>
-              ${escapeHtml(p.unit || "-")}
-            </p>
-
-
-            <p>
-              <b>Category:</b>
-              ${escapeHtml(p.category || "-")}
-            </p>
-
-
-            <p>
-              <b>Stock:</b>
-              ${Number(p.stock || 0)}
-            </p>
-
-
-            <p>
-              <b>Minimum Order:</b>
-              ${Number(p.minOrder || 1)}
-            </p>
-
-
-            <p>
-              ${
-                availability
-
-                ? `<span class="badge available">
-                     🟢 Available
-                   </span>`
-
-                : `<span class="badge unavailable">
-                     🔴 Unavailable
-                   </span>`
-              }
-            </p>
-
-
-            <p class="small">
-              ${escapeHtml(
-                p.description || ""
-              )}
-            </p>
-
-
-            <button
-              class="info"
-              onclick="editProduct('${p.id}')">
-              ✏️ Edit
-            </button>
-
-
-            <button
-              class="danger"
-              onclick="deleteProduct('${p.id}')">
-              🗑️ Delete
-            </button>
-
-          </div>
-
-        `;
-
-      });
-
-    },
-
-    error => {
-
-      document.getElementById(
-        "productsList"
-      ).innerHTML =
-        "<p>Products load error: " +
-        escapeHtml(error.message) +
-        "</p>";
-
-    });
-
-}
-
-
-// ===============================
-// EDIT PRODUCT
-// ===============================
-
-async function editProduct(id){
-
-  try{
-
-    const doc =
-      await db
-        .collection("products")
-        .doc(id)
-        .get();
-
-
-    if(!doc.exists){
-
-      alert("Product not found.");
-      return;
-
-    }
-
-
-    const p = doc.data();
-
-
-    document.getElementById(
-      "productId"
-    ).value = id;
-
-
-    document.getElementById(
-      "productName"
-    ).value = p.name || "";
-
-
-    document.getElementById(
-      "productPrice"
-    ).value = p.price ?? "";
-
-
-    document.getElementById(
-      "productUnit"
-    ).value = p.unit || "";
-
-
-    document.getElementById(
-      "productImage"
-    ).value = p.image || "";
-
-
-    document.getElementById(
-      "productCategory"
-    ).value = p.category || "";
-
-
-    document.getElementById(
-      "productStock"
-    ).value = p.stock ?? 0;
-
-
-    document.getElementById(
-      "productMinOrder"
-    ).value = p.minOrder ?? 1;
-
-
-    document.getElementById(
-      "productDescription"
-    ).value = p.description || "";
-
-
-    document.getElementById(
-      "productAvailable"
-    ).value =
-      p.available === true
-      ? "true"
-      : "false";
-
-
-    window.scrollTo({
-
-      top:0,
-
-      behavior:"smooth"
-
-    });
-
-  }
-
-  catch(error){
-
-    alert(
-      "Edit error: " +
-      error.message
-    );
-
-  }
-
-}
-
-
-// ===============================
-// DELETE PRODUCT
-// ===============================
-
-async function deleteProduct(id){
-
-  if(
-    !confirm(
-      "Ee material delete cheyyala?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    await db
-      .collection("products")
-      .doc(id)
-      .delete();
-
-
-    alert("Material deleted ✅");
-
-  }
-
-  catch(error){
-
-    alert(
-      "Delete error: " +
-      error.message
-    );
-
-  }
-
-}
-
-
-// ===============================
-// CLEAR PRODUCT
-// ===============================
 
 function clearProductForm(){
-
-  document.getElementById(
-    "productId"
-  ).value = "";
-
-
-  document.getElementById(
-    "productName"
-  ).value = "";
-
-
-  document.getElementById(
-    "productPrice"
-  ).value = "";
-
-
-  document.getElementById(
-    "productUnit"
-  ).value = "";
-
-
-  document.getElementById(
-    "productImage"
-  ).value = "";
-
-
-  document.getElementById(
-    "productCategory"
-  ).value = "";
-
-
-  document.getElementById(
-    "productStock"
-  ).value = "";
-
-
-  document.getElementById(
-    "productMinOrder"
-  ).value = "1";
-
-
-  document.getElementById(
-    "productDescription"
-  ).value = "";
-
-
-  document.getElementById(
-    "productAvailable"
-  ).value = "true";
-
+  productId.value="";
+  productName.value="";
+  productPrice.value="";
+  productUnit.value="";
+  productImage.value="";
+  productCategory.value="";
+  productStock.value="";
+  productMinOrder.value="1";
+  productDescription.value="";
+  productAvailable.value="true";
 }
 
-
-// ===============================
-// DELIVERY SETTINGS
-// ===============================
-
-function loadDeliverySettings(){
-
-  db
-    .collection("settings")
-    .doc("store")
-    .onSnapshot(doc => {
-
-      if(!doc.exists){
-
-        deliverySlabs = [];
-
-        renderDelivery();
-
-        return;
-
-      }
-
-
-      const data = doc.data();
-
-
-      deliverySlabs =
-        Array.isArray(data.deliverySlabs)
-        ? data.deliverySlabs
-        : [];
-
-
-      document.getElementById(
-        "freeDeliveryAbove"
-      ).value =
-        data.freeDeliveryAbove ?? "";
-
-
-      renderDelivery();
-
-    },
-
-    error => {
-
-      document.getElementById(
-        "deliveryList"
-      ).innerHTML =
-        "<p>Delivery load error: " +
-        escapeHtml(error.message) +
-        "</p>";
-
-    });
-
+async function loadProducts(){
+  try{
+    const snap=await db.collection("products").get();
+    products=snap.docs.map(d=>({id:d.id,...d.data()}));
+    products.sort((a,b)=>String(a.name||"").localeCompare(String(b.name||"")));
+    renderProducts();
+  }catch(e){productsList.innerHTML='<p class="error">'+escapeHtml(e.message)+'</p>'}
 }
 
+function renderProducts(){
+  if(!products.length){
+    productsList.innerHTML="<p class='muted'>No products yet.</p>"; return;
+  }
+  productsList.innerHTML=products.map(p=>`
+    <div class="product">
+      <div class="top">
+        <div>
+          <h3>${escapeHtml(p.name||"Unnamed")}</h3>
+          <span class="pill">₹${Number(p.price||0)}</span>
+          <span class="pill">${escapeHtml(p.unit||"")}</span>
+          <span class="pill">${escapeHtml(p.category||"")}</span>
+          <span class="pill">Stock: ${Number(p.stock||0)}</span>
+          <span class="pill">${p.available!==false?"Available":"Unavailable"}</span>
+        </div>
+        <div class="row" style="min-width:240px">
+          <button onclick="editProduct('${p.id}')">Edit</button>
+          <button class="danger" onclick="deleteProduct('${p.id}')">Delete</button>
+        </div>
+      </div>
+    </div>`).join("");
+}
 
-// ===============================
-// FREE DELIVERY
-// ===============================
+function editProduct(id){
+  const p=products.find(x=>x.id===id); if(!p)return;
+  productId.value=p.id;
+  productName.value=p.name||"";
+  productPrice.value=p.price??0;
+  productUnit.value=p.unit||"";
+  productImage.value=p.image||"";
+  productCategory.value=p.category||"";
+  productStock.value=p.stock??0;
+  productMinOrder.value=p.minOrder??1;
+  productDescription.value=p.description||"";
+  productAvailable.value=p.available===false?"false":"true";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function deleteProduct(id){
+  if(!confirm("Delete this product?"))return;
+  try{await db.collection("products").doc(id).delete();loadProducts()}
+  catch(e){alert(e.message)}
+}
+
+async function loadDeliverySettings(){
+  try{
+    const doc=await db.collection("settings").doc("store").get();
+    const data=doc.exists?doc.data():{};
+    deliverySlabs=Array.isArray(data.deliverySlabs)?data.deliverySlabs:[];
+    freeDeliveryAbove.value=data.freeDeliveryAbove??0;
+    renderDelivery();
+  }catch(e){console.error(e)}
+}
 
 async function saveFreeDelivery(){
-
-  const amount =
-    Number(
-      document.getElementById(
-        "freeDeliveryAbove"
-      ).value || 0
-    );
-
-
-  if(amount < 0){
-
-    alert(
-      "Free delivery amount correct ga enter cheyyi."
-    );
-
-    return;
-
-  }
-
-
   try{
-
-    await db
-      .collection("settings")
-      .doc("store")
-      .set({
-
-        freeDeliveryAbove:amount
-
-      },
-
-      {merge:true});
-
-
-    alert(
-      "Free delivery saved ✅"
-    );
-
-  }
-
-  catch(error){
-
-    alert(
-      "Error: " +
-      error.message
-    );
-
-  }
-
+    await db.collection("settings").doc("store").set({
+      freeDeliveryAbove:Number(freeDeliveryAbove.value)||0,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true});
+    alert("Free delivery setting saved.");
+  }catch(e){alert(e.message)}
 }
-
-
-// ===============================
-// ADD / EDIT DELIVERY SLAB
-// ===============================
 
 async function saveDeliverySlab(){
-
-  const from =
-    Number(
-      document.getElementById(
-        "fromKm"
-      ).value
-    );
-
-
-  const to =
-    Number(
-      document.getElementById(
-        "toKm"
-      ).value
-    );
-
-
-  const charge =
-    Number(
-      document.getElementById(
-        "deliveryCharge"
-      ).value
-    );
-
-
-  if(
-    isNaN(from) ||
-    isNaN(to) ||
-    isNaN(charge)
-  ){
-
-    alert(
-      "Delivery details enter cheyyi ra."
-    );
-
-    return;
-
-  }
-
-
-  if(from < 0){
-
-    alert(
-      "From KM 0 or more undali."
-    );
-
-    return;
-
-  }
-
-
-  if(to <= from){
-
-    alert(
-      "To KM, From KM kanna ekkuva undali."
-    );
-
-    return;
-
-  }
-
-
-  if(charge < 0){
-
-    alert(
-      "Charge negative undakudadhu."
-    );
-
-    return;
-
-  }
-
-
-  const slab = {
-
-    fromKm:from,
-
-    toKm:to,
-
-    charge:charge
-
-  };
-
-
-  if(editingSlabIndex >= 0){
-
-    deliverySlabs[
-      editingSlabIndex
-    ] = slab;
-
-  }
-
-  else{
-
-    deliverySlabs.push(slab);
-
-  }
-
-
-  deliverySlabs.sort(
-    (a,b) =>
-      Number(a.fromKm) -
-      Number(b.fromKm)
-  );
-
-
+  const from=Number(fromKm.value), to=Number(toKm.value), charge=Number(deliveryCharge.value);
+  if(to<from){alert("To KM must be greater than From KM.");return}
+  const i=slabIndex.value;
+  if(i==="") deliverySlabs.push({fromKm:from,toKm:to,charge});
+  else deliverySlabs[Number(i)]={fromKm:from,toKm:to,charge};
   try{
-
-    await db
-      .collection("settings")
-      .doc("store")
-      .set({
-
-        deliverySlabs:
-          deliverySlabs
-
-      },
-
-      {merge:true});
-
-
-    clearDeliveryForm();
-
-
-    alert(
-      "Delivery slab saved ✅"
-    );
-
-  }
-
-  catch(error){
-
-    alert(
-      "Delivery error: " +
-      error.message
-    );
-
-  }
-
+    await db.collection("settings").doc("store").set({
+      deliverySlabs,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true});
+    clearDeliveryForm();renderDelivery();
+  }catch(e){alert(e.message)}
 }
-
-
-// ===============================
-// RENDER DELIVERY
-// ===============================
 
 function renderDelivery(){
-
-  const box =
-    document.getElementById(
-      "deliveryList"
-    );
-
-
-  box.innerHTML = "";
-
-
-  if(!deliverySlabs.length){
-
-    box.innerHTML =
-      "<p>No delivery slabs added yet.</p>";
-
-    return;
-
-  }
-
-
-  deliverySlabs.forEach(
-    (s,index) => {
-
-      box.innerHTML += `
-
-        <div class="slab">
-
-          <b>
-            🚚 ${Number(s.fromKm)}
-            KM -
-            ${Number(s.toKm)}
-            KM
-          </b>
-
-          →
-
-          <strong>
-            ₹${Number(
-              s.charge || 0
-            ).toLocaleString("en-IN")}
-          </strong>
-
-          <br><br>
-
-
-          <button
-            class="info"
-            onclick="editDeliverySlab(${index})">
-            ✏️ Edit
-          </button>
-
-
-          <button
-            class="danger"
-            onclick="deleteDeliverySlab(${index})">
-            🗑️ Delete
-          </button>
-
-        </div>
-
-      `;
-
-    }
-  );
-
+  deliveryList.innerHTML=deliverySlabs.length
+    ? deliverySlabs.map((s,i)=>`
+      <div class="slab">
+        <b>${s.fromKm} - ${s.toKm} km</b> → ₹${s.charge}
+        <button style="width:auto;margin-left:8px" onclick="editDeliverySlab(${i})">Edit</button>
+        <button class="danger" style="width:auto" onclick="deleteDeliverySlab(${i})">Delete</button>
+      </div>`).join("")
+    : "<p class='muted'>No delivery slabs added.</p>";
 }
 
-
-// ===============================
-// EDIT DELIVERY
-// ===============================
-
-function editDeliverySlab(index){
-
-  const slab =
-    deliverySlabs[index];
-
-
-  if(!slab){
-    return;
-  }
-
-
-  document.getElementById(
-    "fromKm"
-  ).value =
-    slab.fromKm;
-
-
-  document.getElementById(
-    "toKm"
-  ).value =
-    slab.toKm;
-
-
-  document.getElementById(
-    "deliveryCharge"
-  ).value =
-    slab.charge;
-
-
-  editingSlabIndex = index;
-
-
-  document.getElementById(
-    "deliverySaveButton"
-  ).innerText =
-    "💾 Update Slab";
-
-
-  document.getElementById(
-    "fromKm"
-  ).scrollIntoView({
-
-    behavior:"smooth",
-
-    block:"center"
-
-  });
-
+function editDeliverySlab(i){
+  const s=deliverySlabs[i];
+  fromKm.value=s.fromKm;toKm.value=s.toKm;deliveryCharge.value=s.charge;slabIndex.value=i;
 }
-
-
-// ===============================
-// DELETE DELIVERY
-// ===============================
-
-async function deleteDeliverySlab(index){
-
-  if(
-    !confirm(
-      "Ee delivery slab delete cheyyala?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  deliverySlabs.splice(
-    index,
-    1
-  );
-
-
-  try{
-
-    await db
-      .collection("settings")
-      .doc("store")
-      .set({
-
-        deliverySlabs:
-          deliverySlabs
-
-      },
-
-      {merge:true});
-
-
-    if(
-      editingSlabIndex === index
-    ){
-
-      clearDeliveryForm();
-
-    }
-
-
-  }
-
-  catch(error){
-
-    alert(
-      "Delete error: " +
-      error.message
-    );
-
-  }
-
+async function deleteDeliverySlab(i){
+  if(!confirm("Delete this delivery slab?"))return;
+  deliverySlabs.splice(i,1);
+  await db.collection("settings").doc("store").set({deliverySlabs},{merge:true});
+  renderDelivery();
 }
-
-
-// ===============================
-// CLEAR DELIVERY FORM
-// ===============================
-
 function clearDeliveryForm(){
-
-  document.getElementById(
-    "fromKm"
-  ).value = "";
-
-
-  document.getElementById(
-    "toKm"
-  ).value = "";
-
-
-  document.getElementById(
-    "deliveryCharge"
-  ).value = "";
-
-
-  editingSlabIndex = -1;
-
-
-  document.getElementById(
-    "deliverySaveButton"
-  ).innerText =
-    "➕ Add Slab";
-
+  fromKm.value="";toKm.value="";deliveryCharge.value="";slabIndex.value="";
 }
 
-
-// ===============================
-// ORDERS
-// ===============================
-
-function loadOrders(){
-
-  db
-    .collection("orders")
-    .onSnapshot(snapshot => {
-
-      allOrders = [];
-
-
-      snapshot.forEach(doc => {
-
-        allOrders.push({
-
-          id:doc.id,
-
-          ...doc.data()
-
-        });
-
-      });
-
-
-      allOrders.sort(
-        (a,b) => {
-
-          const aTime =
-            a.createdAt?.seconds || 0;
-
-          const bTime =
-            b.createdAt?.seconds || 0;
-
-          return bTime - aTime;
-
-        }
-      );
-
-
-      renderOrders();
-
-    },
-
-    error => {
-
-      document.getElementById(
-        "ordersList"
-      ).innerHTML =
-        "<p>Orders load error: " +
-        escapeHtml(error.message) +
-        "</p>";
-
+async function loadOrders(){
+  try{
+    const snap=await db.collection("orders").get();
+    orders=snap.docs.map(d=>({id:d.id,...d.data()}));
+    orders.sort((a,b)=>{
+      const aa=a.createdAt?.seconds||0,bb=b.createdAt?.seconds||0;
+      return bb-aa;
     });
-
+    renderOrders();
+  }catch(e){ordersList.innerHTML='<p class="error">'+escapeHtml(e.message)+'</p>'}
 }
-
-
-// ===============================
-// RENDER ORDERS
-// ===============================
 
 function renderOrders(){
-
-  const list =
-    document.getElementById(
-      "ordersList"
-    );
-
-
-  const search =
-    document.getElementById(
-      "searchOrder"
-    ).value
-      .trim()
-      .toLowerCase();
-
-
-  list.innerHTML = "";
-
-
-  let total = 0;
-  let sales = 0;
-  let pending = 0;
-
-
-  allOrders.forEach(o => {
-
-    total++;
-
-    sales += Number(
-      o.total || 0
-    );
-
-
-    if(
-      o.status !== "Delivered" &&
-      o.status !== "Cancelled"
-    ){
-
-      pending++;
-
-    }
-
-
-    const searchable = (
-
-      String(o.customerName || "") +
-      " " +
-      String(o.customerPhone || "") +
-      " " +
-      String(o.customerAddress || "") +
-      " " +
-      String(o.id || "")
-
-    ).toLowerCase();
-
-
-    if(
-      search &&
-      !searchable.includes(search)
-    ){
-
-      return;
-
-    }
-
-
-    const items =
-      Array.isArray(o.items)
-      ? o.items
-      : [];
-
-
-    let itemsHtml = "";
-
-
-    items.forEach(item => {
-
-      itemsHtml += `
-
-        <div class="small">
-
-          ${escapeHtml(
-            item.name || "Product"
-          )}
-
-          ×
-
-          ${Number(
-            item.quantity || 0
-          )}
-
-        </div>
-
-      `;
-
-    });
-
-
-    list.innerHTML += `
-
-      <div class="order">
-
-        <b>Order ID:</b>
-        ${escapeHtml(o.id)}
-
-        <br><br>
-
-
-        <b>Customer:</b>
-        ${escapeHtml(
-          o.customerName || ""
-        )}
-
-        <br>
-
-
-        <b>Phone:</b>
-        ${escapeHtml(
-          o.customerPhone || ""
-        )}
-
-        <br>
-
-
-        <b>Address:</b>
-        ${escapeHtml(
-          o.customerAddress || ""
-        )}
-
-        <br>
-
-
-        <b>Total:</b>
-        ₹${Number(
-          o.total || 0
-        ).toLocaleString("en-IN")}
-
-        <br><br>
-
-
-        <b>Items:</b>
-
-        ${itemsHtml || "<div>No item details</div>"}
-
-        <br>
-
-
-        <select
-          onchange="
-            changeStatus(
-              '${escapeHtml(o.id)}',
-              this.value
-            )
-          ">
-
-          ${statusOption(
-            "Order Received",
-            o.status
-          )}
-
-          ${statusOption(
-            "Payment Pending",
-            o.status
-          )}
-
-          ${statusOption(
-            "Processing",
-            o.status
-          )}
-
-          ${statusOption(
-            "Out for Delivery",
-            o.status
-          )}
-
-          ${statusOption(
-            "Delivered",
-            o.status
-          )}
-
-          ${statusOption(
-            "Cancelled",
-            o.status
-          )}
-
-        </select>
-
-
-        <button
-          class="danger"
-          onclick="
-            deleteOrder(
-              '${escapeHtml(o.id)}'
-            )
-          ">
-          🗑️ Delete
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-
-  document.getElementById(
-    "totalOrders"
-  ).innerText = total;
-
-
-  document.getElementById(
-    "totalSales"
-  ).innerText =
-    "₹" +
-    sales.toLocaleString("en-IN");
-
-
-  document.getElementById(
-    "pendingOrders"
-  ).innerText = pending;
-
-
-  if(!list.innerHTML){
-
-    list.innerHTML =
-      "<p>No matching orders.</p>";
-
-  }
-
+  const q=orderSearch.value.trim().toLowerCase();
+  const list=orders.filter(o=>
+    !q || [o.id,o.customerName,o.phone,o.address].some(v=>String(v||"").toLowerCase().includes(q))
+  );
+  ordersList.innerHTML=list.length?list.map(o=>`
+    <div class="order">
+      <h3>${escapeHtml(o.id||"Order")}</h3>
+      <p><b>${escapeHtml(o.customerName||"")}</b> · ${escapeHtml(o.phone||"")}</p>
+      <p>${escapeHtml(o.address||"")}</p>
+      <p>Total: <b>₹${Number(o.total||o.grandTotal||0)}</b> · Payment: ${escapeHtml(o.paymentMethod||"")}</p>
+      <select onchange="changeStatus('${o.id}',this.value)">
+        ${["Order Received","Payment Pending","Processing","Out for Delivery","Delivered","Cancelled"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
+      </select>
+      <button class="danger" style="margin-top:8px" onclick="deleteOrder('${o.id}')">Delete Order</button>
+    </div>`).join(""):"<p class='muted'>No orders found.</p>";
 }
 
-
-// ===============================
-// STATUS OPTION
-// ===============================
-
-function statusOption(
-  name,
-  current
-){
-
-  return `
-
-    <option
-      value="${escapeHtml(name)}"
-      ${
-        current === name
-        ? "selected"
-        : ""
-      }>
-
-      ${escapeHtml(name)}
-
-    </option>
-
-  `;
-
-}
-
-
-// ===============================
-// CHANGE STATUS
-// ===============================
-
-async function changeStatus(
-  id,
-  status
-){
-
+async function changeStatus(id,status){
   try{
-
-    await db
-      .collection("orders")
-      .doc(id)
-      .update({
-
-        status:status
-
-      });
-
-
-    await db
-      .collection("publicOrders")
-      .doc(id)
-      .update({
-
-        status:status
-
-      });
-
-  }
-
-  catch(error){
-
-    alert(
-      "Status update error: " +
-      error.message
-    );
-
-  }
-
+    await db.collection("orders").doc(id).update({status,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+    await db.collection("publicOrders").doc(id).set({status,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    const o=orders.find(x=>x.id===id);if(o)o.status=status;
+  }catch(e){alert(e.message)}
 }
-
-
-// ===============================
-// DELETE ORDER
-// ===============================
 
 async function deleteOrder(id){
-
-  if(
-    !confirm(
-      "Order delete cheyyala?"
-    )
-  ){
-
-    return;
-
-  }
-
-
+  if(!confirm("Delete this order?"))return;
   try{
-
-    await db
-      .collection("orders")
-      .doc(id)
-      .delete();
-
-
-    await db
-      .collection("publicOrders")
-      .doc(id)
-      .delete();
-
-
-  }
-
-  catch(error){
-
-    alert(
-      "Order delete error: " +
-      error.message
-    );
-
-  }
-
+    await db.collection("orders").doc(id).delete();
+    await db.collection("publicOrders").doc(id).delete();
+    orders=orders.filter(o=>o.id!==id);renderOrders();
+  }catch(e){alert(e.message)}
 }
 
-
-// ===============================
-// ESCAPE HTML
-// ===============================
-
-function escapeHtml(value){
-
-  return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
+function escapeHtml(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 }
-
 </script>
-
 </body>
 </html>
