@@ -18,10 +18,9 @@
     }
 
     body {
-      font-family: Inter, Arial, sans-serif;
-      background: #f6f7f9;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f6f8;
       color: #172033;
-      line-height: 1.6;
     }
 
     a {
@@ -46,24 +45,23 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255,255,255,0.96);
-      border-bottom: 1px solid #e7e9ee;
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #e5e7eb;
+      backdrop-filter: blur(10px);
     }
 
     .header-inner {
-      min-height: 74px;
+      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 25px;
+      gap: 20px;
     }
 
     .logo {
-      font-size: 25px;
+      font-size: 26px;
       font-weight: 800;
       color: #111827;
-      white-space: nowrap;
     }
 
     .logo span {
@@ -73,15 +71,15 @@
     .nav-menu {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 5px;
     }
 
     .nav-menu a {
-      padding: 10px 14px;
-      border-radius: 10px;
+      padding: 10px 13px;
+      border-radius: 9px;
+      color: #4b5563;
       font-size: 14px;
       font-weight: 600;
-      color: #4b5563;
       transition: 0.2s;
     }
 
@@ -103,53 +101,59 @@
     /* ================= HERO ================= */
 
     .hero {
-      min-height: 560px;
-      display: flex;
-      align-items: center;
+      min-height: 590px;
       position: relative;
       overflow: hidden;
-      background:
-        linear-gradient(
-          110deg,
-          rgba(17,24,39,0.97),
-          rgba(31,41,55,0.91)
-        );
+      display: flex;
+      align-items: center;
+      background: #111827;
     }
 
-    .hero::after {
-      content: "";
+    .hero-image {
       position: absolute;
-      width: 520px;
-      height: 520px;
-      right: -170px;
-      top: -120px;
-      border-radius: 50%;
-      background: rgba(245,158,11,0.13);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.42;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(10,15,25,0.95) 0%,
+          rgba(10,15,25,0.82) 45%,
+          rgba(10,15,25,0.25) 100%
+        );
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
-      padding: 80px 0;
+      padding: 90px 0;
+      color: white;
     }
 
     .hero-badge {
       display: inline-block;
       padding: 8px 14px;
-      border: 1px solid rgba(245,158,11,0.4);
-      background: rgba(245,158,11,0.1);
-      color: #fbbf24;
       border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.45);
+      color: #fbbf24;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
       margin-bottom: 20px;
     }
 
     .hero h1 {
       max-width: 720px;
-      font-size: clamp(42px, 6vw, 72px);
-      line-height: 1.05;
-      color: white;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1.02;
       letter-spacing: -2px;
       margin-bottom: 22px;
     }
@@ -159,23 +163,21 @@
     }
 
     .hero p {
-      max-width: 620px;
+      max-width: 610px;
       color: #d1d5db;
       font-size: 18px;
+      line-height: 1.7;
       margin-bottom: 32px;
     }
 
-    .hero-actions {
+    .hero-buttons {
       display: flex;
-      align-items: center;
-      gap: 14px;
+      gap: 13px;
       flex-wrap: wrap;
     }
 
     .hero-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display: inline-block;
       padding: 14px 24px;
       border-radius: 10px;
       background: #f59e0b;
@@ -189,30 +191,28 @@
       transform: translateY(-2px);
     }
 
-    .hero-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .hero-track {
+      display: inline-block;
       padding: 14px 24px;
       border-radius: 10px;
-      border: 1px solid #4b5563;
+      border: 1px solid rgba(255,255,255,0.4);
       color: white;
       font-weight: 700;
     }
 
-    .hero-secondary:hover {
-      background: rgba(255,255,255,0.08);
+    .hero-track:hover {
+      background: rgba(255,255,255,0.1);
     }
 
-    /* ================= TRUST BAR ================= */
+    /* ================= TRUST ================= */
 
-    .trust-bar {
+    .trust-section {
       background: white;
       border-bottom: 1px solid #e5e7eb;
     }
 
-    .trust-inner {
-      min-height: 92px;
+    .trust-grid {
+      min-height: 90px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
@@ -224,14 +224,14 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      color: #374151;
       font-size: 14px;
       font-weight: 700;
+      color: #374151;
     }
 
     .trust-icon {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
       background: #fff7e6;
@@ -252,23 +252,21 @@
 
     .section-label {
       color: #d97706;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
-      text-transform: uppercase;
       letter-spacing: 1.5px;
-      margin-bottom: 8px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
     }
 
     .section-heading h2 {
       font-size: 38px;
-      line-height: 1.2;
-      margin-bottom: 10px;
       color: #111827;
+      margin-bottom: 10px;
     }
 
     .section-heading p {
       color: #6b7280;
-      font-size: 16px;
     }
 
     .products-grid {
@@ -281,66 +279,61 @@
       background: white;
       border: 1px solid #e5e7eb;
       border-radius: 18px;
-      padding: 22px;
+      padding: 18px;
       overflow: hidden;
+      box-shadow: 0 7px 25px rgba(15,23,42,0.05);
       transition: 0.25s;
-      box-shadow: 0 8px 25px rgba(15,23,42,0.04);
     }
 
     .product-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.1);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.12);
       border-color: #f3c46b;
     }
 
     .product-image {
       height: 190px;
+      border-radius: 13px;
       display: grid;
       place-items: center;
-      background:
-        linear-gradient(
-          135deg,
-          #f9fafb,
-          #fff7e6
-        );
-      border-radius: 14px;
-      font-size: 78px;
-      margin-bottom: 20px;
+      background: linear-gradient(135deg,#f9fafb,#fff7e6);
+      font-size: 72px;
+      margin-bottom: 19px;
     }
 
     .product-card h3 {
-      font-size: 20px;
       color: #111827;
+      font-size: 20px;
       margin-bottom: 8px;
     }
 
-    .product-card > p {
-      min-height: 52px;
+    .product-card p {
       color: #6b7280;
       font-size: 14px;
-      margin-bottom: 20px;
+      min-height: 48px;
+      margin-bottom: 18px;
     }
 
     .product-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding-top: 17px;
+      gap: 10px;
       border-top: 1px solid #edf0f3;
+      padding-top: 16px;
     }
 
     .product-bottom strong {
-      font-size: 22px;
+      font-size: 21px;
       color: #111827;
     }
 
     .product-bottom button {
       border: none;
+      border-radius: 9px;
+      padding: 11px 14px;
       background: #111827;
       color: white;
-      padding: 11px 15px;
-      border-radius: 9px;
       font-weight: 700;
       cursor: pointer;
       transition: 0.2s;
@@ -354,9 +347,9 @@
     /* ================= ABOUT ================= */
 
     .about-section {
-      padding: 85px 0;
       background: #111827;
       color: white;
+      padding: 85px 0;
     }
 
     .about-grid {
@@ -364,10 +357,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 60px;
       align-items: center;
-    }
-
-    .about-section .section-label {
-      color: #fbbf24;
     }
 
     .about-section h2 {
@@ -378,28 +367,26 @@
 
     .about-section p {
       color: #d1d5db;
-      font-size: 16px;
-      max-width: 600px;
+      line-height: 1.8;
     }
 
     .about-boxes {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2,1fr);
       gap: 15px;
     }
 
     .about-box {
       padding: 25px;
-      border: 1px solid #374151;
       border-radius: 14px;
       background: #1f2937;
+      border: 1px solid #374151;
     }
 
     .about-box strong {
       display: block;
-      font-size: 28px;
       color: #fbbf24;
-      margin-bottom: 5px;
+      font-size: 28px;
     }
 
     .about-box span {
@@ -410,10 +397,10 @@
     /* ================= FOOTER ================= */
 
     footer {
-      background: #0b1120;
+      background: #080d18;
       color: #9ca3af;
       text-align: center;
-      padding: 25px 15px;
+      padding: 25px;
       font-size: 13px;
     }
 
@@ -424,7 +411,7 @@
       position: fixed;
       inset: 0;
       z-index: 5000;
-      background: rgba(15,23,42,0.72);
+      background: rgba(15,23,42,0.75);
       backdrop-filter: blur(5px);
       align-items: center;
       justify-content: center;
@@ -432,20 +419,19 @@
     }
 
     .modal-content {
-      width: min(560px, 100%);
+      width: min(560px,100%);
       max-height: 90vh;
       overflow-y: auto;
       background: white;
       border-radius: 20px;
       padding: 30px;
       position: relative;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.3);
     }
 
     .modal-content h2 {
       color: #111827;
       margin-bottom: 8px;
-      font-size: 27px;
     }
 
     .modal-content > p {
@@ -455,14 +441,13 @@
 
     .close-button {
       position: absolute;
-      right: 18px;
+      right: 17px;
       top: 15px;
       width: 38px;
       height: 38px;
       border: none;
       border-radius: 50%;
       background: #f3f4f6;
-      color: #374151;
       font-size: 25px;
       cursor: pointer;
     }
@@ -479,8 +464,8 @@
 
     .cart-item {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 15px;
       padding: 15px 0;
       border-bottom: 1px solid #e5e7eb;
@@ -519,9 +504,8 @@
 
     .cart-summary {
       background: #f9fafb;
-      border-radius: 12px;
       padding: 18px;
-      margin-top: 15px;
+      border-radius: 12px;
     }
 
     .cart-summary p {
@@ -531,9 +515,9 @@
       color: #4b5563;
     }
 
-    .cart-summary .grand-total {
+    .grand-total {
       font-size: 19px;
-      color: #111827;
+      color: #111827 !important;
     }
 
     .checkout-button,
@@ -548,7 +532,6 @@
       font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      transition: 0.2s;
     }
 
     .checkout-button,
@@ -570,10 +553,6 @@
       color: white;
     }
 
-    .close-success-button:hover {
-      background: #374151;
-    }
-
     /* ================= CHECKOUT ================= */
 
     .checkout-content label {
@@ -588,12 +567,11 @@
     .checkout-content input,
     .checkout-content textarea {
       width: 100%;
+      padding: 12px;
       border: 1px solid #d1d5db;
       border-radius: 9px;
-      padding: 12px 13px;
       outline: none;
       font-size: 14px;
-      background: white;
     }
 
     .checkout-content input:focus,
@@ -608,9 +586,8 @@
     }
 
     .payment-heading {
-      margin-top: 25px;
+      margin-top: 24px;
       margin-bottom: 10px;
-      color: #111827;
     }
 
     .payment-options {
@@ -622,19 +599,15 @@
     .payment-options label {
       margin: 0;
       padding: 13px;
+      background: #f9fafb;
       border: 1px solid #e5e7eb;
       border-radius: 10px;
       cursor: pointer;
-      background: #f9fafb;
-    }
-
-    .payment-options label:hover {
-      border-color: #f59e0b;
     }
 
     .payment-options input {
       width: auto;
-      margin-right: 7px;
+      margin-right: 6px;
     }
 
     .checkout-total {
@@ -643,9 +616,9 @@
       align-items: center;
       margin-top: 22px;
       padding: 17px;
+      border-radius: 12px;
       background: #111827;
       color: white;
-      border-radius: 12px;
     }
 
     .checkout-total strong {
@@ -660,39 +633,34 @@
     }
 
     .success-icon {
-      width: 72px;
-      height: 72px;
+      width: 70px;
+      height: 70px;
+      margin: auto auto 18px;
       display: grid;
       place-items: center;
-      margin: 0 auto 18px;
-      background: #ecfdf5;
       border-radius: 50%;
-      font-size: 38px;
-    }
-
-    .success-content h2 {
-      margin-bottom: 8px;
+      background: #ecfdf5;
+      font-size: 36px;
     }
 
     .order-details {
-      text-align: left;
       margin-top: 22px;
       padding: 18px;
       background: #f9fafb;
       border-radius: 12px;
+      text-align: left;
     }
 
     .order-details p {
       display: flex;
       justify-content: space-between;
-      gap: 15px;
       padding: 7px 0;
       color: #6b7280;
+      gap: 15px;
     }
 
     .order-details strong {
       color: #111827;
-      text-align: right;
     }
 
     .upi-box {
@@ -701,14 +669,6 @@
       border-radius: 12px;
       background: #fff7e6;
       border: 1px solid #f3c46b;
-    }
-
-    .upi-box h3 {
-      margin-bottom: 8px;
-    }
-
-    .upi-id {
-      margin-top: 8px;
     }
 
     .upi-note {
@@ -725,59 +685,45 @@
 
     .empty-cart-icon {
       font-size: 50px;
-      margin-bottom: 10px;
     }
 
-    /* ================= RESPONSIVE ================= */
+    /* ================= MOBILE ================= */
 
     @media (max-width: 900px) {
+
       .products-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
       }
 
       .about-grid {
         grid-template-columns: 1fr;
       }
 
-      .nav-menu {
-        gap: 2px;
-      }
-
       .nav-menu a {
-        padding: 8px 9px;
         font-size: 12px;
+        padding: 8px;
       }
     }
 
     @media (max-width: 650px) {
-      .header-inner {
-        min-height: auto;
-        padding: 15px 0;
-        flex-direction: column;
-        align-items: stretch;
-      }
 
-      .logo {
-        text-align: center;
+      .header-inner {
+        flex-direction: column;
+        padding: 14px 0;
       }
 
       .nav-menu {
-        justify-content: center;
         flex-wrap: wrap;
-      }
-
-      .nav-menu a {
-        font-size: 12px;
-        padding: 7px 9px;
+        justify-content: center;
       }
 
       .hero {
-        min-height: 500px;
+        min-height: 540px;
       }
 
       .hero-content {
-        padding: 65px 0;
         text-align: center;
+        padding: 70px 0;
       }
 
       .hero h1 {
@@ -789,14 +735,18 @@
         font-size: 16px;
       }
 
-      .hero-actions {
+      .hero-buttons {
         justify-content: center;
       }
 
-      .trust-inner {
+      .trust-grid {
         grid-template-columns: 1fr;
         padding: 20px 0;
         gap: 12px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
       }
 
       .products-section {
@@ -804,31 +754,11 @@
       }
 
       .section-heading h2 {
-        font-size: 31px;
-      }
-
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .product-image {
-        height: 180px;
-      }
-
-      .about-section {
-        padding: 65px 0;
-      }
-
-      .about-section h2 {
-        font-size: 32px;
+        font-size: 30px;
       }
 
       .about-boxes {
         grid-template-columns: 1fr 1fr;
-      }
-
-      .modal-content {
-        padding: 24px 18px;
       }
 
       .payment-options {
@@ -836,12 +766,11 @@
       }
 
       .cart-item {
-        align-items: flex-start;
         flex-direction: column;
+        align-items: flex-start;
       }
 
       .cart-item-actions {
-        width: 100%;
         justify-content: flex-start;
       }
     }
@@ -850,8 +779,10 @@
 
 <body>
 
-  <!-- HEADER -->
+  <!-- ================= HEADER ================= -->
+
   <header class="site-header">
+
     <div class="container header-inner">
 
       <a href="#home" class="logo">
@@ -859,8 +790,11 @@
       </a>
 
       <nav class="nav-menu">
+
         <a href="#home">Home</a>
+
         <a href="#products">Products</a>
+
         <a href="#about">About</a>
 
         <a href="#" id="cartLink">
@@ -870,19 +804,30 @@
         <a href="track-order.html">
           📦 Track Orders
         </a>
+
       </nav>
 
     </div>
+
   </header>
 
 
-  <!-- HERO -->
+  <!-- ================= HERO ================= -->
+
   <section id="home" class="hero">
+
+    <img
+      class="hero-image"
+      src="https://pub-a8ebad8b0a19407a910fcded3dcc2ace.r2.dev/uploads-2026/04/1775623198823-3vqoyd.png"
+      alt="Construction site with cement, steel, bricks and building materials"
+    >
+
+    <div class="hero-overlay"></div>
 
     <div class="container hero-content">
 
       <div class="hero-badge">
-        🏗️ TRUSTED CONSTRUCTION MATERIALS
+        🏗️ QUALITY CONSTRUCTION MATERIALS
       </div>
 
       <h1>
@@ -891,18 +836,20 @@
       </h1>
 
       <p>
-        Quality construction materials delivered
-        to your location. From cement and steel
-        to bricks, sand and aggregates.
+        Shop quality cement, steel, bricks, sand,
+        aggregates and construction materials —
+        all in one place.
       </p>
 
-      <div class="hero-actions">
+      <div class="hero-buttons">
 
         <a href="#products" class="hero-button">
           Shop Materials →
         </a>
 
-        <a href="track-order.html" class="hero-secondary">
+        <a
+          href="track-order.html"
+          class="hero-track">
           Track Your Order
         </a>
 
@@ -913,24 +860,48 @@
   </section>
 
 
-  <!-- TRUST BAR -->
-  <section class="trust-bar">
+  <!-- ================= TRUST ================= -->
 
-    <div class="container trust-inner">
+  <section class="trust-section">
+
+    <div class="container trust-grid">
 
       <div class="trust-item">
-        <div class="trust-icon">✓</div>
-        <span>Quality Materials</span>
+
+        <div class="trust-icon">
+          ✓
+        </div>
+
+        <span>
+          Quality Materials
+        </span>
+
       </div>
 
-      <div class="trust-item">
-        <div class="trust-icon">🚚</div>
-        <span>Reliable Delivery</span>
-      </div>
 
       <div class="trust-item">
-        <div class="trust-icon">🔒</div>
-        <span>Secure Ordering</span>
+
+        <div class="trust-icon">
+          🚚
+        </div>
+
+        <span>
+          Reliable Delivery
+        </span>
+
+      </div>
+
+
+      <div class="trust-item">
+
+        <div class="trust-icon">
+          🔒
+        </div>
+
+        <span>
+          Secure Ordering
+        </span>
+
       </div>
 
     </div>
@@ -938,8 +909,11 @@
   </section>
 
 
-  <!-- PRODUCTS -->
-  <section id="products" class="products-section">
+  <!-- ================= PRODUCTS ================= -->
+
+  <section
+    id="products"
+    class="products-section">
 
     <div class="container">
 
@@ -954,8 +928,8 @@
         </h2>
 
         <p>
-          Quality construction materials for
-          homes, buildings and projects.
+          Quality construction materials
+          for every project.
         </p>
 
       </div>
@@ -964,7 +938,8 @@
       <div class="products-grid">
 
 
-        <!-- PRODUCT 1 -->
+        <!-- CEMENT -->
+
         <div class="product-card">
 
           <div class="product-image">
@@ -976,13 +951,15 @@
           </h3>
 
           <p>
-            Premium quality cement for strong
-            and durable construction.
+            Premium quality cement for
+            strong and durable construction.
           </p>
 
           <div class="product-bottom">
 
-            <strong>₹450</strong>
+            <strong>
+              ₹450
+            </strong>
 
             <button
               type="button"
@@ -995,7 +972,8 @@
         </div>
 
 
-        <!-- PRODUCT 2 -->
+        <!-- STEEL -->
+
         <div class="product-card">
 
           <div class="product-image">
@@ -1007,13 +985,15 @@
           </h3>
 
           <p>
-            High-strength TMT steel for durable
-            structural construction.
+            High-strength TMT steel for
+            durable structural construction.
           </p>
 
           <div class="product-bottom">
 
-            <strong>₹5,500</strong>
+            <strong>
+              ₹5,500
+            </strong>
 
             <button
               type="button"
@@ -1026,7 +1006,8 @@
         </div>
 
 
-        <!-- PRODUCT 3 -->
+        <!-- BRICKS -->
+
         <div class="product-card">
 
           <div class="product-image">
@@ -1038,13 +1019,15 @@
           </h3>
 
           <p>
-            Strong and reliable bricks suitable
+            Strong and reliable bricks
             for walls and construction.
           </p>
 
           <div class="product-bottom">
 
-            <strong>₹10</strong>
+            <strong>
+              ₹10
+            </strong>
 
             <button
               type="button"
@@ -1057,7 +1040,8 @@
         </div>
 
 
-        <!-- PRODUCT 4 -->
+        <!-- SAND -->
+
         <div class="product-card">
 
           <div class="product-image">
@@ -1069,13 +1053,15 @@
           </h3>
 
           <p>
-            Quality sand suitable for concrete
-            and general construction work.
+            Quality sand suitable for
+            concrete and construction work.
           </p>
 
           <div class="product-bottom">
 
-            <strong>₹1,500</strong>
+            <strong>
+              ₹1,500
+            </strong>
 
             <button
               type="button"
@@ -1088,7 +1074,8 @@
         </div>
 
 
-        <!-- PRODUCT 5 -->
+        <!-- AGGREGATE -->
+
         <div class="product-card">
 
           <div class="product-image">
@@ -1106,7 +1093,9 @@
 
           <div class="product-bottom">
 
-            <strong>₹1,800</strong>
+            <strong>
+              ₹1,800
+            </strong>
 
             <button
               type="button"
@@ -1119,7 +1108,8 @@
         </div>
 
 
-        <!-- PRODUCT 6 -->
+        <!-- BLOCKS -->
+
         <div class="product-card">
 
           <div class="product-image">
@@ -1131,13 +1121,15 @@
           </h3>
 
           <p>
-            Durable blocks for walls and
-            building projects.
+            Durable blocks for walls
+            and building projects.
           </p>
 
           <div class="product-bottom">
 
-            <strong>₹55</strong>
+            <strong>
+              ₹55
+            </strong>
 
             <button
               type="button"
@@ -1157,8 +1149,11 @@
   </section>
 
 
-  <!-- ABOUT -->
-  <section id="about" class="about-section">
+  <!-- ================= ABOUT ================= -->
+
+  <section
+    id="about"
+    class="about-section">
 
     <div class="container about-grid">
 
@@ -1174,11 +1169,10 @@
         </h2>
 
         <p>
-          BuildMart makes it easier to purchase
+          BuildMart makes it easy to purchase
           essential construction materials online.
-          Choose your products, place your order
-          and get your materials delivered to your
-          location.
+          Select your materials, place your order
+          and track it from anywhere.
         </p>
 
       </div>
@@ -1213,14 +1207,21 @@
   </section>
 
 
-  <!-- FOOTER -->
+  <!-- ================= FOOTER ================= -->
+
   <footer>
-    © 2026 BuildMart. Quality materials for stronger construction.
+
+    © 2026 BuildMart.
+    Quality materials for stronger construction.
+
   </footer>
 
 
-  <!-- CART MODAL -->
-  <div id="cartModal" class="modal">
+  <!-- ================= CART MODAL ================= -->
+
+  <div
+    id="cartModal"
+    class="modal">
 
     <div class="modal-content">
 
@@ -1231,7 +1232,9 @@
         ×
       </button>
 
-      <h2>🛒 Your Cart</h2>
+      <h2>
+        🛒 Your Cart
+      </h2>
 
       <div
         id="cartItems"
@@ -1242,19 +1245,28 @@
 
         <p>
           <span>Subtotal</span>
-          <strong id="cartSubtotal">₹0</strong>
+          <strong id="cartSubtotal">
+            ₹0
+          </strong>
         </p>
 
         <p>
           <span>Delivery</span>
-          <strong id="deliveryCharge">₹0</strong>
+          <strong id="deliveryCharge">
+            ₹0
+          </strong>
         </p>
 
         <hr>
 
         <p class="grand-total">
+
           <span>Total</span>
-          <strong id="grandTotal">₹0</strong>
+
+          <strong id="grandTotal">
+            ₹0
+          </strong>
+
         </p>
 
       </div>
@@ -1271,10 +1283,14 @@
   </div>
 
 
-  <!-- CHECKOUT MODAL -->
-  <div id="checkoutModal" class="modal">
+  <!-- ================= CHECKOUT ================= -->
 
-    <div class="modal-content checkout-content">
+  <div
+    id="checkoutModal"
+    class="modal">
+
+    <div
+      class="modal-content checkout-content">
 
       <button
         type="button"
@@ -1283,10 +1299,12 @@
         ×
       </button>
 
-      <h2>📦 Checkout</h2>
+      <h2>
+        📦 Checkout
+      </h2>
 
       <p>
-        Enter your delivery details below.
+        Enter your delivery details.
       </p>
 
 
@@ -1337,20 +1355,27 @@
       <div class="payment-options">
 
         <label>
+
           <input
             type="radio"
             name="payment"
             value="COD"
             checked>
+
           💵 Cash on Delivery
+
         </label>
 
+
         <label>
+
           <input
             type="radio"
             name="payment"
             value="UPI">
+
           📱 UPI Payment
+
         </label>
 
       </div>
@@ -1373,7 +1398,9 @@
         type="button"
         class="place-order-button"
         onclick="placeOrder()">
+
         🛍️ Place Order
+
       </button>
 
     </div>
@@ -1381,10 +1408,14 @@
   </div>
 
 
-  <!-- SUCCESS MODAL -->
-  <div id="successModal" class="modal">
+  <!-- ================= SUCCESS ================= -->
 
-    <div class="modal-content success-content">
+  <div
+    id="successModal"
+    class="modal">
+
+    <div
+      class="modal-content success-content">
 
       <div class="success-icon">
         ✅
@@ -1438,16 +1469,20 @@
           <strong id="upiAmount"></strong>
         </p>
 
-        <p class="upi-id">
+        <p>
           UPI ID:
-          <strong>9848676751@fam</strong>
+          <strong>
+            9848676751@fam
+          </strong>
         </p>
 
         <button
           type="button"
           onclick="payWithUPI()"
           class="upi-pay-button">
+
           💳 Pay Now with UPI
+
         </button>
 
         <p class="upi-note">
@@ -1461,7 +1496,9 @@
         type="button"
         class="close-success-button"
         onclick="closeSuccess()">
+
         Continue Shopping
+
       </button>
 
     </div>
@@ -1469,13 +1506,15 @@
   </div>
 
 
-  <!-- FIREBASE -->
+  <!-- ================= FIREBASE ================= -->
+
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 
-  <!-- BUILDMART SCRIPT -->
+  <!-- ================= BUILDMART SCRIPT ================= -->
+
   <script src="./script.js"></script>
 
 </body>
