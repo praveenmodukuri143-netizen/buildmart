@@ -4,9 +4,848 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BuildMart - Construction Materials</title>
+  <title>BuildMart | Construction Materials</title>
 
-  <link rel="stylesheet" href="./style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #f6f7f9;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input,
+    textarea {
+      font-family: inherit;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    /* ================= HEADER ================= */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid #e7e9ee;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: #f59e0b;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-menu a {
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4b5563;
+      transition: 0.2s;
+    }
+
+    .nav-menu a:hover {
+      background: #fff7e6;
+      color: #d97706;
+    }
+
+    #cartLink {
+      background: #111827;
+      color: white;
+    }
+
+    #cartLink:hover {
+      background: #f59e0b;
+      color: #111827;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          110deg,
+          rgba(17,24,39,0.97),
+          rgba(31,41,55,0.91)
+        );
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      right: -170px;
+      top: -120px;
+      border-radius: 50%;
+      background: rgba(245,158,11,0.13);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 80px 0;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid rgba(245,158,11,0.4);
+      background: rgba(245,158,11,0.1);
+      color: #fbbf24;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.05;
+      color: white;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      color: #f59e0b;
+    }
+
+    .hero p {
+      max-width: 620px;
+      color: #d1d5db;
+      font-size: 18px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 10px;
+      background: #f59e0b;
+      color: #111827;
+      font-weight: 800;
+      transition: 0.2s;
+    }
+
+    .hero-button:hover {
+      background: #fbbf24;
+      transform: translateY(-2px);
+    }
+
+    .hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      color: white;
+      font-weight: 700;
+    }
+
+    .hero-secondary:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ================= TRUST BAR ================= */
+
+    .trust-bar {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .trust-inner {
+      min-height: 92px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: center;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .trust-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: #fff7e6;
+      border-radius: 10px;
+      font-size: 20px;
+    }
+
+    /* ================= PRODUCTS ================= */
+
+    .products-section {
+      padding: 90px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-label {
+      color: #d97706;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .section-heading h2 {
+      font-size: 38px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .section-heading p {
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 22px;
+      overflow: hidden;
+      transition: 0.25s;
+      box-shadow: 0 8px 25px rgba(15,23,42,0.04);
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.1);
+      border-color: #f3c46b;
+    }
+
+    .product-image {
+      height: 190px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(
+          135deg,
+          #f9fafb,
+          #fff7e6
+        );
+      border-radius: 14px;
+      font-size: 78px;
+      margin-bottom: 20px;
+    }
+
+    .product-card h3 {
+      font-size: 20px;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .product-card > p {
+      min-height: 52px;
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .product-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 17px;
+      border-top: 1px solid #edf0f3;
+    }
+
+    .product-bottom strong {
+      font-size: 22px;
+      color: #111827;
+    }
+
+    .product-bottom button {
+      border: none;
+      background: #111827;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .product-bottom button:hover {
+      background: #f59e0b;
+      color: #111827;
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about-section {
+      padding: 85px 0;
+      background: #111827;
+      color: white;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-section .section-label {
+      color: #fbbf24;
+    }
+
+    .about-section h2 {
+      font-size: 40px;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .about-section p {
+      color: #d1d5db;
+      font-size: 16px;
+      max-width: 600px;
+    }
+
+    .about-boxes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .about-box {
+      padding: 25px;
+      border: 1px solid #374151;
+      border-radius: 14px;
+      background: #1f2937;
+    }
+
+    .about-box strong {
+      display: block;
+      font-size: 28px;
+      color: #fbbf24;
+      margin-bottom: 5px;
+    }
+
+    .about-box span {
+      color: #d1d5db;
+      font-size: 13px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #0b1120;
+      color: #9ca3af;
+      text-align: center;
+      padding: 25px 15px;
+      font-size: 13px;
+    }
+
+    /* ================= MODALS ================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(15,23,42,0.72);
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      width: min(560px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+    }
+
+    .modal-content h2 {
+      color: #111827;
+      margin-bottom: 8px;
+      font-size: 27px;
+    }
+
+    .modal-content > p {
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .close-button {
+      position: absolute;
+      right: 18px;
+      top: 15px;
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 50%;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .close-button:hover {
+      background: #e5e7eb;
+    }
+
+    /* ================= CART ================= */
+
+    .cart-items {
+      margin: 20px 0;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .cart-item-info strong {
+      color: #111827;
+    }
+
+    .cart-item-info p {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .cart-item-actions button {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 7px;
+      background: #f3f4f6;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart-item-actions button:hover {
+      background: #f59e0b;
+    }
+
+    .cart-summary {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 15px;
+    }
+
+    .cart-summary p {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+      color: #4b5563;
+    }
+
+    .cart-summary .grand-total {
+      font-size: 19px;
+      color: #111827;
+    }
+
+    .checkout-button,
+    .place-order-button,
+    .close-success-button,
+    .upi-pay-button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 18px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .checkout-button,
+    .place-order-button,
+    .upi-pay-button {
+      background: #f59e0b;
+      color: #111827;
+    }
+
+    .checkout-button:hover,
+    .place-order-button:hover,
+    .upi-pay-button:hover {
+      background: #d97706;
+      color: white;
+    }
+
+    .close-success-button {
+      background: #111827;
+      color: white;
+    }
+
+    .close-success-button:hover {
+      background: #374151;
+    }
+
+    /* ================= CHECKOUT ================= */
+
+    .checkout-content label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      color: #374151;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .checkout-content input,
+    .checkout-content textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      padding: 12px 13px;
+      outline: none;
+      font-size: 14px;
+      background: white;
+    }
+
+    .checkout-content input:focus,
+    .checkout-content textarea:focus {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
+    }
+
+    .checkout-content textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .payment-heading {
+      margin-top: 25px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .payment-options label {
+      margin: 0;
+      padding: 13px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #f9fafb;
+    }
+
+    .payment-options label:hover {
+      border-color: #f59e0b;
+    }
+
+    .payment-options input {
+      width: auto;
+      margin-right: 7px;
+    }
+
+    .checkout-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 22px;
+      padding: 17px;
+      background: #111827;
+      color: white;
+      border-radius: 12px;
+    }
+
+    .checkout-total strong {
+      color: #fbbf24;
+      font-size: 21px;
+    }
+
+    /* ================= SUCCESS ================= */
+
+    .success-content {
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      background: #ecfdf5;
+      border-radius: 50%;
+      font-size: 38px;
+    }
+
+    .success-content h2 {
+      margin-bottom: 8px;
+    }
+
+    .order-details {
+      text-align: left;
+      margin-top: 22px;
+      padding: 18px;
+      background: #f9fafb;
+      border-radius: 12px;
+    }
+
+    .order-details p {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 7px 0;
+      color: #6b7280;
+    }
+
+    .order-details strong {
+      color: #111827;
+      text-align: right;
+    }
+
+    .upi-box {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #fff7e6;
+      border: 1px solid #f3c46b;
+    }
+
+    .upi-box h3 {
+      margin-bottom: 8px;
+    }
+
+    .upi-id {
+      margin-top: 8px;
+    }
+
+    .upi-note {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 40px 15px;
+      color: #6b7280;
+    }
+
+    .empty-cart-icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 900px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-menu {
+        gap: 2px;
+      }
+
+      .nav-menu a {
+        padding: 8px 9px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .header-inner {
+        min-height: auto;
+        padding: 15px 0;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .logo {
+        text-align: center;
+      }
+
+      .nav-menu {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .nav-menu a {
+        font-size: 12px;
+        padding: 7px 9px;
+      }
+
+      .hero {
+        min-height: 500px;
+      }
+
+      .hero-content {
+        padding: 65px 0;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 43px;
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .trust-inner {
+        grid-template-columns: 1fr;
+        padding: 20px 0;
+        gap: 12px;
+      }
+
+      .products-section {
+        padding: 65px 0;
+      }
+
+      .section-heading h2 {
+        font-size: 31px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-image {
+        height: 180px;
+      }
+
+      .about-section {
+        padding: 65px 0;
+      }
+
+      .about-section h2 {
+        font-size: 32px;
+      }
+
+      .about-boxes {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .modal-content {
+        padding: 24px 18px;
+      }
+
+      .payment-options {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-item {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .cart-item-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -15,16 +854,13 @@
   <header class="site-header">
     <div class="container header-inner">
 
-      <div class="logo">
-        🏗️ BuildMart
-      </div>
+      <a href="#home" class="logo">
+        🏗️ Build<span>Mart</span>
+      </a>
 
       <nav class="nav-menu">
-
         <a href="#home">Home</a>
-
         <a href="#products">Products</a>
-
         <a href="#about">About</a>
 
         <a href="#" id="cartLink">
@@ -34,7 +870,6 @@
         <a href="track-order.html">
           📦 Track Orders
         </a>
-
       </nav>
 
     </div>
@@ -46,18 +881,57 @@
 
     <div class="container hero-content">
 
+      <div class="hero-badge">
+        🏗️ TRUSTED CONSTRUCTION MATERIALS
+      </div>
+
       <h1>
-        Quality Construction Materials
+        Build Strong.<br>
+        Build <span>Better.</span>
       </h1>
 
       <p>
-        Build stronger. Build smarter.
-        Shop construction materials from BuildMart.
+        Quality construction materials delivered
+        to your location. From cement and steel
+        to bricks, sand and aggregates.
       </p>
 
-      <a href="#products" class="hero-button">
-        Shop Now
-      </a>
+      <div class="hero-actions">
+
+        <a href="#products" class="hero-button">
+          Shop Materials →
+        </a>
+
+        <a href="track-order.html" class="hero-secondary">
+          Track Your Order
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TRUST BAR -->
+  <section class="trust-bar">
+
+    <div class="container trust-inner">
+
+      <div class="trust-item">
+        <div class="trust-icon">✓</div>
+        <span>Quality Materials</span>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon">🚚</div>
+        <span>Reliable Delivery</span>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon">🔒</div>
+        <span>Secure Ordering</span>
+      </div>
 
     </div>
 
@@ -71,12 +945,17 @@
 
       <div class="section-heading">
 
+        <div class="section-label">
+          Our Materials
+        </div>
+
         <h2>
-          Our Products
+          Everything You Need to Build
         </h2>
 
         <p>
-          Quality materials for every construction project.
+          Quality construction materials for
+          homes, buildings and projects.
         </p>
 
       </div>
@@ -97,14 +976,13 @@
           </h3>
 
           <p>
-            Premium quality cement for strong construction.
+            Premium quality cement for strong
+            and durable construction.
           </p>
 
           <div class="product-bottom">
 
-            <strong>
-              ₹450
-            </strong>
+            <strong>₹450</strong>
 
             <button
               type="button"
@@ -129,14 +1007,13 @@
           </h3>
 
           <p>
-            High-strength TMT steel for durable structures.
+            High-strength TMT steel for durable
+            structural construction.
           </p>
 
           <div class="product-bottom">
 
-            <strong>
-              ₹5,500
-            </strong>
+            <strong>₹5,500</strong>
 
             <button
               type="button"
@@ -161,14 +1038,13 @@
           </h3>
 
           <p>
-            Strong and reliable bricks for construction.
+            Strong and reliable bricks suitable
+            for walls and construction.
           </p>
 
           <div class="product-bottom">
 
-            <strong>
-              ₹10
-            </strong>
+            <strong>₹10</strong>
 
             <button
               type="button"
@@ -193,14 +1069,13 @@
           </h3>
 
           <p>
-            Quality sand suitable for construction work.
+            Quality sand suitable for concrete
+            and general construction work.
           </p>
 
           <div class="product-bottom">
 
-            <strong>
-              ₹1,500
-            </strong>
+            <strong>₹1,500</strong>
 
             <button
               type="button"
@@ -225,14 +1100,13 @@
           </h3>
 
           <p>
-            Quality aggregate for concrete and foundations.
+            Quality aggregate for concrete,
+            foundations and structural work.
           </p>
 
           <div class="product-bottom">
 
-            <strong>
-              ₹1,800
-            </strong>
+            <strong>₹1,800</strong>
 
             <button
               type="button"
@@ -257,14 +1131,13 @@
           </h3>
 
           <p>
-            Durable blocks for walls and building projects.
+            Durable blocks for walls and
+            building projects.
           </p>
 
           <div class="product-bottom">
 
-            <strong>
-              ₹55
-            </strong>
+            <strong>₹55</strong>
 
             <button
               type="button"
@@ -276,6 +1149,7 @@
 
         </div>
 
+
       </div>
 
     </div>
@@ -286,22 +1160,63 @@
   <!-- ABOUT -->
   <section id="about" class="about-section">
 
-    <div class="container">
+    <div class="container about-grid">
 
-      <h2>
-        About BuildMart
-      </h2>
+      <div>
 
-      <p>
-        BuildMart makes it easy to purchase
-        construction materials online.
-        Order quality products and get them
-        delivered to your location.
-      </p>
+        <div class="section-label">
+          About BuildMart
+        </div>
+
+        <h2>
+          Construction materials,
+          made simple.
+        </h2>
+
+        <p>
+          BuildMart makes it easier to purchase
+          essential construction materials online.
+          Choose your products, place your order
+          and get your materials delivered to your
+          location.
+        </p>
+
+      </div>
+
+
+      <div class="about-boxes">
+
+        <div class="about-box">
+          <strong>6+</strong>
+          <span>Construction Products</span>
+        </div>
+
+        <div class="about-box">
+          <strong>₹0</strong>
+          <span>Delivery above ₹5,000</span>
+        </div>
+
+        <div class="about-box">
+          <strong>24/7</strong>
+          <span>Online Ordering</span>
+        </div>
+
+        <div class="about-box">
+          <strong>100%</strong>
+          <span>Order Tracking</span>
+        </div>
+
+      </div>
 
     </div>
 
   </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 BuildMart. Quality materials for stronger construction.
+  </footer>
 
 
   <!-- CART MODAL -->
@@ -316,9 +1231,7 @@
         ×
       </button>
 
-      <h2>
-        🛒 Your Cart
-      </h2>
+      <h2>🛒 Your Cart</h2>
 
       <div
         id="cartItems"
@@ -328,19 +1241,19 @@
       <div class="cart-summary">
 
         <p>
-          <span>Subtotal:</span>
+          <span>Subtotal</span>
           <strong id="cartSubtotal">₹0</strong>
         </p>
 
         <p>
-          <span>Delivery:</span>
+          <span>Delivery</span>
           <strong id="deliveryCharge">₹0</strong>
         </p>
 
         <hr>
 
         <p class="grand-total">
-          <span>Total:</span>
+          <span>Total</span>
           <strong id="grandTotal">₹0</strong>
         </p>
 
@@ -350,9 +1263,7 @@
         type="button"
         class="checkout-button"
         onclick="openCheckout()">
-
-        Proceed to Checkout
-
+        Proceed to Checkout →
       </button>
 
     </div>
@@ -372,12 +1283,10 @@
         ×
       </button>
 
-      <h2>
-        📦 Checkout
-      </h2>
+      <h2>📦 Checkout</h2>
 
       <p>
-        Please enter your delivery details.
+        Enter your delivery details below.
       </p>
 
 
@@ -402,7 +1311,7 @@
 
 
       <label for="customerAddress">
-        Address
+        Delivery Address
       </label>
 
       <textarea
@@ -428,27 +1337,20 @@
       <div class="payment-options">
 
         <label>
-
           <input
             type="radio"
             name="payment"
             value="COD"
             checked>
-
           💵 Cash on Delivery
-
         </label>
 
-
         <label>
-
           <input
             type="radio"
             name="payment"
             value="UPI">
-
           📱 UPI Payment
-
         </label>
 
       </div>
@@ -471,9 +1373,7 @@
         type="button"
         class="place-order-button"
         onclick="placeOrder()">
-
         🛍️ Place Order
-
       </button>
 
     </div>
@@ -502,22 +1402,22 @@
       <div class="order-details">
 
         <p>
-          Order ID:
+          <span>Order ID</span>
           <strong id="orderId"></strong>
         </p>
 
         <p>
-          Customer:
+          <span>Customer</span>
           <strong id="orderCustomer"></strong>
         </p>
 
         <p>
-          Total:
+          <span>Total</span>
           <strong id="orderTotal"></strong>
         </p>
 
         <p>
-          Payment:
+          <span>Payment</span>
           <strong id="orderPayment"></strong>
         </p>
 
@@ -547,9 +1447,7 @@
           type="button"
           onclick="payWithUPI()"
           class="upi-pay-button">
-
           💳 Pay Now with UPI
-
         </button>
 
         <p class="upi-note">
@@ -563,9 +1461,7 @@
         type="button"
         class="close-success-button"
         onclick="closeSuccess()">
-
         Continue Shopping
-
       </button>
 
     </div>
@@ -574,16 +1470,13 @@
 
 
   <!-- FIREBASE -->
-
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 
   <!-- BUILDMART SCRIPT -->
-
   <script src="./script.js"></script>
 
 </body>
-
 </html>
