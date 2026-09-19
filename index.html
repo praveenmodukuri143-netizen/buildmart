@@ -1,1345 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>BuildMart - Construction Materials</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f5f5f5;
-      color: #222;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      background: #111827;
-      color: white;
-      padding: 15px 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      color: #f59e0b;
-    }
-
-    nav {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .cart-btn {
-      background: #f59e0b;
-      color: #111;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      min-height: 430px;
-      background:
-        linear-gradient(
-          rgba(0,0,0,0.55),
-          rgba(0,0,0,0.55)
-        ),
-        url("https://pub-a8ebad8b0a19407a910fcded3dcc2ace.r2.dev/uploads-2026/04/1775623198823-3vqoyd.png");
-
-      background-size: cover;
-      background-position: center;
-
-      display: flex;
-      align-items: center;
-      padding: 50px 7%;
-      color: white;
-    }
-
-    .hero-content {
-      max-width: 650px;
-    }
-
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 15px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-
-    .hero-btn {
-      background: #f59e0b;
-      color: #111;
-      padding: 13px 22px;
-      border: none;
-      border-radius: 7px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* =========================
-       TRUST BAR
-    ========================= */
-
-    .trust-bar {
-      background: white;
-      padding: 18px 6%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .trust-item {
-      font-weight: bold;
-    }
-
-    /* =========================
-       PRODUCTS
-    ========================= */
-
-    .products-section {
-      padding: 55px 6%;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .section-title h2 {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-      gap: 22px;
-    }
-
-    .product-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      transition: 0.2s;
-    }
-
-    .product-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .product-icon {
-      height: 150px;
-      background: #f3f4f6;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 65px;
-      margin-bottom: 15px;
-    }
-
-    .product-card h3 {
-      margin-bottom: 8px;
-    }
-
-    .product-price {
-      color: #d97706;
-      font-size: 20px;
-      font-weight: bold;
-      margin: 12px 0;
-    }
-
-    .add-btn {
-      width: 100%;
-      padding: 11px;
-      border: none;
-      background: #111827;
-      color: white;
-      border-radius: 7px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .add-btn:hover {
-      background: #f59e0b;
-      color: #111;
-    }
-
-    /* =========================
-       ABOUT
-    ========================= */
-
-    .about {
-      background: #111827;
-      color: white;
-      padding: 55px 7%;
-      text-align: center;
-    }
-
-    .about h2 {
-      margin-bottom: 15px;
-    }
-
-    .about p {
-      max-width: 750px;
-      margin: auto;
-      line-height: 1.7;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-      background: #080b11;
-      color: white;
-      text-align: center;
-      padding: 25px;
-    }
-
-    /* =========================
-       MODALS
-    ========================= */
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
-      padding: 15px;
-    }
-
-    .modal-content {
-      background: white;
-      width: 100%;
-      max-width: 550px;
-      max-height: 90vh;
-      overflow-y: auto;
-      border-radius: 12px;
-      padding: 25px;
-      position: relative;
-    }
-
-    .close-btn {
-      position: absolute;
-      right: 18px;
-      top: 15px;
-      font-size: 25px;
-      border: none;
-      background: none;
-      cursor: pointer;
-    }
-
-    /* =========================
-       CART
-    ========================= */
-
-    .cart-total-box {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid #ddd;
-    }
-
-    .total-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 8px 0;
-    }
-
-    .checkout-btn {
-      width: 100%;
-      margin-top: 18px;
-      padding: 13px;
-      border: none;
-      background: #f59e0b;
-      color: #111;
-      border-radius: 7px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* =========================
-       CHECKOUT FORM
-    ========================= */
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 11px;
-      border: 1px solid #ccc;
-      border-radius: 7px;
-      font-size: 14px;
-    }
-
-    .form-group textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
-
-    .payment-methods {
-      margin-top: 15px;
-      padding: 15px;
-      background: #f7f7f7;
-      border-radius: 8px;
-    }
-
-    .payment-option {
-      margin: 10px 0;
-    }
-
-    /* =========================
-       UPI BOX
-    ========================= */
-
-    #upiPaymentBox {
-      display: none;
-      margin-top: 15px;
-      padding: 18px;
-      background: #fff8e7;
-      border: 1px solid #f59e0b;
-      border-radius: 10px;
-    }
-
-    #upiPaymentBox h4 {
-      margin-bottom: 12px;
-      color: #111827;
-    }
-
-    .upi-id-box {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 12px;
-      border-radius: 7px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0;
-    }
-
-    .upi-id-text {
-      font-weight: bold;
-      color: #111827;
-      word-break: break-all;
-    }
-
-    .copy-upi-btn {
-      background: #111827;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .copy-upi-btn:hover {
-      background: #f59e0b;
-      color: #111;
-    }
-
-    .upi-pay-btn {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
-      background: #16a34a;
-      color: white;
-      border: none;
-      border-radius: 7px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* =========================
-       SUCCESS
-    ========================= */
-
-    .success-box {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .success-icon {
-      font-size: 55px;
-      margin-bottom: 10px;
-    }
-
-    .success-box h2 {
-      margin-bottom: 10px;
-    }
-
-    .success-box p {
-      margin: 8px 0;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 700px) {
-
-      header {
-        padding: 13px 4%;
-      }
-
-      nav a {
-        display: none;
-      }
-
-      .hero {
-        min-height: 400px;
-        padding: 40px 6%;
-      }
-
-      .hero h1 {
-        font-size: 36px;
-      }
-
-      .trust-bar {
-        grid-template-columns: 1fr;
-      }
-
-      .products-section {
-        padding: 40px 5%;
-      }
-
-      .upi-id-box {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .copy-upi-btn {
-        width: 100%;
-      }
-    }
-
-  </style>
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================= -->
+  <!-- ================= HEADER ================= -->
 
-  <header>
+  <header class="site-header">
 
-    <div class="logo">
-      BuildMart
+    <div class="container header-inner">
+
+      <div class="logo">
+        🏗️ BuildMart
+      </div>
+
+      <nav class="nav-menu">
+
+        <a href="#home">Home</a>
+
+        <a href="#products">Products</a>
+
+        <a href="#about">About</a>
+
+        <a href="#" id="cartLink">
+          🛒 Cart (0)
+        </a>
+
+        <a href="track-order.html">
+          📦 Track Orders
+        </a>
+
+      </nav>
+
     </div>
-
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-
-      <button
-        class="cart-btn"
-        onclick="openCart()"
-      >
-        🛒 Cart
-        (<span id="cartCount">0</span>)
-      </button>
-    </nav>
 
   </header>
 
 
-  <!-- =========================
-       HERO
-  ========================= -->
+  <!-- ================= HERO ================= -->
 
-  <section
-    class="hero"
-    id="home"
-  >
+  <section id="home" class="hero">
 
-    <div class="hero-content">
+    <div class="container hero-content">
 
       <h1>
-        Build Strong.
-        Build Smart.
+        Quality Construction Materials
       </h1>
 
       <p>
-        Quality construction materials delivered
-        straight to your doorstep.
+        Build stronger. Build smarter.
+        Shop construction materials from BuildMart.
       </p>
 
-      <button
-        class="hero-btn"
-        onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"
-      >
-        Shop Materials
-      </button>
+      <a href="#products" class="hero-button">
+        Shop Now
+      </a>
 
     </div>
 
   </section>
 
 
-  <!-- =========================
-       TRUST BAR
-  ========================= -->
+  <!-- ================= PRODUCTS ================= -->
 
-  <section class="trust-bar">
+  <section id="products" class="products-section">
 
-    <div class="trust-item">
-      🚚 Fast Delivery
-    </div>
+    <div class="container">
 
-    <div class="trust-item">
-      🏗️ Quality Materials
-    </div>
+      <div class="section-heading">
 
-    <div class="trust-item">
-      🔒 Secure Ordering
+        <h2>
+          Our Products
+        </h2>
+
+        <p>
+          Quality materials for every construction project.
+        </p>
+
+      </div>
+
+
+      <!-- Firebase products will appear here -->
+
+      <div
+        id="productsContainer"
+        class="products-grid">
+
+        <div class="product-card">
+
+          <div class="product-image">
+            ⏳
+          </div>
+
+          <h3>
+            Loading products...
+          </h3>
+
+          <p>
+            Please wait.
+          </p>
+
+        </div>
+
+      </div>
+
     </div>
 
   </section>
 
 
-  <!-- =========================
-       PRODUCTS
-  ========================= -->
+  <!-- ================= ABOUT ================= -->
 
-  <section
-    class="products-section"
-    id="products"
-  >
+  <section id="about" class="about-section">
 
-    <div class="section-title">
+    <div class="container">
 
       <h2>
-        Construction Materials
+        About BuildMart
       </h2>
 
       <p>
-        Everything you need to build your project.
+        BuildMart makes it easy to purchase
+        construction materials online.
+        Order quality products and get them
+        delivered to your location.
       </p>
 
     </div>
 
-
-    <div class="products">
-
-
-      <!-- Cement -->
-
-      <div class="product-card">
-
-        <div class="product-icon">
-          🧱
-        </div>
-
-        <h3>
-          UltraTech Cement
-        </h3>
-
-        <p>
-          High-quality construction cement.
-        </p>
-
-        <div class="product-price">
-          ₹450
-        </div>
-
-        <button
-          class="add-btn"
-          onclick="addToCart('UltraTech Cement',450)"
-        >
-          Add to Cart
-        </button>
-
-      </div>
-
-
-      <!-- Steel -->
-
-      <div class="product-card">
-
-        <div class="product-icon">
-          🔩
-        </div>
-
-        <h3>
-          TMT Steel Rod
-        </h3>
-
-        <p>
-          Strong TMT steel for construction.
-        </p>
-
-        <div class="product-price">
-          ₹5,500
-        </div>
-
-        <button
-          class="add-btn"
-          onclick="addToCart('TMT Steel Rod',5500)"
-        >
-          Add to Cart
-        </button>
-
-      </div>
-
-
-      <!-- Bricks -->
-
-      <div class="product-card">
-
-        <div class="product-icon">
-          🧱
-        </div>
-
-        <h3>
-          Red Bricks
-        </h3>
-
-        <p>
-          Durable red bricks for building.
-        </p>
-
-        <div class="product-price">
-          ₹10
-        </div>
-
-        <button
-          class="add-btn"
-          onclick="addToCart('Red Bricks',10)"
-        >
-          Add to Cart
-        </button>
-
-      </div>
-
-
-      <!-- Sand -->
-
-      <div class="product-card">
-
-        <div class="product-icon">
-          🏖️
-        </div>
-
-        <h3>
-          River Sand
-        </h3>
-
-        <p>
-          Quality sand for construction work.
-        </p>
-
-        <div class="product-price">
-          ₹1,500
-        </div>
-
-        <button
-          class="add-btn"
-          onclick="addToCart('River Sand',1500)"
-        >
-          Add to Cart
-        </button>
-
-      </div>
-
-
-      <!-- Aggregate -->
-
-      <div class="product-card">
-
-        <div class="product-icon">
-          🪨
-        </div>
-
-        <h3>
-          20mm Aggregate
-        </h3>
-
-        <p>
-          Premium quality construction aggregate.
-        </p>
-
-        <div class="product-price">
-          ₹1,800
-        </div>
-
-        <button
-          class="add-btn"
-          onclick="addToCart('20mm Aggregate',1800)"
-        >
-          Add to Cart
-        </button>
-
-      </div>
-
-
-      <!-- Blocks -->
-
-      <div class="product-card">
-
-        <div class="product-icon">
-          🧱
-        </div>
-
-        <h3>
-          Concrete Blocks
-        </h3>
-
-        <p>
-          Strong and durable concrete blocks.
-        </p>
-
-        <div class="product-price">
-          ₹55
-        </div>
-
-        <button
-          class="add-btn"
-          onclick="addToCart('Concrete Blocks',55)"
-        >
-          Add to Cart
-        </button>
-
-      </div>
-
-
-    </div>
-
   </section>
 
 
-  <!-- =========================
-       ABOUT
-  ========================= -->
+  <!-- ================= CART MODAL ================= -->
 
-  <section
-    class="about"
-    id="about"
-  >
-
-    <h2>
-      About BuildMart
-    </h2>
-
-    <p>
-      BuildMart makes it simple to purchase
-      quality construction materials online.
-      From cement and steel to bricks, sand and
-      aggregates, we aim to make construction
-      material ordering easier and faster.
-    </p>
-
-  </section>
-
-
-  <!-- =========================
-       FOOTER
-  ========================= -->
-
-  <footer>
-
-    <p>
-      © 2026 BuildMart. All rights reserved.
-    </p>
-
-  </footer>
-
-
-  <!-- =========================
-       CART MODAL
-  ========================= -->
-
-  <div
-    class="modal"
-    id="cartModal"
-  >
+  <div id="cartModal" class="modal">
 
     <div class="modal-content">
 
       <button
-        class="close-btn"
-        onclick="closeCart()"
-      >
+        type="button"
+        class="close-button"
+        onclick="closeCart()">
+
         ×
+
       </button>
 
       <h2>
-        Your Cart
+        🛒 Your Cart
       </h2>
 
       <div
         id="cartItems"
-        style="margin-top:20px;"
-      ></div>
+        class="cart-items">
+      </div>
 
 
-      <div class="cart-total-box">
+      <div class="cart-summary">
 
-        <div class="total-row">
+        <p>
 
           <span>
-            Subtotal
+            Subtotal:
           </span>
 
           <strong id="cartSubtotal">
-            ₹0.00
+            ₹0
           </strong>
 
-        </div>
+        </p>
 
 
-        <div class="total-row">
+        <p>
 
           <span>
-            Delivery
+            Delivery:
           </span>
 
           <strong id="deliveryCharge">
-            ₹0.00
+            ₹0
           </strong>
 
-        </div>
+        </p>
 
 
-        <div
-          class="total-row"
-          style="font-size:20px;"
-        >
+        <hr>
 
-          <strong>
-            Total
+
+        <p class="grand-total">
+
+          <span>
+            Total:
+          </span>
+
+          <strong id="grandTotal">
+            ₹0
           </strong>
 
-          <strong id="cartTotal">
-            ₹0.00
-          </strong>
-
-        </div>
-
-
-        <button
-          class="checkout-btn"
-          onclick="openCheckout()"
-        >
-          Proceed to Checkout
-        </button>
+        </p>
 
       </div>
+
+
+      <button
+        type="button"
+        class="checkout-button"
+        onclick="openCheckout()">
+
+        Proceed to Checkout
+
+      </button>
 
     </div>
 
   </div>
 
 
-  <!-- =========================
-       CHECKOUT MODAL
-  ========================= -->
+  <!-- ================= CHECKOUT MODAL ================= -->
 
-  <div
-    class="modal"
-    id="checkoutModal"
-  >
+  <div id="checkoutModal" class="modal">
 
-    <div class="modal-content">
+    <div class="modal-content checkout-content">
 
       <button
-        class="close-btn"
-        onclick="closeCheckout()"
-      >
+        type="button"
+        class="close-button"
+        onclick="closeCheckout()">
+
         ×
+
       </button>
 
+
       <h2>
-        Checkout
+        📦 Checkout
+      </h2>
+
+      <p>
+        Please enter your delivery details.
+      </p>
+
+
+      <!-- NAME -->
+
+      <label for="customerName">
+        Full Name
+      </label>
+
+      <input
+        type="text"
+        id="customerName"
+        placeholder="Enter your name">
+
+
+      <!-- PHONE -->
+
+      <label for="customerPhone">
+        Phone Number
+      </label>
+
+      <input
+        type="tel"
+        id="customerPhone"
+        placeholder="Enter phone number">
+
+
+      <!-- ADDRESS -->
+
+      <label for="customerAddress">
+        Address
+      </label>
+
+      <textarea
+        id="customerAddress"
+        placeholder="Enter full delivery address"></textarea>
+
+
+      <!-- LOCATION -->
+
+      <label for="customerLocation">
+        Location / City
+      </label>
+
+      <input
+        type="text"
+        id="customerLocation"
+        placeholder="Enter city / location">
+
+
+      <!-- PAYMENT -->
+
+      <h3 class="payment-heading">
+        Payment Method
+      </h3>
+
+
+      <div class="payment-options">
+
+        <label>
+
+          <input
+            type="radio"
+            name="payment"
+            value="COD"
+            checked>
+
+          💵 Cash on Delivery
+
+        </label>
+
+
+        <label>
+
+          <input
+            type="radio"
+            name="payment"
+            value="UPI">
+
+          📱 UPI Payment
+
+        </label>
+
+      </div>
+
+
+      <!-- TOTAL -->
+
+      <div class="checkout-total">
+
+        <span>
+          Order Total
+        </span>
+
+        <strong id="checkoutTotal">
+          ₹0
+        </strong>
+
+      </div>
+
+
+      <!-- PLACE ORDER -->
+
+      <button
+        type="button"
+        class="place-order-button"
+        onclick="placeOrder()">
+
+        🛍️ Place Order
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= SUCCESS MODAL ================= -->
+
+  <div id="successModal" class="modal">
+
+    <div class="modal-content success-content">
+
+
+      <div class="success-icon">
+        ✅
+      </div>
+
+
+      <h2>
+        Order Placed Successfully!
       </h2>
 
 
+      <p>
+        Thank you for shopping with BuildMart.
+      </p>
+
+
+      <!-- ORDER DETAILS -->
+
+      <div class="order-details">
+
+        <p>
+
+          Order ID:
+
+          <strong id="orderId">
+          </strong>
+
+        </p>
+
+
+        <p>
+
+          Customer:
+
+          <strong id="orderCustomer">
+          </strong>
+
+        </p>
+
+
+        <p>
+
+          Total:
+
+          <strong id="orderTotal">
+          </strong>
+
+        </p>
+
+
+        <p>
+
+          Payment:
+
+          <strong id="orderPayment">
+          </strong>
+
+        </p>
+
+      </div>
+
+
+      <!-- ================= UPI ================= -->
+
       <div
-        style="margin-top:20px;"
-      >
+        id="upiPaymentBox"
+        class="upi-box"
+        style="display:none;">
 
-        <!-- Name -->
-
-        <div class="form-group">
-
-          <label>
-            Full Name
-          </label>
-
-          <input
-            type="text"
-            id="customerName"
-            placeholder="Enter your name"
-          />
-
-        </div>
+        <h3>
+          📱 Pay using UPI
+        </h3>
 
 
-        <!-- Phone -->
+        <p>
 
-        <div class="form-group">
+          Amount:
 
-          <label>
-            Phone Number
-          </label>
-
-          <input
-            type="tel"
-            id="customerPhone"
-            placeholder="Enter phone number"
-          />
-
-        </div>
-
-
-        <!-- Address -->
-
-        <div class="form-group">
-
-          <label>
-            Address
-          </label>
-
-          <textarea
-            id="customerAddress"
-            placeholder="Enter delivery address"
-          ></textarea>
-
-        </div>
-
-
-        <!-- Location -->
-
-        <div class="form-group">
-
-          <label>
-            Location
-          </label>
-
-          <input
-            type="text"
-            id="customerLocation"
-            placeholder="Enter city / village"
-          />
-
-        </div>
-
-
-        <!-- Payment -->
-
-        <div class="payment-methods">
-
-          <strong>
-            Payment Method
+          <strong id="upiAmount">
           </strong>
 
-
-          <div class="payment-option">
-
-            <label>
-
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="COD"
-                checked
-              />
-
-              Cash on Delivery
-
-            </label>
-
-          </div>
+        </p>
 
 
-          <div class="payment-option">
+        <p class="upi-id">
 
-            <label>
+          UPI ID:
 
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="UPI"
-              />
+          <strong>
+            9000158191@ibl
+          </strong>
 
-              UPI Payment
+        </p>
 
-            </label>
-
-          </div>
-
-
-          <!-- =========================
-               UPI PAYMENT BOX
-          ========================= -->
-
-          <div
-            id="upiPaymentBox"
-          >
-
-            <h4>
-              📱 Pay using UPI
-            </h4>
-
-            <p>
-              Send payment to this UPI ID:
-            </p>
-
-
-            <div class="upi-id-box">
-
-              <span
-                class="upi-id-text"
-                id="upiIdDisplay"
-              >
-                9000158191@ibl
-              </span>
-
-
-              <button
-                type="button"
-                class="copy-upi-btn"
-                onclick="copyUPIId()"
-              >
-                Copy UPI ID
-              </button>
-
-            </div>
-
-
-            <p
-              style="
-                font-size:13px;
-                line-height:1.5;
-              "
-            >
-              You can pay using Google Pay,
-              PhonePe, Paytm, BHIM or another
-              supported UPI app.
-            </p>
-
-
-            <button
-              type="button"
-              class="upi-pay-btn"
-              onclick="payFromCheckout()"
-            >
-              💳 Pay Now with UPI
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- Total -->
-
-        <div
-          style="
-            margin-top:18px;
-            padding:15px;
-            background:#f3f4f6;
-            border-radius:8px;
-          "
-        >
-
-          <div
-            style="
-              display:flex;
-              justify-content:space-between;
-            "
-          >
-
-            <strong>
-              Order Total
-            </strong>
-
-            <strong
-              id="checkoutTotal"
-            >
-              ₹0.00
-            </strong>
-
-          </div>
-
-        </div>
-
-
-        <!-- Place Order -->
 
         <button
-          class="checkout-btn"
-          onclick="placeOrder()"
-        >
-          Place Order
+          type="button"
+          onclick="payWithUPI()"
+          class="upi-pay-button">
+
+          💳 Pay Now with UPI
+
         </button>
 
+
+        <p class="upi-note">
+
+          UPI app open ayyaka
+          payment complete cheyyandi.
+
+        </p>
+
       </div>
+
+
+      <!-- CONTINUE -->
+
+      <button
+        type="button"
+        class="close-success-button"
+        onclick="closeSuccess()">
+
+        Continue Shopping
+
+      </button>
+
 
     </div>
 
   </div>
 
 
-  <!-- =========================
-       SUCCESS MODAL
-  ========================= -->
-
-  <div
-    class="modal"
-    id="successModal"
-  >
-
-    <div class="modal-content">
-
-      <div class="success-box">
-
-        <div class="success-icon">
-          ✅
-        </div>
-
-        <h2>
-          Order Confirmed!
-        </h2>
-
-        <p>
-          Thank you for your order.
-        </p>
-
-
-        <p>
-          <strong>
-            Order ID:
-          </strong>
-
-          <span id="orderId">
-          </span>
-        </p>
-
-
-        <p>
-          <strong>
-            Total:
-          </strong>
-
-          <span id="orderTotal">
-          </span>
-        </p>
-
-
-        <p>
-          <strong>
-            Payment:
-          </strong>
-
-          <span id="successPaymentMethod">
-          </span>
-        </p>
-
-
-        <button
-          class="checkout-btn"
-          onclick="closeSuccessModal()"
-        >
-          Continue Shopping
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       FIREBASE
-  ========================= -->
+  <!-- ================= FIREBASE ================= -->
 
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 
-  <!-- =========================
-       SCRIPT
-  ========================= -->
+  <!-- ================= BUILDMART JS ================= -->
 
   <script src="./script.js"></script>
 
 
-  <!-- =========================
-       UPI EXTRA FUNCTIONS
-  ========================= -->
-
-  <script>
-
-    function copyUPIId() {
-
-      const upiId =
-        "9000158191@ibl";
-
-      if (
-        navigator.clipboard &&
-        navigator.clipboard.writeText
-      ) {
-
-        navigator.clipboard
-          .writeText(upiId)
-          .then(function () {
-
-            alert(
-              "UPI ID copied!\n\n" +
-              upiId
-            );
-
-          })
-          .catch(function () {
-
-            alert(
-              "UPI ID:\n" +
-              upiId
-            );
-
-          });
-
-      } else {
-
-        alert(
-          "UPI ID:\n" +
-          upiId
-        );
-
-      }
-
-    }
-
-
-    function payFromCheckout() {
-
-      const totalElement =
-        document.getElementById(
-          "checkoutTotal"
-        );
-
-      if (!totalElement) {
-
-        alert(
-          "Order total not found."
-        );
-
-        return;
-      }
-
-
-      const totalText =
-        totalElement.textContent
-          .replace("₹", "")
-          .trim();
-
-
-      const amount =
-        Number(totalText);
-
-
-      if (
-        !amount ||
-        amount <= 0
-      ) {
-
-        alert(
-          "Invalid payment amount."
-        );
-
-        return;
-      }
-
-
-      const upiId =
-        "9000158191@ibl";
-
-
-      const upiUrl =
-        "upi://pay" +
-
-        "?pa=" +
-        encodeURIComponent(upiId) +
-
-        "&pn=" +
-        encodeURIComponent("BuildMart") +
-
-        "&am=" +
-        encodeURIComponent(
-          amount.toFixed(2)
-        ) +
-
-        "&cu=INR" +
-
-        "&tn=" +
-        encodeURIComponent(
-          "BuildMart Payment"
-        );
-
-
-      window.location.href =
-        upiUrl;
-
-    }
-
-  </script>
-
-
 </body>
+
 </html>
