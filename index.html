@@ -1,261 +1,589 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuildMart - Construction Materials</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BuildMart - Construction Materials</title>
+
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-<header>
-    <nav>
-        <div class="logo">BuildMart</div>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
 
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#products">Products</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-            <a href="track-order.html">📦 Track Order</a>
-        </div>
-    </nav>
-</header>
+      <div class="logo">
+        🏗️ BuildMart
+      </div>
 
-<section class="hero" id="home">
-    <div class="hero-content">
-        <h1>Build Your Dreams With Quality Materials</h1>
-        <p>Bricks, Sand, Cement, Steel and more — delivered to your doorstep.</p>
-        <a href="#products" class="hero-btn">Shop Materials</a>
+      <nav class="nav-menu">
+
+        <a href="#home">Home</a>
+
+        <a href="#products">Products</a>
+
+        <a href="#about">About</a>
+
+        <a href="#" id="cartLink">
+          🛒 Cart (0)
+        </a>
+
+        <a href="track-order.html">
+          📦 Track Orders
+        </a>
+
+      </nav>
+
     </div>
-</section>
+  </header>
 
-<section class="categories">
-    <h2>Categories</h2>
 
-    <div class="category-container">
-        <div class="category-card">🧱<h3>Bricks</h3></div>
-        <div class="category-card">🏖️<h3>Sand</h3></div>
-        <div class="category-card">🏗️<h3>Cement</h3></div>
-        <div class="category-card">🔩<h3>Steel</h3></div>
+  <!-- HERO -->
+  <section id="home" class="hero">
+
+    <div class="container hero-content">
+
+      <h1>
+        Quality Construction Materials
+      </h1>
+
+      <p>
+        Build stronger. Build smarter.
+        Shop construction materials from BuildMart.
+      </p>
+
+      <a href="#products" class="hero-button">
+        Shop Now
+      </a>
+
     </div>
-</section>
 
-<section class="products" id="products">
-    <h2>Popular Materials</h2>
+  </section>
 
-    <div class="product-container">
 
+  <!-- PRODUCTS -->
+  <section id="products" class="products-section">
+
+    <div class="container">
+
+      <div class="section-heading">
+
+        <h2>
+          Our Products
+        </h2>
+
+        <p>
+          Quality materials for every construction project.
+        </p>
+
+      </div>
+
+
+      <div class="products-grid">
+
+
+        <!-- PRODUCT 1 -->
         <div class="product-card">
-            <div class="product-image">🧱</div>
-            <h3>Red Bricks</h3>
-            <p>Strong and durable construction bricks.</p>
-            <h4>₹8 / piece</h4>
-            <button onclick="addToCart('Red Bricks', 8)">
-                Add to Cart
+
+          <div class="product-image">
+            🧱
+          </div>
+
+          <h3>
+            UltraTech Cement
+          </h3>
+
+          <p>
+            Premium quality cement for strong construction.
+          </p>
+
+          <div class="product-bottom">
+
+            <strong>
+              ₹450
+            </strong>
+
+            <button
+              type="button"
+              onclick="addToCart('UltraTech Cement', 450)">
+              Add to Cart
             </button>
+
+          </div>
+
         </div>
 
+
+        <!-- PRODUCT 2 -->
         <div class="product-card">
-            <div class="product-image">🏖️</div>
-            <h3>River Sand</h3>
-            <p>Quality river sand for construction.</p>
-            <h4>₹1,500 / load</h4>
-            <button onclick="addToCart('River Sand', 1500)">
-                Add to Cart
+
+          <div class="product-image">
+            🔩
+          </div>
+
+          <h3>
+            TMT Steel Rod
+          </h3>
+
+          <p>
+            High-strength TMT steel for durable structures.
+          </p>
+
+          <div class="product-bottom">
+
+            <strong>
+              ₹5,500
+            </strong>
+
+            <button
+              type="button"
+              onclick="addToCart('TMT Steel Rod', 5500)">
+              Add to Cart
             </button>
+
+          </div>
+
         </div>
 
+
+        <!-- PRODUCT 3 -->
         <div class="product-card">
-            <div class="product-image">🏗️</div>
-            <h3>Cement</h3>
-            <p>High-quality cement for strong buildings.</p>
-            <h4>₹400 / bag</h4>
-            <button onclick="addToCart('Cement', 400)">
-                Add to Cart
+
+          <div class="product-image">
+            🧱
+          </div>
+
+          <h3>
+            Red Bricks
+          </h3>
+
+          <p>
+            Strong and reliable bricks for construction.
+          </p>
+
+          <div class="product-bottom">
+
+            <strong>
+              ₹10
+            </strong>
+
+            <button
+              type="button"
+              onclick="addToCart('Red Bricks', 10)">
+              Add to Cart
             </button>
+
+          </div>
+
         </div>
+
+
+        <!-- PRODUCT 4 -->
+        <div class="product-card">
+
+          <div class="product-image">
+            🏖️
+          </div>
+
+          <h3>
+            River Sand
+          </h3>
+
+          <p>
+            Quality sand suitable for construction work.
+          </p>
+
+          <div class="product-bottom">
+
+            <strong>
+              ₹1,500
+            </strong>
+
+            <button
+              type="button"
+              onclick="addToCart('River Sand', 1500)">
+              Add to Cart
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT 5 -->
+        <div class="product-card">
+
+          <div class="product-image">
+            🪨
+          </div>
+
+          <h3>
+            20mm Aggregate
+          </h3>
+
+          <p>
+            Quality aggregate for concrete and foundations.
+          </p>
+
+          <div class="product-bottom">
+
+            <strong>
+              ₹1,800
+            </strong>
+
+            <button
+              type="button"
+              onclick="addToCart('20mm Aggregate', 1800)">
+              Add to Cart
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT 6 -->
+        <div class="product-card">
+
+          <div class="product-image">
+            🧱
+          </div>
+
+          <h3>
+            Concrete Blocks
+          </h3>
+
+          <p>
+            Durable blocks for walls and building projects.
+          </p>
+
+          <div class="product-bottom">
+
+            <strong>
+              ₹55
+            </strong>
+
+            <button
+              type="button"
+              onclick="addToCart('Concrete Blocks', 55)">
+              Add to Cart
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
-</section>
 
-<section class="why-us" id="about">
-    <h2>Why Choose BuildMart?</h2>
-
-    <div class="why-container">
-        <div>
-            <h3>🚚 Fast Delivery</h3>
-            <p>Materials delivered quickly to your location.</p>
-        </div>
-
-        <div>
-            <h3>✅ Quality Products</h3>
-            <p>We focus on reliable construction materials.</p>
-        </div>
-
-        <div>
-            <h3>💰 Best Prices</h3>
-            <p>Competitive prices for your construction needs.</p>
-        </div>
-    </div>
-</section>
-
-<section class="contact" id="contact">
-    <h2>Contact BuildMart</h2>
-    <p>Need construction materials? Contact us today.</p>
-</section>
-
-<footer>
-    <p>© 2026 BuildMart. All Rights Reserved.</p>
-</footer>
+  </section>
 
 
-<!-- CART MODAL -->
+  <!-- ABOUT -->
+  <section id="about" class="about-section">
 
-<div id="cartModal" class="modal">
+    <div class="container">
 
-    <div class="modal-box">
+      <h2>
+        About BuildMart
+      </h2>
 
-        <span class="close" onclick="closeCart()">✕</span>
-
-        <h2>🛒 Your Cart</h2>
-
-        <div id="cartItems"></div>
-
-        <div class="cart-summary">
-            <p>
-                <span>Subtotal</span>
-                <span>₹<span id="cartSubtotal">0</span></span>
-            </p>
-
-            <p>
-                <span>Delivery</span>
-                <span>₹<span id="deliveryCharge">0</span></span>
-            </p>
-
-            <h3>
-                <span>Grand Total</span>
-                <span>₹<span id="grandTotal">0</span></span>
-            </h3>
-        </div>
-
-        <button class="checkout-btn" onclick="openCheckout()">
-            Proceed to Checkout
-        </button>
+      <p>
+        BuildMart makes it easy to purchase
+        construction materials online.
+        Order quality products and get them
+        delivered to your location.
+      </p>
 
     </div>
-</div>
+
+  </section>
 
 
-<!-- CHECKOUT MODAL -->
+  <!-- CART MODAL -->
+  <div id="cartModal" class="modal">
 
-<div id="checkoutModal" class="modal">
+    <div class="modal-content">
 
-    <div class="modal-box">
+      <button
+        type="button"
+        class="close-button"
+        onclick="closeCart()">
+        ×
+      </button>
 
-        <span class="close" onclick="closeCheckout()">✕</span>
+      <h2>
+        🛒 Your Cart
+      </h2>
 
-        <h2>📦 Checkout</h2>
+      <div
+        id="cartItems"
+        class="cart-items">
+      </div>
 
-        <h3>Customer Details</h3>
+      <div class="cart-summary">
 
-        <input type="text" id="customerName" placeholder="Full Name">
+        <p>
+          <span>Subtotal:</span>
+          <strong id="cartSubtotal">₹0</strong>
+        </p>
 
-        <input
-            type="tel"
-            id="customerPhone"
-            placeholder="10 Digit Mobile Number"
-            maxlength="10"
-        >
+        <p>
+          <span>Delivery:</span>
+          <strong id="deliveryCharge">₹0</strong>
+        </p>
 
-        <textarea
-            id="customerAddress"
-            placeholder="Full Delivery Address"
-        ></textarea>
+        <hr>
 
-        <input
-            type="text"
-            id="customerLocation"
-            placeholder="City / Town / Village"
-        >
+        <p class="grand-total">
+          <span>Total:</span>
+          <strong id="grandTotal">₹0</strong>
+        </p>
 
-        <h3>💳 Payment Method</h3>
+      </div>
 
-        <label class="payment">
-            <input type="radio" name="payment" value="COD" checked>
-            Cash on Delivery
+      <button
+        type="button"
+        class="checkout-button"
+        onclick="openCheckout()">
+
+        Proceed to Checkout
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkoutModal" class="modal">
+
+    <div class="modal-content checkout-content">
+
+      <button
+        type="button"
+        class="close-button"
+        onclick="closeCheckout()">
+        ×
+      </button>
+
+      <h2>
+        📦 Checkout
+      </h2>
+
+      <p>
+        Please enter your delivery details.
+      </p>
+
+
+      <label for="customerName">
+        Full Name
+      </label>
+
+      <input
+        type="text"
+        id="customerName"
+        placeholder="Enter your name">
+
+
+      <label for="customerPhone">
+        Phone Number
+      </label>
+
+      <input
+        type="tel"
+        id="customerPhone"
+        placeholder="Enter phone number">
+
+
+      <label for="customerAddress">
+        Address
+      </label>
+
+      <textarea
+        id="customerAddress"
+        placeholder="Enter full delivery address"></textarea>
+
+
+      <label for="customerLocation">
+        Location / City
+      </label>
+
+      <input
+        type="text"
+        id="customerLocation"
+        placeholder="Enter city / location">
+
+
+      <h3 class="payment-heading">
+        Payment Method
+      </h3>
+
+
+      <div class="payment-options">
+
+        <label>
+
+          <input
+            type="radio"
+            name="payment"
+            value="COD"
+            checked>
+
+          💵 Cash on Delivery
+
         </label>
 
-        <label class="payment">
-            <input type="radio" name="payment" value="UPI">
-            UPI Payment
+
+        <label>
+
+          <input
+            type="radio"
+            name="payment"
+            value="UPI">
+
+          📱 UPI Payment
+
         </label>
 
-        <div class="checkout-total">
-            <span>Total Amount</span>
-            <strong>₹<span id="checkoutTotal">0</span></strong>
-        </div>
-
-        <button class="checkout-btn" onclick="placeOrder()">
-            ✅ Place Order
-        </button>
-
-    </div>
-</div>
+      </div>
 
 
-<!-- SUCCESS MODAL -->
+      <div class="checkout-total">
 
-<div id="successModal" class="modal">
+        <span>
+          Order Total
+        </span>
 
-    <div class="modal-box success">
+        <strong id="checkoutTotal">
+          ₹0
+        </strong>
 
-        <div class="success-icon">✓</div>
+      </div>
 
-        <h2>Order Placed Successfully!</h2>
 
-        <p>Thank you for choosing BuildMart.</p>
+      <button
+        type="button"
+        class="place-order-button"
+        onclick="placeOrder()">
 
-        <div class="order-details">
+        🛍️ Place Order
 
-            <p>
-                <strong>Order ID:</strong>
-                <span id="orderId"></span>
-            </p>
-
-            <p>
-                <strong>Customer:</strong>
-                <span id="orderCustomer"></span>
-            </p>
-
-            <p>
-                <strong>Total:</strong>
-                ₹<span id="orderTotal"></span>
-            </p>
-
-            <p>
-                <strong>Payment:</strong>
-                <span id="orderPayment"></span>
-            </p>
-
-            <p>
-                <strong>Status:</strong>
-                <span class="status">Order Received</span>
-            </p>
-
-        </div>
-
-        <button class="checkout-btn" onclick="closeSuccess()">
-            Continue Shopping
-        </button>
+      </button>
 
     </div>
-</div>
+
+  </div>
 
 
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>S
+  <!-- SUCCESS MODAL -->
+  <div id="successModal" class="modal">
+
+    <div class="modal-content success-content">
+
+      <div class="success-icon">
+        ✅
+      </div>
+
+      <h2>
+        Order Placed Successfully!
+      </h2>
+
+      <p>
+        Thank you for shopping with BuildMart.
+      </p>
+
+
+      <div class="order-details">
+
+        <p>
+          Order ID:
+          <strong id="orderId"></strong>
+        </p>
+
+        <p>
+          Customer:
+          <strong id="orderCustomer"></strong>
+        </p>
+
+        <p>
+          Total:
+          <strong id="orderTotal"></strong>
+        </p>
+
+        <p>
+          Payment:
+          <strong id="orderPayment"></strong>
+        </p>
+
+      </div>
+
+
+      <div
+        id="upiPaymentBox"
+        class="upi-box"
+        style="display:none;">
+
+        <h3>
+          📱 Pay using UPI
+        </h3>
+
+        <p>
+          Amount:
+          <strong id="upiAmount"></strong>
+        </p>
+
+        <p class="upi-id">
+          UPI ID:
+          <strong>9848676751@fam</strong>
+        </p>
+
+        <button
+          type="button"
+          onclick="payWithUPI()"
+          class="upi-pay-button">
+
+          💳 Pay Now with UPI
+
+        </button>
+
+        <p class="upi-note">
+          UPI app open ayyaka payment complete cheyyandi.
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-success-button"
+        onclick="closeSuccess()">
+
+        Continue Shopping
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- FIREBASE -->
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+
+  <!-- BUILDMART SCRIPT -->
+
+  <script src="./script.js"></script>
+
 </body>
+
 </html>
