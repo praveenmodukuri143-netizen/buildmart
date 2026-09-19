@@ -1,3 +1,8 @@
+// ===============================
+// BUILD MART - script.js
+// ===============================
+
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
   authDomain: "buildmart-f394b.firebaseapp.com",
@@ -8,29 +13,28 @@ const firebaseConfig = {
   measurementId: "G-JVRDZ49BC0"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const db = firebase.firestore();
-
-let cart = JSON.parse(localStorage.getItem("buildmartCart")) || [];
 
 
 // ===============================
 // CART
 // ===============================
 
+let cart = JSON.parse(localStorage.getItem("buildmartCart")) || [];
+
 function saveCart() {
-  localStorage.setItem(
-    "buildmartCart",
-    JSON.stringify(cart)
-  );
+  localStorage.setItem("buildmartCart", JSON.stringify(cart));
 }
 
 
+// Add product to cart
 function addToCart(name, price) {
-
-  const existing =
-    cart.find(item => item.name === name);
+  const existing = cart.find(item => item.name === name);
 
   if (existing) {
     existing.quantity += 1;
@@ -43,100 +47,124 @@ function addToCart(name, price) {
   }
 
   saveCart();
-
   renderCart();
 
-  alert(name + " added to cart.");
+  alert(name + " added to cart!");
 }
 
 
+// Open cart
 function openCart() {
+  const cartModal = document.getElementById("cartModal");
+
+  if (cartModal) {
+    cartModal.style.display = "flex";
+  }
 
   renderCart();
-
-  const modal =
-    document.getElementById("cartModal");
-
-  if (modal) {
-    modal.style.display = "flex";
-  }
 }
 
 
+// Close cart
 function closeCart() {
+  const cartModal = document.getElementById("cartModal");
 
-  const modal =
-    document.getElementById("cartModal");
-
-  if (modal) {
-    modal.style.display = "none";
+  if (cartModal) {
+    cartModal.style.display = "none";
   }
 }
 
 
+// Render cart
 function renderCart() {
-
-  const cartItems =
-    document.getElementById("cartItems");
+  const cartItems = document.getElementById("cartItems");
+  const cartCount = document.getElementById("cartCount");
 
   if (!cartItems) return;
 
   if (cart.length === 0) {
+    cartItems.innerHTML = `
+      <p style="text-align:center;padding:30px;">
+        Your cart is empty.
+      </p>
+    `;
 
-    cartItems.innerHTML =
-      "<p>Your cart is empty.</p>";
+    if (cartCount) {
+      cartCount.textContent = "0";
+    }
 
     updateCartTotals();
-
     return;
   }
 
-  cartItems.innerHTML = "";
+  let totalItems = 0;
 
-  cart.forEach((item, index) => {
+  cartItems.innerHTML = cart.map((item, index) => {
 
-    const div =
-      document.createElement("div");
+    totalItems += item.quantity;
 
-    div.className = "cart-item";
+    return `
+      <div class="cart-item" style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:10px;
+        padding:12px 0;
+        border-bottom:1px solid #ddd;
+      ">
 
-    div.innerHTML = `
-      <div>
-        <strong>${item.name}</strong>
-        <br>
-        ₹${Number(item.price).toLocaleString("en-IN")}
+        <div style="flex:1;">
+          <strong>${item.name}</strong>
+          <div>₹${Number(item.price).toFixed(2)}</div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;">
+
+          <button
+            onclick="changeQuantity(${index}, -1)"
+            style="padding:5px 10px;"
+          >
+            −
+          </button>
+
+          <span>${item.quantity}</span>
+
+          <button
+            onclick="changeQuantity(${index}, 1)"
+            style="padding:5px 10px;"
+          >
+            +
+          </button>
+
+        </div>
+
+        <button
+          onclick="removeFromCart(${index})"
+          style="
+            background:#e53935;
+            color:white;
+            border:none;
+            padding:6px 10px;
+            border-radius:5px;
+            cursor:pointer;
+          "
+        >
+          Remove
+        </button>
+
       </div>
-
-      <div>
-        <button onclick="changeQuantity(${index}, -1)">−</button>
-
-        <span style="margin:0 10px;">
-          ${item.quantity}
-        </span>
-
-        <button onclick="changeQuantity(${index}, 1)">+</button>
-      </div>
-
-      <div>
-        ₹${(
-          Number(item.price) *
-          Number(item.quantity)
-        ).toLocaleString("en-IN")}
-      </div>
-
-      <button onclick="removeFromCart(${index})">
-        ✕
-      </button>
     `;
+  }).join("");
 
-    cartItems.appendChild(div);
-
-  });
+  if (cartCount) {
+    cartCount.textContent = totalItems;
+  }
 
   updateCartTotals();
 }
 
 
+// Change quantity
 function changeQuantity(index, change) {
 
   if (!cart[index]) return;
@@ -148,68 +176,83 @@ function changeQuantity(index, change) {
   }
 
   saveCart();
-
   renderCart();
 }
 
 
+// Remove item
 function removeFromCart(index) {
+
+  if (!cart[index]) return;
 
   cart.splice(index, 1);
 
   saveCart();
-
   renderCart();
+}
+
+
+// ===============================
+// TOTALS
+// ===============================
+
+function calculateSubtotal() {
+
+  return cart.reduce((total, item) => {
+    return total + (Number(item.price) * Number(item.quantity));
+  }, 0);
+
+}
+
+
+function calculateDelivery(subtotal) {
+
+  if (subtotal <= 0) {
+    return 0;
+  }
+
+  // Free delivery above ₹5000
+  if (subtotal >= 5000) {
+    return 0;
+  }
+
+  return 100;
 }
 
 
 function updateCartTotals() {
 
-  let subtotal = 0;
+  const subtotal = calculateSubtotal();
+  const delivery = calculateDelivery(subtotal);
+  const total = subtotal + delivery;
 
-  cart.forEach(item => {
-
-    subtotal +=
-      Number(item.price) *
-      Number(item.quantity);
-
-  });
-
-  let delivery = 0;
-
-  if (subtotal > 0 && subtotal < 5000) {
-    delivery = 100;
-  }
-
-  const grandTotal =
-    subtotal + delivery;
-
-
-  const subtotalEl =
+  const subtotalElement =
     document.getElementById("cartSubtotal");
 
-  const deliveryEl =
+  const deliveryElement =
     document.getElementById("deliveryCharge");
 
-  const grandTotalEl =
-    document.getElementById("grandTotal");
+  const totalElement =
+    document.getElementById("cartTotal");
 
-
-  if (subtotalEl) {
-    subtotalEl.textContent =
-      "₹" + subtotal.toLocaleString("en-IN");
+  if (subtotalElement) {
+    subtotalElement.textContent =
+      "₹" + subtotal.toFixed(2);
   }
 
-  if (deliveryEl) {
-    deliveryEl.textContent =
-      "₹" + delivery.toLocaleString("en-IN");
+  if (deliveryElement) {
+    deliveryElement.textContent =
+      delivery === 0
+        ? "FREE"
+        : "₹" + delivery.toFixed(2);
   }
 
-  if (grandTotalEl) {
-    grandTotalEl.textContent =
-      "₹" + grandTotal.toLocaleString("en-IN");
+  if (totalElement) {
+    totalElement.textContent =
+      "₹" + total.toFixed(2);
   }
 
+  updateCheckoutTotal();
 }
 
 
@@ -226,11 +269,11 @@ function openCheckout() {
 
   closeCart();
 
-  const checkout =
+  const checkoutModal =
     document.getElementById("checkoutModal");
 
-  if (checkout) {
-    checkout.style.display = "flex";
+  if (checkoutModal) {
+    checkoutModal.style.display = "flex";
   }
 
   updateCheckoutTotal();
@@ -239,59 +282,79 @@ function openCheckout() {
 
 function closeCheckout() {
 
-  const checkout =
+  const checkoutModal =
     document.getElementById("checkoutModal");
 
-  if (checkout) {
-    checkout.style.display = "none";
+  if (checkoutModal) {
+    checkoutModal.style.display = "none";
   }
-
 }
 
 
+// Update checkout total
 function updateCheckoutTotal() {
 
-  let subtotal = 0;
-
-  cart.forEach(item => {
-
-    subtotal +=
-      Number(item.price) *
-      Number(item.quantity);
-
-  });
-
-  let delivery = 0;
-
-  if (subtotal > 0 && subtotal < 5000) {
-    delivery = 100;
-  }
-
-  const total =
-    subtotal + delivery;
-
+  const subtotal = calculateSubtotal();
+  const delivery = calculateDelivery(subtotal);
+  const total = subtotal + delivery;
 
   const checkoutTotal =
     document.getElementById("checkoutTotal");
 
   if (checkoutTotal) {
-
     checkoutTotal.textContent =
-      "₹" + total.toLocaleString("en-IN");
-
+      "₹" + total.toFixed(2);
   }
+}
+
+
+// ===============================
+// PAYMENT UI
+// ===============================
+
+function setupPaymentUI() {
+
+  const paymentRadios =
+    document.querySelectorAll(
+      'input[name="paymentMethod"]'
+    );
+
+  const upiBox =
+    document.getElementById("upiPaymentBox");
+
+  if (!paymentRadios.length) return;
+
+  paymentRadios.forEach(radio => {
+
+    radio.addEventListener("change", function () {
+
+      if (!upiBox) return;
+
+      if (this.value === "UPI") {
+        upiBox.style.display = "block";
+      } else {
+        upiBox.style.display = "none";
+      }
+
+    });
+
+  });
 
 }
 
 
+// ===============================
+// ORDER ID
+// ===============================
+
 function generateOrderId() {
 
-  const random =
+  return "BM" +
     Math.floor(
-      100000 + Math.random() * 900000
+      100000 +
+      Math.random() * 900000
     );
 
-  return "BM" + random;
 }
 
 
@@ -301,188 +364,148 @@ function generateOrderId() {
 
 async function placeOrder() {
 
-  if (cart.length === 0) {
-    alert("Your cart is empty.");
-    return;
-  }
-
-
-  const customerName =
-    document
-      .getElementById("customerName")
-      ?.value
-      .trim();
-
-  const customerPhone =
-    document
-      .getElementById("customerPhone")
-      ?.value
-      .trim();
-
-  const customerAddress =
-    document
-      .getElementById("customerAddress")
-      ?.value
-      .trim();
-
-  const customerLocation =
-    document
-      .getElementById("customerLocation")
-      ?.value
-      .trim();
-
-
-  if (
-    !customerName ||
-    !customerPhone ||
-    !customerAddress ||
-    !customerLocation
-  ) {
-
-    alert(
-      "Please fill all customer details."
-    );
-
-    return;
-  }
-
-
-  const paymentMethod =
-    document.querySelector(
-      'input[name="payment"]:checked'
-    )?.value;
-
-
-  if (!paymentMethod) {
-
-    alert(
-      "Please select a payment method."
-    );
-
-    return;
-  }
-
-
-  let subtotal = 0;
-
-  cart.forEach(item => {
-
-    subtotal +=
-      Number(item.price) *
-      Number(item.quantity);
-
-  });
-
-
-  let delivery = 0;
-
-  if (subtotal > 0 && subtotal < 5000) {
-    delivery = 100;
-  }
-
-
-  const grandTotal =
-    subtotal + delivery;
-
-
-  const orderId =
-    generateOrderId();
-
-
-  /*
-    IMPORTANT:
-
-    COD:
-    Order Received
-
-    UPI:
-    Payment Pending
-
-    We DO NOT mark UPI as paid here.
-  */
-
-  const initialStatus =
-    paymentMethod === "UPI"
-      ? "Payment Pending"
-      : "Order Received";
-
-
-  const createdAt =
-    firebase.firestore.FieldValue.serverTimestamp();
-
-
-  const orderData = {
-
-    orderId: orderId,
-
-    customerName: customerName,
-
-    customerPhone: customerPhone,
-
-    customerAddress: customerAddress,
-
-    customerLocation: customerLocation,
-
-    items: cart.map(item => ({
-      name: item.name,
-      price: Number(item.price),
-      quantity: Number(item.quantity)
-    })),
-
-    subtotal: subtotal,
-
-    delivery: delivery,
-
-    total: grandTotal,
-
-    paymentMethod: paymentMethod,
-
-    status: initialStatus,
-
-    createdAt: createdAt
-
-  };
-
-
-  /*
-    Public tracking data.
-    Customer can see only tracking information.
-  */
-
-  const publicOrderData = {
-
-    orderId: orderId,
-
-    items: cart.map(item => ({
-      name: item.name,
-      price: Number(item.price),
-      quantity: Number(item.quantity)
-    })),
-
-    total: grandTotal,
-
-    status: initialStatus,
-
-    createdAt: createdAt
-
-  };
-
-
   try {
 
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+
+    const customerName =
+      document.getElementById("customerName")?.value.trim();
+
+    const customerPhone =
+      document.getElementById("customerPhone")?.value.trim();
+
+    const customerAddress =
+      document.getElementById("customerAddress")?.value.trim();
+
+    const customerLocation =
+      document.getElementById("customerLocation")?.value.trim();
+
+
+    if (!customerName ||
+        !customerPhone ||
+        !customerAddress ||
+        !customerLocation) {
+
+      alert("Please fill all customer details.");
+      return;
+    }
+
+
+    const paymentRadio =
+      document.querySelector(
+        'input[name="paymentMethod"]:checked'
+      );
+
+
+    if (!paymentRadio) {
+
+      alert("Please select a payment method.");
+      return;
+    }
+
+
+    const paymentMethod =
+      paymentRadio.value;
+
+
+    const subtotal =
+      calculateSubtotal();
+
+    const delivery =
+      calculateDelivery(subtotal);
+
+    const grandTotal =
+      subtotal + delivery;
+
+
+    const orderId =
+      generateOrderId();
+
+
+    // UPI orders start as Payment Pending
+    // COD orders start as Order Received
+
+    const initialStatus =
+      paymentMethod === "UPI"
+        ? "Payment Pending"
+        : "Order Received";
+
+
+    // Order items
+    const items =
+      cart.map(item => ({
+        name: item.name,
+        price: Number(item.price),
+        quantity: Number(item.quantity)
+      }));
+
+
+    // Private order
+    const orderData = {
+
+      orderId: orderId,
+
+      customerName: customerName,
+
+      customerPhone: customerPhone,
+
+      customerAddress: customerAddress,
+
+      customerLocation: customerLocation,
+
+      items: items,
+
+      subtotal: subtotal,
+
+      delivery: delivery,
+
+      total: grandTotal,
+
+      paymentMethod: paymentMethod,
+
+      status: initialStatus,
+
+      createdAt:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    };
+
+
+    // Public tracking data
+    const publicOrderData = {
+
+      orderId: orderId,
+
+      status: initialStatus,
+
+      items: items,
+
+      total: grandTotal,
+
+      paymentMethod: paymentMethod,
+
+      createdAt:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    };
+
+
+    // Save both orders together
     const batch =
       db.batch();
 
 
     const privateOrderRef =
-      db
-        .collection("orders")
+      db.collection("orders")
         .doc(orderId);
 
 
     const publicOrderRef =
-      db
-        .collection("publicOrders")
+      db.collection("publicOrders")
         .doc(orderId);
 
 
@@ -501,9 +524,9 @@ async function placeOrder() {
     await batch.commit();
 
 
-    // =========================
+    // ==========================
     // COD
-    // =========================
+    // ==========================
 
     if (paymentMethod === "COD") {
 
@@ -519,36 +542,32 @@ async function placeOrder() {
     }
 
 
-    // =========================
+    // ==========================
     // UPI
-    // =========================
+    // ==========================
 
     if (paymentMethod === "UPI") {
 
       closeCheckout();
 
 
-      /*
-        IMPORTANT:
-
-        DO NOT show "Order Confirmed".
-
-        DO NOT clear cart.
-
-        Order remains Payment Pending
-        until actual payment verification.
-      */
-
       alert(
-        "Order created. Payment is Pending. Complete the UPI payment to continue."
+        "Order created.\n\n" +
+        "Payment is Pending.\n\n" +
+        "Complete the UPI payment to continue."
       );
 
 
+      // Open UPI payment
       payWithUPI(
         orderId,
         grandTotal
       );
 
+
+      // IMPORTANT:
+      // Cart is NOT cleared here.
+      // Payment is not automatically verified.
       return;
     }
 
@@ -556,103 +575,16 @@ async function placeOrder() {
   } catch (error) {
 
     console.error(
-      "Order Error:",
+      "Order error:",
       error
     );
 
     alert(
-      "Order could not be placed.\n\n" +
+      "Something went wrong while placing the order.\n\n" +
       error.message
     );
 
   }
-
-}
-
-
-// ===============================
-// COD SUCCESS ONLY
-// ===============================
-
-function showOrderSuccess(
-  orderId,
-  total,
-  paymentMethod
-) {
-
-  const successModal =
-    document.getElementById(
-      "successModal"
-    );
-
-  if (!successModal) return;
-
-
-  const orderIdEl =
-    document.getElementById(
-      "orderId"
-    );
-
-  const orderCustomerEl =
-    document.getElementById(
-      "orderCustomer"
-    );
-
-  const orderTotalEl =
-    document.getElementById(
-      "orderTotal"
-    );
-
-  const orderPaymentEl =
-    document.getElementById(
-      "orderPayment"
-    );
-
-
-  if (orderIdEl) {
-    orderIdEl.textContent =
-      orderId;
-  }
-
-  if (orderCustomerEl) {
-
-    orderCustomerEl.textContent =
-      document
-        .getElementById("customerName")
-        ?.value
-        .trim() || "";
-
-  }
-
-  if (orderTotalEl) {
-
-    orderTotalEl.textContent =
-      "₹" +
-      Number(total)
-        .toLocaleString("en-IN");
-
-  }
-
-  if (orderPaymentEl) {
-
-    orderPaymentEl.textContent =
-      paymentMethod;
-
-  }
-
-
-  const upiBox =
-    document.getElementById(
-      "upiPaymentBox"
-    );
-
-  if (upiBox) {
-    upiBox.style.display = "none";
-  }
-
-
-  successModal.style.display =
-    "flex";
 
 }
 
@@ -666,8 +598,9 @@ function payWithUPI(
   amount
 ) {
 
+  // Daddy's PhonePe UPI ID
   const upiId =
-    "9848676751@fam";
+    "9000158191@ibl";
 
 
   const upiUrl =
@@ -688,20 +621,17 @@ function payWithUPI(
 
     "&tn=" +
     encodeURIComponent(
-      "BuildMart Order " +
-      orderId
+      "BuildMart Order " + orderId
     );
 
 
-  /*
-    This opens a compatible UPI app
-    when the device/browser supports
-    UPI deep links.
+  console.log(
+    "UPI Payment URL:",
+    upiUrl
+  );
 
-    IMPORTANT:
-    This does NOT verify payment success.
-  */
 
+  // Open UPI app
   window.location.href =
     upiUrl;
 
@@ -709,25 +639,75 @@ function payWithUPI(
 
 
 // ===============================
-// SUCCESS MODAL CLOSE
+// SUCCESS MODAL
 // ===============================
 
-function closeSuccess() {
+function showOrderSuccess(
+  orderId,
+  amount,
+  paymentMethod
+) {
 
-  const modal =
-    document.getElementById(
-      "successModal"
+  const successModal =
+    document.getElementById("successModal");
+
+  if (!successModal) {
+
+    alert(
+      "Order placed successfully!\n\n" +
+      "Order ID: " + orderId +
+      "\nTotal: ₹" + amount.toFixed(2)
     );
 
-  if (modal) {
-    modal.style.display = "none";
+    return;
   }
+
+
+  const orderIdElement =
+    document.getElementById("orderId");
+
+  const orderTotalElement =
+    document.getElementById("orderTotal");
+
+  const paymentMethodElement =
+    document.getElementById("successPaymentMethod");
+
+
+  if (orderIdElement) {
+    orderIdElement.textContent =
+      orderId;
+  }
+
+
+  if (orderTotalElement) {
+    orderTotalElement.textContent =
+      "₹" + amount.toFixed(2);
+  }
+
+
+  if (paymentMethodElement) {
+    paymentMethodElement.textContent =
+      paymentMethod;
+  }
+
+
+  // Hide UPI box in success modal
+  const upiBox =
+    document.getElementById("upiPaymentBox");
+
+  if (upiBox) {
+    upiBox.style.display = "none";
+  }
+
+
+  successModal.style.display =
+    "flex";
 
 }
 
 
 // ===============================
-// CLEAR CART
+// CLEAR CART + FORM
 // ===============================
 
 function clearCartAndForm() {
@@ -759,60 +739,43 @@ function clearCartAndForm() {
   });
 
 
-  const checkout =
-    document.getElementById(
-      "checkoutModal"
+  // Reset payment method
+  const codRadio =
+    document.querySelector(
+      'input[name="paymentMethod"][value="COD"]'
     );
 
-  if (checkout) {
-    checkout.style.display = "none";
+
+  if (codRadio) {
+    codRadio.checked = true;
+  }
+
+
+  const upiBox =
+    document.getElementById("upiPaymentBox");
+
+
+  if (upiBox) {
+    upiBox.style.display =
+      "none";
   }
 
 }
 
 
 // ===============================
-// PAYMENT UI
+// CLOSE SUCCESS MODAL
 // ===============================
 
-function setupPaymentUI() {
+function closeSuccessModal() {
 
-  const paymentRadios =
-    document.querySelectorAll(
-      'input[name="payment"]'
-    );
+  const successModal =
+    document.getElementById("successModal");
 
-
-  paymentRadios.forEach(radio => {
-
-    radio.addEventListener(
-      "change",
-      function () {
-
-        const upiBox =
-          document.getElementById(
-            "upiPaymentBox"
-          );
-
-        if (!upiBox) return;
-
-
-        if (this.value === "UPI") {
-
-          upiBox.style.display =
-            "block";
-
-        } else {
-
-          upiBox.style.display =
-            "none";
-
-        }
-
-      }
-    );
-
-  });
+  if (successModal) {
+    successModal.style.display =
+      "none";
+  }
 
 }
 
