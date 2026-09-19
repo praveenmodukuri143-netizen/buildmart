@@ -1,7 +1,3 @@
-// ============================================
-// BUILDMART - FIREBASE
-// ============================================
-
 const firebaseConfig = {
   apiKey: "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
   authDomain: "buildmart-f394b.firebaseapp.com",
@@ -12,24 +8,16 @@ const firebaseConfig = {
   measurementId: "G-JVRDZ49BC0"
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 
+let cart = JSON.parse(localStorage.getItem("buildmartCart")) || [];
 
-// ============================================
+
+// ===============================
 // CART
-// ============================================
-
-let cart =
-  JSON.parse(localStorage.getItem("buildmartCart")) || [];
-
-
-// ============================================
-// SAVE CART
-// ============================================
+// ===============================
 
 function saveCart() {
   localStorage.setItem(
@@ -39,46 +27,14 @@ function saveCart() {
 }
 
 
-// ============================================
-// CART COUNT
-// ============================================
-
-function updateCartCount() {
-
-  const cartLink =
-    document.getElementById("cartLink");
-
-  if (!cartLink) return;
-
-  const totalItems =
-    cart.reduce(
-      (total, item) =>
-        total + item.quantity,
-      0
-    );
-
-  cartLink.textContent =
-    `🛒 Cart (${totalItems})`;
-}
-
-
-// ============================================
-// ADD TO CART
-// ============================================
-
 function addToCart(name, price) {
 
-  const existingItem =
-    cart.find(
-      item => item.name === name
-    );
+  const existing =
+    cart.find(item => item.name === name);
 
-  if (existingItem) {
-
-    existingItem.quantity += 1;
-
+  if (existing) {
+    existing.quantity += 1;
   } else {
-
     cart.push({
       name: name,
       price: Number(price),
@@ -87,49 +43,36 @@ function addToCart(name, price) {
   }
 
   saveCart();
-  updateCartCount();
 
-  alert(
-    `${name} added to cart!`
-  );
+  renderCart();
+
+  alert(name + " added to cart.");
 }
 
-
-// ============================================
-// OPEN CART
-// ============================================
 
 function openCart() {
 
-  const cartModal =
+  renderCart();
+
+  const modal =
     document.getElementById("cartModal");
 
-  if (cartModal) {
-    cartModal.style.display = "flex";
+  if (modal) {
+    modal.style.display = "flex";
   }
-
-  renderCart();
 }
 
-
-// ============================================
-// CLOSE CART
-// ============================================
 
 function closeCart() {
 
-  const cartModal =
+  const modal =
     document.getElementById("cartModal");
 
-  if (cartModal) {
-    cartModal.style.display = "none";
+  if (modal) {
+    modal.style.display = "none";
   }
 }
 
-
-// ============================================
-// RENDER CART
-// ============================================
 
 function renderCart() {
 
@@ -138,338 +81,262 @@ function renderCart() {
 
   if (!cartItems) return;
 
-  cartItems.innerHTML = "";
-
   if (cart.length === 0) {
 
-    cartItems.innerHTML = `
-      <div class="empty-cart">
-        <div class="empty-cart-icon">🛒</div>
-        <p>Your cart is empty.</p>
-      </div>
-    `;
+    cartItems.innerHTML =
+      "<p>Your cart is empty.</p>";
 
     updateCartTotals();
+
     return;
   }
 
+  cartItems.innerHTML = "";
 
-  cart.forEach(
-    (item, index) => {
+  cart.forEach((item, index) => {
 
-      const itemTotal =
-        item.price * item.quantity;
+    const div =
+      document.createElement("div");
 
-      const div =
-        document.createElement("div");
+    div.className = "cart-item";
 
-      div.className = "cart-item";
+    div.innerHTML = `
+      <div>
+        <strong>${item.name}</strong>
+        <br>
+        ₹${Number(item.price).toLocaleString("en-IN")}
+      </div>
 
-      div.innerHTML = `
+      <div>
+        <button onclick="changeQuantity(${index}, -1)">−</button>
 
-        <div class="cart-item-info">
+        <span style="margin:0 10px;">
+          ${item.quantity}
+        </span>
 
-          <strong>
-            ${item.name}
-          </strong>
+        <button onclick="changeQuantity(${index}, 1)">+</button>
+      </div>
 
-          <p>
-            ₹${item.price.toLocaleString("en-IN")}
-            × ${item.quantity}
-          </p>
+      <div>
+        ₹${(
+          Number(item.price) *
+          Number(item.quantity)
+        ).toLocaleString("en-IN")}
+      </div>
 
-        </div>
+      <button onclick="removeFromCart(${index})">
+        ✕
+      </button>
+    `;
 
-        <div class="cart-item-actions">
+    cartItems.appendChild(div);
 
-          <button
-            type="button"
-            onclick="decreaseQuantity(${index})">
-            −
-          </button>
-
-          <span>
-            ${item.quantity}
-          </span>
-
-          <button
-            type="button"
-            onclick="increaseQuantity(${index})">
-            +
-          </button>
-
-          <strong>
-            ₹${itemTotal.toLocaleString("en-IN")}
-          </strong>
-
-          <button
-            type="button"
-            onclick="removeFromCart(${index})">
-            ❌
-          </button>
-
-        </div>
-
-      `;
-
-      cartItems.appendChild(div);
-    }
-  );
+  });
 
   updateCartTotals();
 }
 
 
-// ============================================
-// INCREASE QUANTITY
-// ============================================
-
-function increaseQuantity(index) {
+function changeQuantity(index, change) {
 
   if (!cart[index]) return;
 
-  cart[index].quantity += 1;
+  cart[index].quantity += change;
 
-  saveCart();
-  renderCart();
-  updateCartCount();
-}
-
-
-// ============================================
-// DECREASE QUANTITY
-// ============================================
-
-function decreaseQuantity(index) {
-
-  if (!cart[index]) return;
-
-  if (cart[index].quantity > 1) {
-
-    cart[index].quantity -= 1;
-
-  } else {
-
+  if (cart[index].quantity <= 0) {
     cart.splice(index, 1);
   }
 
   saveCart();
+
   renderCart();
-  updateCartCount();
 }
 
 
-// ============================================
-// REMOVE ITEM
-// ============================================
-
 function removeFromCart(index) {
-
-  if (!cart[index]) return;
 
   cart.splice(index, 1);
 
   saveCart();
+
   renderCart();
-  updateCartCount();
 }
 
 
-// ============================================
-// CART TOTALS
-// ============================================
-
 function updateCartTotals() {
 
-  const subtotal =
-    cart.reduce(
-      (total, item) =>
-        total +
-        item.price *
-        item.quantity,
-      0
-    );
+  let subtotal = 0;
 
-  const delivery =
-    subtotal === 0
-      ? 0
-      : subtotal >= 5000
-        ? 0
-        : 100;
+  cart.forEach(item => {
+
+    subtotal +=
+      Number(item.price) *
+      Number(item.quantity);
+
+  });
+
+  let delivery = 0;
+
+  if (subtotal > 0 && subtotal < 5000) {
+    delivery = 100;
+  }
 
   const grandTotal =
     subtotal + delivery;
 
 
-  const subtotalElement =
-    document.getElementById(
-      "cartSubtotal"
-    );
+  const subtotalEl =
+    document.getElementById("cartSubtotal");
 
-  const deliveryElement =
-    document.getElementById(
-      "deliveryCharge"
-    );
+  const deliveryEl =
+    document.getElementById("deliveryCharge");
 
-  const grandTotalElement =
-    document.getElementById(
-      "grandTotal"
-    );
-
-  const checkoutTotalElement =
-    document.getElementById(
-      "checkoutTotal"
-    );
+  const grandTotalEl =
+    document.getElementById("grandTotal");
 
 
-  if (subtotalElement) {
-
-    subtotalElement.textContent =
-      `₹${subtotal.toLocaleString("en-IN")}`;
+  if (subtotalEl) {
+    subtotalEl.textContent =
+      "₹" + subtotal.toLocaleString("en-IN");
   }
 
-
-  if (deliveryElement) {
-
-    deliveryElement.textContent =
-      delivery === 0
-        ? "FREE"
-        : `₹${delivery}`;
+  if (deliveryEl) {
+    deliveryEl.textContent =
+      "₹" + delivery.toLocaleString("en-IN");
   }
 
-
-  if (grandTotalElement) {
-
-    grandTotalElement.textContent =
-      `₹${grandTotal.toLocaleString("en-IN")}`;
+  if (grandTotalEl) {
+    grandTotalEl.textContent =
+      "₹" + grandTotal.toLocaleString("en-IN");
   }
 
-
-  if (checkoutTotalElement) {
-
-    checkoutTotalElement.textContent =
-      `₹${grandTotal.toLocaleString("en-IN")}`;
-  }
 }
 
 
-// ============================================
-// OPEN CHECKOUT
-// ============================================
+// ===============================
+// CHECKOUT
+// ===============================
 
 function openCheckout() {
 
   if (cart.length === 0) {
-
-    alert(
-      "Your cart is empty."
-    );
-
+    alert("Your cart is empty.");
     return;
   }
 
   closeCart();
 
-  const checkoutModal =
-    document.getElementById(
-      "checkoutModal"
-    );
+  const checkout =
+    document.getElementById("checkoutModal");
 
-  if (checkoutModal) {
-
-    checkoutModal.style.display =
-      "flex";
+  if (checkout) {
+    checkout.style.display = "flex";
   }
 
-  updateCartTotals();
+  updateCheckoutTotal();
 }
 
-
-// ============================================
-// CLOSE CHECKOUT
-// ============================================
 
 function closeCheckout() {
 
-  const checkoutModal =
-    document.getElementById(
-      "checkoutModal"
-    );
+  const checkout =
+    document.getElementById("checkoutModal");
 
-  if (checkoutModal) {
-
-    checkoutModal.style.display =
-      "none";
+  if (checkout) {
+    checkout.style.display = "none";
   }
+
 }
 
 
-// ============================================
-// GENERATE ORDER ID
-// ============================================
+function updateCheckoutTotal() {
+
+  let subtotal = 0;
+
+  cart.forEach(item => {
+
+    subtotal +=
+      Number(item.price) *
+      Number(item.quantity);
+
+  });
+
+  let delivery = 0;
+
+  if (subtotal > 0 && subtotal < 5000) {
+    delivery = 100;
+  }
+
+  const total =
+    subtotal + delivery;
+
+
+  const checkoutTotal =
+    document.getElementById("checkoutTotal");
+
+  if (checkoutTotal) {
+
+    checkoutTotal.textContent =
+      "₹" + total.toLocaleString("en-IN");
+
+  }
+
+}
+
 
 function generateOrderId() {
 
-  return (
-    "BM" +
+  const random =
     Math.floor(
-      10000000 +
-      Math.random() * 90000000
-    )
-  );
+      100000 + Math.random() * 900000
+    );
+
+  return "BM" + random;
 }
 
 
-// ============================================
+// ===============================
 // PLACE ORDER
-// ============================================
+// ===============================
 
 async function placeOrder() {
 
-  const name =
+  if (cart.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+
+  const customerName =
     document
       .getElementById("customerName")
       ?.value
       .trim();
 
-  const phone =
+  const customerPhone =
     document
       .getElementById("customerPhone")
       ?.value
       .trim();
 
-  const address =
+  const customerAddress =
     document
       .getElementById("customerAddress")
       ?.value
       .trim();
 
-  const location =
+  const customerLocation =
     document
       .getElementById("customerLocation")
       ?.value
       .trim();
 
-  const paymentElement =
-    document.querySelector(
-      'input[name="payment"]:checked'
-    );
-
-  const payment =
-    paymentElement
-      ? paymentElement.value
-      : "COD";
-
-
-  // ========================================
-  // VALIDATION
-  // ========================================
 
   if (
-    !name ||
-    !phone ||
-    !address ||
-    !location
+    !customerName ||
+    !customerPhone ||
+    !customerAddress ||
+    !customerLocation
   ) {
 
     alert(
@@ -480,87 +347,87 @@ async function placeOrder() {
   }
 
 
-  if (cart.length === 0) {
+  const paymentMethod =
+    document.querySelector(
+      'input[name="payment"]:checked'
+    )?.value;
+
+
+  if (!paymentMethod) {
 
     alert(
-      "Your cart is empty."
+      "Please select a payment method."
     );
 
     return;
   }
 
 
-  // ========================================
-  // TOTAL
-  // ========================================
+  let subtotal = 0;
 
-  const subtotal =
-    cart.reduce(
-      (total, item) =>
-        total +
-        item.price *
-        item.quantity,
-      0
-    );
+  cart.forEach(item => {
 
-  const delivery =
-    subtotal >= 5000
-      ? 0
-      : 100;
+    subtotal +=
+      Number(item.price) *
+      Number(item.quantity);
+
+  });
+
+
+  let delivery = 0;
+
+  if (subtotal > 0 && subtotal < 5000) {
+    delivery = 100;
+  }
+
 
   const grandTotal =
     subtotal + delivery;
 
 
-  // ========================================
-  // ORDER ID
-  // ========================================
-
   const orderId =
     generateOrderId();
 
 
-  // ========================================
-  // STATUS
-  // ========================================
-
   /*
+    IMPORTANT:
+
     COD:
     Order Received
 
     UPI:
     Payment Pending
 
-    IMPORTANT:
-    UPI payment is NOT marked
-    successful automatically.
+    We DO NOT mark UPI as paid here.
   */
 
   const initialStatus =
-    payment === "UPI"
+    paymentMethod === "UPI"
       ? "Payment Pending"
       : "Order Received";
 
 
-  // ========================================
-  // PRIVATE ORDER
-  // ========================================
+  const createdAt =
+    firebase.firestore.FieldValue.serverTimestamp();
 
-  const order = {
+
+  const orderData = {
 
     orderId: orderId,
 
-    customerName: name,
+    customerName: customerName,
 
-    phone: phone,
+    customerPhone: customerPhone,
 
-    address: address,
+    customerAddress: customerAddress,
 
-    location: location,
+    customerLocation: customerLocation,
 
-    payment: payment,
-
-    items: cart,
+    items: cart.map(item => ({
+      name: item.name,
+      price: Number(item.price),
+      quantity: Number(item.quantity)
+    })),
 
     subtotal: subtotal,
 
@@ -568,43 +435,40 @@ async function placeOrder() {
 
     total: grandTotal,
 
+    paymentMethod: paymentMethod,
+
     status: initialStatus,
 
-    date: new Date().toLocaleString()
+    createdAt: createdAt
 
   };
 
 
-  // ========================================
-  // PUBLIC ORDER
-  // ========================================
+  /*
+    Public tracking data.
+    Customer can see only tracking information.
+  */
 
-  const publicOrder = {
+  const publicOrderData = {
 
     orderId: orderId,
 
+    items: cart.map(item => ({
+      name: item.name,
+      price: Number(item.price),
+      quantity: Number(item.quantity)
+    })),
+
+    total: grandTotal,
+
     status: initialStatus,
 
-    date: order.date,
-
-    items: cart,
-
-    total: grandTotal
+    createdAt: createdAt
 
   };
 
 
   try {
-
-    console.log(
-      "Saving order:",
-      orderId
-    );
-
-
-    // ======================================
-    // FIRESTORE BATCH
-    // ======================================
 
     const batch =
       db.batch();
@@ -616,12 +480,6 @@ async function placeOrder() {
         .doc(orderId);
 
 
-    batch.set(
-      privateOrderRef,
-      order
-    );
-
-
     const publicOrderRef =
       db
         .collection("publicOrders")
@@ -629,35 +487,30 @@ async function placeOrder() {
 
 
     batch.set(
-      publicOrderRef,
-      publicOrder
+      privateOrderRef,
+      orderData
     );
 
 
-    // ======================================
-    // SAVE BOTH ORDERS
-    // ======================================
+    batch.set(
+      publicOrderRef,
+      publicOrderData
+    );
+
 
     await batch.commit();
 
 
-    console.log(
-      "Order saved successfully:",
-      orderId
-    );
+    // =========================
+    // COD
+    // =========================
 
-
-    // ======================================
-    // COD ORDER
-    // ======================================
-
-    if (payment === "COD") {
+    if (paymentMethod === "COD") {
 
       showOrderSuccess(
         orderId,
-        name,
         grandTotal,
-        "COD"
+        "Cash on Delivery"
       );
 
       clearCartAndForm();
@@ -666,11 +519,11 @@ async function placeOrder() {
     }
 
 
-    // ======================================
-    // UPI ORDER
-    // ======================================
+    // =========================
+    // UPI
+    // =========================
 
-    if (payment === "UPI") {
+    if (paymentMethod === "UPI") {
 
       closeCheckout();
 
@@ -678,20 +531,16 @@ async function placeOrder() {
       /*
         IMPORTANT:
 
-        We DO NOT show "Payment Successful".
+        DO NOT show "Order Confirmed".
 
-        Order remains:
+        DO NOT clear cart.
 
-        Payment Pending
-
-        until a real payment gateway
-        verifies the payment.
+        Order remains Payment Pending
+        until actual payment verification.
       */
 
       alert(
-        "Order created successfully.\n\n" +
-        "Payment Status: Payment Pending\n\n" +
-        "Your UPI payment screen will open next."
+        "Order created. Payment is Pending. Complete the UPI payment to continue."
       );
 
 
@@ -700,15 +549,6 @@ async function placeOrder() {
         grandTotal
       );
 
-
-      /*
-        Do NOT clear the cart here.
-
-        If payment fails or user closes
-        the UPI app, the order remains
-        Payment Pending.
-      */
-
       return;
     }
 
@@ -716,129 +556,115 @@ async function placeOrder() {
   } catch (error) {
 
     console.error(
-      "Firestore order error:",
+      "Order Error:",
       error
     );
 
-
     alert(
-      "Order save avvaledu. Firebase Firestore Rules check cheyyandi."
+      "Order could not be placed.\n\n" +
+      error.message
     );
+
   }
+
 }
 
 
-// ============================================
-// SHOW COD SUCCESS
-// ============================================
+// ===============================
+// COD SUCCESS ONLY
+// ===============================
 
 function showOrderSuccess(
   orderId,
-  name,
-  grandTotal,
-  payment
+  total,
+  paymentMethod
 ) {
-
-  const orderIdElement =
-    document.getElementById(
-      "orderId"
-    );
-
-  const orderCustomerElement =
-    document.getElementById(
-      "orderCustomer"
-    );
-
-  const orderTotalElement =
-    document.getElementById(
-      "orderTotal"
-    );
-
-  const orderPaymentElement =
-    document.getElementById(
-      "orderPayment"
-    );
-
-
-  if (orderIdElement) {
-
-    orderIdElement.textContent =
-      orderId;
-  }
-
-
-  if (orderCustomerElement) {
-
-    orderCustomerElement.textContent =
-      name;
-  }
-
-
-  if (orderTotalElement) {
-
-    orderTotalElement.textContent =
-      `₹${grandTotal.toLocaleString("en-IN")}`;
-  }
-
-
-  if (orderPaymentElement) {
-
-    orderPaymentElement.textContent =
-      payment;
-  }
-
-
-  // ========================================
-  // HIDE UPI BOX
-  // ========================================
-
-  const upiPaymentBox =
-    document.getElementById(
-      "upiPaymentBox"
-    );
-
-  if (upiPaymentBox) {
-
-    upiPaymentBox.style.display =
-      "none";
-  }
-
-
-  // ========================================
-  // SHOW SUCCESS MODAL
-  // ========================================
 
   const successModal =
     document.getElementById(
       "successModal"
     );
 
-  if (successModal) {
+  if (!successModal) return;
 
-    successModal.style.display =
-      "flex";
+
+  const orderIdEl =
+    document.getElementById(
+      "orderId"
+    );
+
+  const orderCustomerEl =
+    document.getElementById(
+      "orderCustomer"
+    );
+
+  const orderTotalEl =
+    document.getElementById(
+      "orderTotal"
+    );
+
+  const orderPaymentEl =
+    document.getElementById(
+      "orderPayment"
+    );
+
+
+  if (orderIdEl) {
+    orderIdEl.textContent =
+      orderId;
   }
+
+  if (orderCustomerEl) {
+
+    orderCustomerEl.textContent =
+      document
+        .getElementById("customerName")
+        ?.value
+        .trim() || "";
+
+  }
+
+  if (orderTotalEl) {
+
+    orderTotalEl.textContent =
+      "₹" +
+      Number(total)
+        .toLocaleString("en-IN");
+
+  }
+
+  if (orderPaymentEl) {
+
+    orderPaymentEl.textContent =
+      paymentMethod;
+
+  }
+
+
+  const upiBox =
+    document.getElementById(
+      "upiPaymentBox"
+    );
+
+  if (upiBox) {
+    upiBox.style.display = "none";
+  }
+
+
+  successModal.style.display =
+    "flex";
+
 }
 
 
-// ============================================
+// ===============================
 // UPI PAYMENT
-// ============================================
+// ===============================
 
 function payWithUPI(
   orderId,
   amount
 ) {
-
-  if (!orderId || !amount) {
-
-    alert(
-      "Payment details not found."
-    );
-
-    return;
-  }
-
 
   const upiId =
     "9848676751@fam";
@@ -846,13 +672,20 @@ function payWithUPI(
 
   const upiUrl =
     "upi://pay" +
+
     "?pa=" +
     encodeURIComponent(upiId) +
+
     "&pn=" +
     encodeURIComponent("BuildMart") +
+
     "&am=" +
-    encodeURIComponent(amount) +
+    encodeURIComponent(
+      Number(amount).toFixed(2)
+    ) +
+
     "&cu=INR" +
+
     "&tn=" +
     encodeURIComponent(
       "BuildMart Order " +
@@ -860,56 +693,51 @@ function payWithUPI(
     );
 
 
-  console.log(
-    "Opening UPI payment:",
-    upiUrl
-  );
+  /*
+    This opens a compatible UPI app
+    when the device/browser supports
+    UPI deep links.
 
-
-  // ========================================
-  // OPEN UPI APP
-  // ========================================
+    IMPORTANT:
+    This does NOT verify payment success.
+  */
 
   window.location.href =
     upiUrl;
+
 }
 
 
-// ============================================
-// CLOSE SUCCESS
-// ============================================
+// ===============================
+// SUCCESS MODAL CLOSE
+// ===============================
 
 function closeSuccess() {
 
-  const successModal =
+  const modal =
     document.getElementById(
       "successModal"
     );
 
-  if (successModal) {
-
-    successModal.style.display =
-      "none";
+  if (modal) {
+    modal.style.display = "none";
   }
+
 }
 
 
-// ============================================
-// CLEAR CART + FORM
-// ============================================
+// ===============================
+// CLEAR CART
+// ===============================
 
 function clearCartAndForm() {
-
-  // CLEAR CART
 
   cart = [];
 
   saveCart();
 
-  updateCartCount();
+  renderCart();
 
-
-  // CLEAR FORM
 
   const fields = [
     "customerName",
@@ -919,58 +747,89 @@ function clearCartAndForm() {
   ];
 
 
-  fields.forEach(
-    function (id) {
+  fields.forEach(id => {
 
-      const element =
-        document.getElementById(id);
+    const element =
+      document.getElementById(id);
 
-      if (element) {
-
-        element.value = "";
-      }
+    if (element) {
+      element.value = "";
     }
-  );
+
+  });
+
+
+  const checkout =
+    document.getElementById(
+      "checkoutModal"
+    );
+
+  if (checkout) {
+    checkout.style.display = "none";
+  }
+
 }
 
 
-// ============================================
-// INITIAL PAGE LOAD
-// ============================================
+// ===============================
+// PAYMENT UI
+// ===============================
+
+function setupPaymentUI() {
+
+  const paymentRadios =
+    document.querySelectorAll(
+      'input[name="payment"]'
+    );
+
+
+  paymentRadios.forEach(radio => {
+
+    radio.addEventListener(
+      "change",
+      function () {
+
+        const upiBox =
+          document.getElementById(
+            "upiPaymentBox"
+          );
+
+        if (!upiBox) return;
+
+
+        if (this.value === "UPI") {
+
+          upiBox.style.display =
+            "block";
+
+        } else {
+
+          upiBox.style.display =
+            "none";
+
+        }
+
+      }
+    );
+
+  });
+
+}
+
+
+// ===============================
+// PAGE LOAD
+// ===============================
 
 document.addEventListener(
   "DOMContentLoaded",
   function () {
 
-    updateCartCount();
+    renderCart();
 
+    setupPaymentUI();
 
-    const cartLink =
-      document.getElementById(
-        "cartLink"
-      );
-
-
-    if (cartLink) {
-
-      cartLink.addEventListener(
-        "click",
-        function (event) {
-
-          event.preventDefault();
-
-          openCart();
-        }
-      );
-    }
-
-
-    /*
-      Make sure cart totals
-      are correct when page loads.
-    */
-
-    updateCartTotals();
+    updateCheckoutTotal();
 
   }
 );
