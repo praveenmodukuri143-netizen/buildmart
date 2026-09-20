@@ -832,8 +832,9 @@ function getMaterialVisual(name) {
   const value = String(name || "").toLowerCase();
   let image = "";
 
-  if (value.includes("cement varra")) {
-    image = "assets/products/cement-varra.png";
+  if (value.includes("cement ring wells") || value.includes("cement varra")) {
+  image = "assets/products/cement-ring-wells.png";
+}
   } else if (value.includes("ramco") || (value.includes("cement") && !value.includes("ring") && !value.includes("varra"))) {
     image = "assets/products/ramco-cement.png";
   } else if (value.includes("ring") || value.includes("well")) {
