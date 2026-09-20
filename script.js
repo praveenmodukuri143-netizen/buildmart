@@ -1,3 +1,5 @@
+// ================= FIREBASE =================
+
 const firebaseConfig = {
   apiKey: "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
   authDomain: "buildmart-f394b.firebaseapp.com",
@@ -14,6 +16,9 @@ if (!firebase.apps.length) {
 
 const db = firebase.firestore();
 
+
+// ================= SETTINGS =================
+
 const UPI_ID = "9000158191@ibl";
 const STORE_NAME = "Srinivasa Building Materials";
 
@@ -22,11 +27,17 @@ let cart = [];
 let deliverySlabs = [];
 let freeDeliveryAbove = 0;
 
+
+// ================= LOAD CART =================
+
 try {
   cart = JSON.parse(localStorage.getItem("buildmartCart")) || [];
 } catch {
   cart = [];
 }
+
+
+// ================= DOM =================
 
 const productsContainer =
   document.getElementById("productsContainer");
@@ -43,6 +54,8 @@ const checkoutModal =
 const successModal =
   document.getElementById("successModal");
 
+
+// ================= PRODUCTS =================
 
 function loadProducts() {
 
@@ -91,6 +104,8 @@ function loadProducts() {
 }
 
 
+// ================= RENDER PRODUCTS =================
+
 function renderProducts() {
 
   if (!productsContainer) return;
@@ -117,47 +132,18 @@ function renderProducts() {
       const price = Number(product.price || 0);
       const unit = product.unit || "";
       const stock = Number(product.stock || 0);
-
       const minOrder = Math.max(
         1,
         Number(product.minOrder || 1)
       );
 
-      const productImageMap = {
-        "Ramco Cement": "assets/products/ramco-cement.png",
-        "Sand": "assets/products/sand.png",
-        "Red Bricks": "assets/products/red-bricks.png",
-        "Dust": "assets/products/dust.png",
-        "Baby Chips": "assets/products/baby-chips.png",
-        "3/4 Stones": "assets/products/3-4-stones.png",
-
-        "Iron 6mm Light": "assets/products/iron-6mm-light.png",
-        "Iron 6mm Heavy": "assets/products/iron-6mm-heavy.png",
-        "Iron 8mm Light": "assets/products/iron-8mm-light.png",
-        "Iron 8mm Heavy": "assets/products/iron-8mm-heavy.png",
-        "Iron 10mm": "assets/products/iron-10mm.png",
-        "Iron 12mm": "assets/products/iron-12mm.png",
-
-        "Cement Varra 30": "assets/products/cement-varra-30.png",
-        "Cement Varra 33": "assets/products/cement-varra-33.png",
-        "Cement Varra 36": "assets/products/cement-varra-36.png",
-        "Cement Varra 39": "assets/products/cement-varra-39.png"
-      };
-
-      const imagePath =
-        productImageMap[product.name];
-
-      const image = imagePath
-        ? `<img src="${imagePath}"
-                alt="${escapeHtml(product.name || "Product")}"
-                onerror="this.parentElement.innerHTML='🧱'">`
-        : "🧱";
+      const materialVisual = getMaterialVisual(product.name);
 
       return `
         <div class="product-card">
 
           <div class="product-image">
-            ${image}
+            ${materialVisual}
           </div>
 
           <h3>
@@ -181,10 +167,10 @@ function renderProducts() {
 
           <button
             type="button"
-            onclick="addToCart('${product.id}')">
+            onclick="addToCart('${product.id}')"
+            ${stock <= 0 ? "" : ""}>
 
             🛒 Add to Cart
-
           </button>
 
         </div>
@@ -193,6 +179,8 @@ function renderProducts() {
     }).join("");
 }
 
+
+// ================= ADD TO CART =================
 
 function addToCart(productId) {
 
@@ -210,10 +198,7 @@ function addToCart(productId) {
   }
 
   const minOrder =
-    Math.max(
-      1,
-      Number(product.minOrder || 1)
-    );
+    Math.max(1, Number(product.minOrder || 1));
 
   const stock =
     Number(product.stock || 0);
@@ -242,25 +227,18 @@ function addToCart(productId) {
       cart.find(item => item.id === productId);
 
     if (item.qty > stock) {
-
       item.qty = stock;
-
-      alert(
-        "Only " +
-        stock +
-        " available."
-      );
+      alert("Only " + stock + " available.");
     }
   }
 
   saveCart();
 
-  alert(
-    product.name +
-    " added to cart."
-  );
+  alert(product.name + " added to cart.");
 }
 
+
+// ================= SAVE CART =================
 
 function saveCart() {
 
@@ -275,15 +253,15 @@ function saveCart() {
 }
 
 
+// ================= CART COUNT =================
+
 function updateCartCount() {
 
   if (!cartLink) return;
 
   const count =
     cart.reduce(
-      (total, item) =>
-        total +
-        Number(item.qty || 0),
+      (total, item) => total + Number(item.qty || 0),
       0
     );
 
@@ -291,6 +269,8 @@ function updateCartCount() {
     `🛒 Cart (${count})`;
 }
 
+
+// ================= OPEN CART =================
 
 function openCart() {
 
@@ -304,6 +284,8 @@ function openCart() {
 }
 
 
+// ================= CLOSE CART =================
+
 function closeCart() {
 
   if (cartModal) {
@@ -311,6 +293,8 @@ function closeCart() {
   }
 }
 
+
+// ================= CART ITEMS =================
 
 function renderCartItems() {
 
@@ -339,18 +323,14 @@ function renderCartItems() {
         <div class="cart-item">
 
           <div>
-
             <strong>
               ${escapeHtml(item.name)}
             </strong>
 
             <p>
               ₹${Number(item.price || 0).toLocaleString("en-IN")}
-              ${item.unit
-                ? " / " + escapeHtml(item.unit)
-                : ""}
+              ${item.unit ? " / " + escapeHtml(item.unit) : ""}
             </p>
-
           </div>
 
           <div>
@@ -390,13 +370,14 @@ function renderCartItems() {
 }
 
 
+// ================= CHANGE QTY =================
+
 function changeQty(index, change) {
 
   if (!cart[index]) return;
 
   cart[index].qty =
-    Number(cart[index].qty || 0) +
-    change;
+    Number(cart[index].qty || 0) + change;
 
   if (cart[index].qty <= 0) {
     cart.splice(index, 1);
@@ -408,6 +389,8 @@ function changeQty(index, change) {
 }
 
 
+// ================= REMOVE =================
+
 function removeFromCart(index) {
 
   cart.splice(index, 1);
@@ -417,6 +400,8 @@ function removeFromCart(index) {
   renderCartItems();
 }
 
+
+// ================= DELIVERY SETTINGS =================
 
 function loadDeliverySettings() {
 
@@ -435,15 +420,12 @@ function loadDeliverySettings() {
             : [];
 
         freeDeliveryAbove =
-          Number(
-            data.freeDeliveryAbove || 0
-          );
+          Number(data.freeDeliveryAbove || 0);
 
         updateCartTotals();
       },
 
       error => {
-
         console.error(
           "Delivery settings error:",
           error
@@ -453,16 +435,18 @@ function loadDeliverySettings() {
 }
 
 
+// ================= DELIVERY =================
+
 function getDistance() {
+
+  // Current checkout has only text location.
+  // Real map distance can be added later.
 
   return 0;
 }
 
 
-function calculateDelivery(
-  distanceKm,
-  subtotal
-) {
+function calculateDelivery(distanceKm, subtotal) {
 
   if (
     freeDeliveryAbove > 0 &&
@@ -478,10 +462,8 @@ function calculateDelivery(
   const slab =
     deliverySlabs.find(
       s =>
-        distanceKm >=
-          Number(s.fromKm || 0) &&
-        distanceKm <=
-          Number(s.toKm || 0)
+        distanceKm >= Number(s.fromKm || 0) &&
+        distanceKm <= Number(s.toKm || 0)
     );
 
   return slab
@@ -489,6 +471,8 @@ function calculateDelivery(
     : 0;
 }
 
+
+// ================= TOTALS =================
 
 function getCartSubtotal() {
 
@@ -520,63 +504,45 @@ function updateCartTotals() {
     subtotal + delivery;
 
   const subtotalEl =
-    document.getElementById(
-      "cartSubtotal"
-    );
+    document.getElementById("cartSubtotal");
 
   const deliveryEl =
-    document.getElementById(
-      "deliveryCharge"
-    );
+    document.getElementById("deliveryCharge");
 
   const grandEl =
-    document.getElementById(
-      "grandTotal"
-    );
+    document.getElementById("grandTotal");
 
   const checkoutEl =
-    document.getElementById(
-      "checkoutTotal"
-    );
+    document.getElementById("checkoutTotal");
 
   if (subtotalEl) {
-
     subtotalEl.textContent =
-      "₹" +
-      subtotal.toLocaleString("en-IN");
+      "₹" + subtotal.toLocaleString("en-IN");
   }
 
   if (deliveryEl) {
-
     deliveryEl.textContent =
-      "₹" +
-      delivery.toLocaleString("en-IN");
+      "₹" + delivery.toLocaleString("en-IN");
   }
 
   if (grandEl) {
-
     grandEl.textContent =
-      "₹" +
-      grandTotal.toLocaleString("en-IN");
+      "₹" + grandTotal.toLocaleString("en-IN");
   }
 
   if (checkoutEl) {
-
     checkoutEl.textContent =
-      "₹" +
-      grandTotal.toLocaleString("en-IN");
+      "₹" + grandTotal.toLocaleString("en-IN");
   }
 }
 
 
+// ================= CHECKOUT =================
+
 function openCheckout() {
 
   if (!cart.length) {
-
-    alert(
-      "Your cart is empty."
-    );
-
+    alert("Your cart is empty.");
     return;
   }
 
@@ -585,9 +551,7 @@ function openCheckout() {
   closeCart();
 
   if (checkoutModal) {
-
-    checkoutModal.style.display =
-      "flex";
+    checkoutModal.style.display = "flex";
   }
 }
 
@@ -595,54 +559,42 @@ function openCheckout() {
 function closeCheckout() {
 
   if (checkoutModal) {
-
-    checkoutModal.style.display =
-      "none";
+    checkoutModal.style.display = "none";
   }
 }
 
 
+// ================= PLACE ORDER =================
+
 async function placeOrder() {
 
   if (!cart.length) {
-
-    alert(
-      "Your cart is empty."
-    );
-
+    alert("Your cart is empty.");
     return;
   }
 
   const name =
-    document.getElementById(
-      "customerName"
-    )?.value.trim();
+    document.getElementById("customerName")
+      ?.value.trim();
 
   const phone =
-    document.getElementById(
-      "customerPhone"
-    )?.value.trim();
+    document.getElementById("customerPhone")
+      ?.value.trim();
 
   const address =
-    document.getElementById(
-      "customerAddress"
-    )?.value.trim();
+    document.getElementById("customerAddress")
+      ?.value.trim();
 
   const location =
-    document.getElementById(
-      "customerLocation"
-    )?.value.trim();
+    document.getElementById("customerLocation")
+      ?.value.trim();
 
   const payment =
     document.querySelector(
       'input[name="payment"]:checked'
     )?.value || "COD";
 
-  if (
-    !name ||
-    !phone ||
-    !address
-  ) {
+  if (!name || !phone || !address) {
 
     alert(
       "Please enter your name, phone and address."
@@ -675,8 +627,7 @@ async function placeOrder() {
 
     orderId,
 
-    customerName:
-      name,
+    customerName: name,
 
     phone,
 
@@ -684,41 +635,26 @@ async function placeOrder() {
 
     location,
 
-    paymentMethod:
-      payment,
+    paymentMethod: payment,
 
     status,
 
     subtotal,
 
-    deliveryCharge:
-      delivery,
+    deliveryCharge: delivery,
 
     total,
 
-    items:
-      cart.map(item => ({
-
-        id:
-          item.id,
-
-        name:
-          item.name,
-
-        price:
-          item.price,
-
-        unit:
-          item.unit,
-
-        qty:
-          item.qty
-
-      })),
+    items: cart.map(item => ({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      unit: item.unit,
+      qty: item.qty
+    })),
 
     createdAt:
-      firebase.firestore.FieldValue
-        .serverTimestamp()
+      firebase.firestore.FieldValue.serverTimestamp()
 
   };
 
@@ -736,8 +672,7 @@ async function placeOrder() {
 
         orderId,
 
-        customerName:
-          name,
+        customerName: name,
 
         phone,
 
@@ -746,8 +681,7 @@ async function placeOrder() {
         total,
 
         createdAt:
-          firebase.firestore.FieldValue
-            .serverTimestamp()
+          firebase.firestore.FieldValue.serverTimestamp()
 
       });
 
@@ -762,9 +696,7 @@ async function placeOrder() {
     } else {
 
       setTimeout(() => {
-
         payWithUPI(total);
-
       }, 500);
     }
 
@@ -773,131 +705,100 @@ async function placeOrder() {
     console.error(error);
 
     alert(
-      "Order failed: " +
-      error.message
+      "Order failed: " + error.message
     );
   }
 }
 
+
+// ================= SUCCESS =================
 
 function showSuccess(order) {
 
   closeCheckout();
 
-  document.getElementById(
-    "orderId"
-  ).textContent =
+  document.getElementById("orderId").textContent =
     order.orderId;
 
-  document.getElementById(
-    "orderCustomer"
-  ).textContent =
+  document.getElementById("orderCustomer").textContent =
     order.customerName;
 
-  document.getElementById(
-    "orderTotal"
-  ).textContent =
-    "₹" +
-    Number(
-      order.total
-    ).toLocaleString("en-IN");
+  document.getElementById("orderTotal").textContent =
+    "₹" + Number(order.total).toLocaleString("en-IN");
 
-  document.getElementById(
-    "orderPayment"
-  ).textContent =
+  document.getElementById("orderPayment").textContent =
     order.paymentMethod;
 
   const upiBox =
-    document.getElementById(
-      "upiPaymentBox"
-    );
+    document.getElementById("upiPaymentBox");
 
   const upiAmount =
-    document.getElementById(
-      "upiAmount"
-    );
+    document.getElementById("upiAmount");
 
-  if (
-    order.paymentMethod === "UPI"
-  ) {
+  if (order.paymentMethod === "UPI") {
 
-    upiBox.style.display =
-      "block";
+    upiBox.style.display = "block";
 
     upiAmount.textContent =
       "₹" +
-      Number(
-        order.total
-      ).toLocaleString("en-IN");
+      Number(order.total).toLocaleString("en-IN");
 
   } else {
 
-    upiBox.style.display =
-      "none";
+    upiBox.style.display = "none";
   }
 
   if (successModal) {
-
-    successModal.style.display =
-      "flex";
+    successModal.style.display = "flex";
   }
 }
 
+
+// ================= CLOSE SUCCESS =================
 
 function closeSuccess() {
 
   if (successModal) {
-
-    successModal.style.display =
-      "none";
+    successModal.style.display = "none";
   }
 }
 
 
+// ================= UPI =================
+
 function payWithUPI(amount) {
 
-  amount =
-    Number(amount || 0);
+  amount = Number(amount || 0);
 
   if (!amount) {
-
-    amount =
-      getCartSubtotal();
+    amount = getCartSubtotal();
   }
 
   const upiUrl =
     "upi://pay" +
-    "?pa=" +
-    encodeURIComponent(UPI_ID) +
-    "&pn=" +
-    encodeURIComponent(STORE_NAME) +
-    "&am=" +
-    encodeURIComponent(
-      amount.toFixed(2)
-    ) +
+    "?pa=" + encodeURIComponent(UPI_ID) +
+    "&pn=" + encodeURIComponent(STORE_NAME) +
+    "&am=" + encodeURIComponent(amount.toFixed(2)) +
     "&cu=INR";
 
   const isMobile =
-    /Android|iPhone|iPad|iPod/i.test(
-      navigator.userAgent
-    );
+    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   if (!isMobile) {
-
     alert(
       "UPI payment ready for ₹" +
       amount.toLocaleString("en-IN") +
       ".\n\nPlease open this website on your mobile phone and tap Pay Now with UPI.\n\nUPI ID: " +
       UPI_ID
     );
-
     return;
   }
 
-  window.location.href =
-    upiUrl;
+  window.location.href = upiUrl;
 }
 
+
+// ================= CART CLICK =================
 
 if (cartLink) {
 
@@ -913,18 +814,36 @@ if (cartLink) {
 }
 
 
+// ================= UPDATE CART =================
+
 function updateCartAfterProductsLoad() {
 
-  cart =
-    cart.filter(item =>
-      products.some(
-        p => p.id === item.id
-      )
-    );
+  cart = cart.filter(item =>
+    products.some(p => p.id === item.id)
+  );
 
   saveCart();
 }
 
+
+
+function getMaterialVisual(name) {
+
+  const value = String(name || "").toLowerCase();
+
+  if (value.includes("cement varra")) return "🏗️";
+  if (value.includes("cement")) return "🧱";
+  if (value.includes("sand")) return "🏖️";
+  if (value.includes("brick")) return "🧱";
+  if (value.includes("dust")) return "⬛";
+  if (value.includes("chips") || value.includes("stones") || value.includes("aggregate")) return "🪨";
+  if (value.includes("iron")) return "🔩";
+
+  return "🏗️";
+}
+
+
+// ================= ESCAPE HTML =================
 
 function escapeHtml(value) {
 
@@ -932,26 +851,17 @@ function escapeHtml(value) {
     .replace(
       /[&<>"']/g,
       char => ({
-
-        "&":
-          "&amp;",
-
-        "<":
-          "&lt;",
-
-        ">":
-          "&gt;",
-
-        '"':
-          "&quot;",
-
-        "'":
-          "&#039;"
-
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
       })[char]
     );
 }
 
+
+// ================= START =================
 
 loadProducts();
 
