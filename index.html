@@ -333,6 +333,27 @@
       font-weight: 700;
     }
 
+
+    /* ================= PROFILE PHOTO ================= */
+
+    .profile-photo {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--accent);
+      background: #f5f7fa;
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
     /* ================= FOOTER ================= */
 
     .site-footer {
@@ -770,9 +791,20 @@
 
     <div class="container about-box">
 
+      <div class="profile-photo">
+        <img
+          src="praveen-profile.jpeg"
+          alt="Praveen"
+        >
+      </div>
+
       <h2>
-        About Srinivasa Building Materials
+        Srinivasa Building Materials
       </h2>
+
+      <h3>
+        Praveen
+      </h3>
 
       <p>
         We make it simple to purchase quality construction
