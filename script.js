@@ -137,11 +137,34 @@ function renderProducts() {
         Number(product.minOrder || 1)
       );
 
-      const image = product.image
-        ? `<img src="${escapeHtml(product.image)}"
-                alt="${escapeHtml(product.name || "Product")}"
-                onerror="this.parentElement.innerHTML='🧱'">`
-        : "🧱";
+      const productImageMap = {
+  "Ramco Cement": "assets/products/ramco-cement.png",
+  "Sand": "assets/products/sand.png",
+  "Red Bricks": "assets/products/red-bricks.png",
+  "Dust": "assets/products/dust.png",
+  "Baby Chips": "assets/products/baby-chips.png",
+  "3/4 Stones": "assets/products/3-4-stones.png",
+
+  "Iron 6mm Light": "assets/products/iron-6mm-light.png",
+  "Iron 6mm Heavy": "assets/products/iron-6mm-heavy.png",
+  "Iron 8mm Light": "assets/products/iron-8mm-light.png",
+  "Iron 8mm Heavy": "assets/products/iron-8mm-heavy.png",
+  "Iron 10mm": "assets/products/iron-10mm.png",
+  "Iron 12mm": "assets/products/iron-12mm.png",
+
+  "Cement Varra 30": "assets/products/cement-varra-30.png",
+  "Cement Varra 33": "assets/products/cement-varra-33.png",
+  "Cement Varra 36": "assets/products/cement-varra-36.png",
+  "Cement Varra 39": "assets/products/cement-varra-39.png"
+};
+
+const imagePath = productImageMap[product.name];
+
+const image = imagePath
+  ? `<img src="${imagePath}"
+          alt="${escapeHtml(product.name || "Product")}"
+          onerror="this.parentElement.innerHTML='🧱'">`
+  : "🧱";
 
       return `
         <div class="product-card">
