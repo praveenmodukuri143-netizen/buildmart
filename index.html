@@ -8,7 +8,201 @@
   <title>Srinivasa Building Materials</title>
 
   <link rel="stylesheet" href="./style.css">
+/* ================= CONSTRUCTION THEME ================= */
 
+:root {
+  --primary: #1f2a37;
+  --primary-dark: #111827;
+  --accent: #f59e0b;
+  --light: #eef1f4;
+  --white: #ffffff;
+  --text: #172033;
+  --muted: #667085;
+  --border: #d7dce2;
+  --success: #15803d;
+  --shadow: 0 14px 35px rgba(31, 42, 55, 0.14);
+}
+
+body {
+  background:
+    linear-gradient(rgba(17,24,39,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,24,39,.035) 1px, transparent 1px),
+    #eef1f4;
+  background-size: 28px 28px;
+}
+
+.site-header {
+  background: rgba(17,24,39,.97);
+  border-bottom: 4px solid var(--accent);
+  box-shadow: 0 5px 20px rgba(17,24,39,.24);
+}
+
+.logo {
+  color: #fff;
+}
+
+.brand-subtitle {
+  color: #cbd5e1;
+}
+
+.nav-menu a {
+  color: #e5e7eb;
+}
+
+.nav-menu a:hover {
+  background: rgba(245,158,11,.14);
+  color: #fff;
+}
+
+#cartLink {
+  background: var(--accent);
+  color: #111827;
+}
+
+#cartLink:hover {
+  background: #fbbf24;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,.045) 0,
+      rgba(255,255,255,.045) 12px,
+      transparent 12px,
+      transparent 24px
+    ),
+    linear-gradient(135deg,#111827 0%,#1f2a37 58%,#374151 100%);
+  padding: 100px 0;
+  min-height: 500px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 14px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #111827 0,
+    #111827 18px,
+    var(--accent) 18px,
+    var(--accent) 36px
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  background: rgba(245,158,11,.16);
+  border: 1px solid rgba(245,158,11,.5);
+  color: #fef3c7;
+  font-weight: 700;
+}
+
+.hero-button {
+  background: var(--accent);
+  color: #111827;
+  border-radius: 6px;
+  border: 2px solid #d97706;
+}
+
+.hero-button:hover {
+  background: #fbbf24;
+}
+
+.trust-icon {
+  background: #fff7df;
+  border: 1px solid #f4cf73;
+}
+
+.section-heading h2 {
+  color: var(--primary);
+}
+
+.section-heading h2::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 10px auto 0;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.product-card {
+  border-radius: 8px;
+  border-top: 4px solid var(--accent);
+  box-shadow: 0 7px 20px rgba(31,42,55,.10);
+}
+
+.product-card:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow);
+}
+
+.product-image {
+  background:
+    linear-gradient(rgba(17,24,39,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,24,39,.035) 1px, transparent 1px),
+    #e9edf1;
+  background-size: 18px 18px;
+}
+
+.product-card button {
+  background: var(--primary);
+  border-radius: 6px;
+  border-bottom: 3px solid #0b1220;
+}
+
+.product-card button:hover {
+  background: var(--primary-dark);
+}
+
+.about-section::before {
+  content: "";
+  display: block;
+  height: 10px;
+  margin-bottom: 45px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #111827 0,
+    #111827 16px,
+    var(--accent) 16px,
+    var(--accent) 32px
+  );
+}
+
+.about-box h2 {
+  color: var(--primary);
+}
+
+.about-box h3 {
+  color: var(--accent);
+}
+
+.profile-photo {
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(31,42,55,.15);
+}
+
+.contact-highlight {
+  background: #fff7df;
+  border: 1px solid #f4cf73;
+  color: #7c4a03;
+}
+
+.site-footer {
+  background: var(--primary-dark);
+  border-top: 6px solid var(--accent);
+}
   <style>
     :root {
       --primary: #123b63;
