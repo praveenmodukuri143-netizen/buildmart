@@ -1,4 +1,4 @@
-// ================= FIREBASE =================
+﻿// ================= FIREBASE =================
 
 const firebaseConfig = {
   apiKey: "AIzaSyDErFysC_Z7dP96Gn29cblxcgsmzIneobA",
@@ -830,16 +830,31 @@ function updateCartAfterProductsLoad() {
 function getMaterialVisual(name) {
 
   const value = String(name || "").toLowerCase();
+  let image = "";
 
-  if (value.includes("cement varra")) return "🏗️";
-  if (value.includes("cement")) return "🧱";
-  if (value.includes("sand")) return "🏖️";
-  if (value.includes("brick")) return "🧱";
-  if (value.includes("dust")) return "⬛";
-  if (value.includes("chips") || value.includes("stones") || value.includes("aggregate")) return "🪨";
-  if (value.includes("iron")) return "🔩";
+  if (value.includes("cement varra")) {
+    image = "assets/products/cement-varra.png";
+  } else if (value.includes("ramco") || (value.includes("cement") && !value.includes("ring") && !value.includes("varra"))) {
+    image = "assets/products/ramco-cement.png";
+  } else if (value.includes("ring") || value.includes("well")) {
+    image = "assets/products/cement-rings.png";
+  } else if (value.includes("iron") || value.includes("steel") || /(^|\s)(6|8|10|12)\s*mm/.test(value)) {
+    image = "assets/products/iron-rods.png";
+  } else if (value.includes("brick")) {
+    image = "assets/products/red-bricks.png";
+  } else if (value.includes("sand")) {
+    image = "assets/products/sand.png";
+  } else if (value.includes("3/4") || value.includes("3-4") || value.includes("aggregate")) {
+    image = "assets/products/3-4-aggregates.png";
+  } else if (value.includes("baby") || value.includes("chips")) {
+    image = "assets/products/baby-chips.png";
+  } else if (value.includes("dust")) {
+    image = "assets/products/dust.png";
+  }
 
-  return "🏗️";
+  if (!image) return "ðŸ—ï¸";
+
+  return `<img src="${image}" alt="${escapeHtml(name || "Building material")}" loading="lazy">`;
 }
 
 

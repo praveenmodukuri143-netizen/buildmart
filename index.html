@@ -821,8 +821,38 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-</style>
 
+/* ================= UNIFORM ORIGINAL PRODUCT IMAGES ================= */
+.product-image {
+  height: 220px !important;
+  min-height: 220px !important;
+  overflow: hidden !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 10px !important;
+}
+.product-image img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
+}
+@media (max-width: 720px) {
+  .product-image {
+    height: 190px !important;
+    min-height: 190px !important;
+  }
+}
+@media (max-width: 480px) {
+  .product-image {
+    height: 210px !important;
+    min-height: 210px !important;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -1355,3 +1385,4 @@ body {
 </body>
 
 </html>
+
