@@ -9,7 +9,58 @@
 
   <link rel="stylesheet" href="./style.css">
 
-  <style>
+  <style>/* ================= WHATSAPP BUTTONS ================= */
+
+.whatsapp-buttons {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.whatsapp-button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #25D366;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.20);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.whatsapp-button:hover {
+  background: #1ebe5d;
+  transform: translateY(-2px);
+}
+
+.whatsapp-icon {
+  font-size: 21px;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .whatsapp-buttons {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .whatsapp-button {
+    padding: 10px 13px;
+    font-size: 12px;
+  }
+
+  .whatsapp-icon {
+    font-size: 19px;
+  }
+}
     :root {
       --primary: #123b63;
       --primary-dark: #0b2945;
@@ -1276,7 +1327,31 @@ body {
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
   <script src="./script.js"></script>
+<!-- ================= WHATSAPP ================= -->
 
+<div class="whatsapp-buttons">
+
+  <a
+    class="whatsapp-button"
+    href="https://wa.me/919000158191?text=Hello%20Srinivasa%20Building%20Materials,%20I%20need%20construction%20materials."
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="whatsapp-icon">🟢</span>
+    WhatsApp 1
+  </a>
+
+  <a
+    class="whatsapp-button"
+    href="https://wa.me/919848676751?text=Hello%20Srinivasa%20Building%20Materials,%20I%20need%20construction%20materials."
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="whatsapp-icon">🟢</span>
+    WhatsApp 2
+  </a>
+
+</div>
 </body>
 
 </html>
