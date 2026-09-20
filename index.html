@@ -3,12 +3,618 @@
 
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BuildMart - Construction Materials</title>
+  <title>Srinivasa Building Materials</title>
 
   <link rel="stylesheet" href="./style.css">
+
+  <style>
+    :root {
+      --primary: #123b63;
+      --primary-dark: #0b2945;
+      --accent: #f59e0b;
+      --light: #f5f7fa;
+      --white: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: #e4e7ec;
+      --success: #16a34a;
+      --shadow: 0 12px 35px rgba(15, 23, 42, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--text);
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    /* ================= HEADER ================= */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.97);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .brand-subtitle {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #344054;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 13px;
+      border-radius: 9px;
+      transition: 0.2s;
+    }
+
+    .nav-menu a:hover {
+      background: #eef5fb;
+      color: var(--primary);
+    }
+
+    #cartLink {
+      background: var(--primary);
+      color: white;
+    }
+
+    #cartLink:hover {
+      background: var(--primary-dark);
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(8, 39, 68, 0.96), rgba(18, 59, 99, 0.88)),
+        radial-gradient(circle at top right, #f59e0b, transparent 35%);
+      color: white;
+      padding: 90px 0;
+      min-height: 470px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.05;
+      margin: 0 0 20px;
+      max-width: 760px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #e5edf5;
+      max-width: 650px;
+      margin-bottom: 30px;
+    }
+
+    .hero-button {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--accent);
+      color: #1f2937;
+      font-weight: 800;
+      padding: 14px 24px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.25);
+      transition: 0.2s;
+    }
+
+    .hero-button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* ================= TRUST STRIP ================= */
+
+    .trust-strip {
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .trust-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 22px 0;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .trust-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      background: #eef5fb;
+      border-radius: 10px;
+      font-size: 21px;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .trust-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ================= PRODUCTS ================= */
+
+    .products-section {
+      padding: 70px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+      font-size: 34px;
+      margin: 0 0 10px;
+      color: var(--primary);
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
+      transition: 0.25s;
+      padding-bottom: 18px;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-image {
+      min-height: 170px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #edf3f8, #f8fafc);
+      color: var(--primary);
+      font-size: 48px;
+    }
+
+    .product-card h3,
+    .product-card p,
+    .product-card button {
+      margin-left: 18px;
+      margin-right: 18px;
+    }
+
+    .product-card h3 {
+      margin-top: 18px;
+      margin-bottom: 7px;
+      font-size: 18px;
+    }
+
+    .product-card p {
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .product-card button {
+      width: calc(100% - 36px);
+      border: 0;
+      background: var(--primary);
+      color: white;
+      padding: 12px;
+      border-radius: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    .product-card button:hover {
+      background: var(--primary-dark);
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about-section {
+      background: white;
+      padding: 75px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-box {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .about-box h2 {
+      color: var(--primary);
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    .about-box p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .contact-highlight {
+      margin-top: 25px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #eef8f1;
+      color: #166534;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .site-footer {
+      background: var(--primary-dark);
+      color: white;
+      padding: 35px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner strong {
+      font-size: 18px;
+    }
+
+    .footer-inner p {
+      color: #cbd5e1;
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    /* ================= MODALS ================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 2000;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      position: relative;
+      width: min(560px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    .close-button {
+      position: absolute;
+      right: 18px;
+      top: 15px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: #f2f4f7;
+      font-size: 24px;
+      cursor: pointer;
+      color: #344054;
+    }
+
+    .cart-items {
+      margin: 20px 0;
+    }
+
+    .cart-summary {
+      border-top: 1px solid var(--border);
+      padding-top: 15px;
+    }
+
+    .cart-summary p,
+    .checkout-total {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 12px 0;
+    }
+
+    .grand-total {
+      font-size: 19px;
+      color: var(--primary);
+    }
+
+    .checkout-button,
+    .place-order-button,
+    .upi-pay-button,
+    .close-success-button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .checkout-button,
+    .place-order-button {
+      background: var(--primary);
+      color: white;
+    }
+
+    .checkout-button:hover,
+    .place-order-button:hover {
+      background: var(--primary-dark);
+    }
+
+    .checkout-content label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 7px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .checkout-content input[type="text"],
+    .checkout-content input[type="tel"],
+    .checkout-content textarea {
+      width: 100%;
+      border: 1px solid #d0d5dd;
+      border-radius: 9px;
+      padding: 12px;
+      font: inherit;
+      outline: none;
+    }
+
+    .checkout-content textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .checkout-content input:focus,
+    .checkout-content textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(18, 59, 99, 0.10);
+    }
+
+    .payment-heading {
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+
+    .payment-options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .payment-options label {
+      margin: 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .checkout-total {
+      margin-top: 22px;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+
+    .success-content {
+      text-align: center;
+    }
+
+    .success-icon {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .order-details {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      margin: 20px 0;
+    }
+
+    .upi-box {
+      background: #fff8e8;
+      border: 1px solid #f5d58a;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: left;
+    }
+
+    .upi-id {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .upi-pay-button {
+      background: #16a34a;
+      color: white;
+    }
+
+    .upi-note {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .close-success-button {
+      background: #eef2f6;
+      color: #344054;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 950px) {
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .header-inner {
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-menu {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+      }
+
+      .nav-menu a {
+        white-space: nowrap;
+      }
+
+      .hero {
+        padding: 65px 0;
+      }
+
+      .trust-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .product-image {
+        min-height: 140px;
+      }
+
+      .modal-content {
+        padding: 24px 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .section-heading h2,
+      .about-box h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
@@ -20,7 +626,10 @@
     <div class="container header-inner">
 
       <div class="logo">
-        🏗️ BuildMart
+        🧱 Srinivasa Building Materials
+        <span class="brand-subtitle">
+          Quality Construction Materials
+        </span>
       </div>
 
       <nav class="nav-menu">
@@ -52,18 +661,59 @@
 
     <div class="container hero-content">
 
+      <div class="hero-badge">
+        🏠 Trusted Construction Materials
+      </div>
+
       <h1>
-        Quality Construction Materials
+        Build Strong.<br>
+        Build Smart.
       </h1>
 
       <p>
-        Build stronger. Build smarter.
-        Shop construction materials from BuildMart.
+        Quality construction materials for your home,
+        commercial and building projects — delivered to
+        your location.
       </p>
 
       <a href="#products" class="hero-button">
-        Shop Now
+        🛒 Shop Materials
       </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= TRUST ================= -->
+
+  <section class="trust-strip">
+
+    <div class="container trust-inner">
+
+      <div class="trust-item">
+        <div class="trust-icon">🏗️</div>
+        <div>
+          <strong>Quality Materials</strong>
+          <span>Reliable construction products</span>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon">🚚</div>
+        <div>
+          <strong>Local Delivery</strong>
+          <span>Materials delivered to your location</span>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon">📞</div>
+        <div>
+          <strong>Call Us</strong>
+          <span>9000158191</span>
+        </div>
+      </div>
 
     </div>
 
@@ -89,11 +739,7 @@
       </div>
 
 
-      <!-- Firebase products will appear here -->
-
-      <div
-        id="productsContainer"
-        class="products-grid">
+      <div id="productsContainer" class="products-grid">
 
         <div class="product-card">
 
@@ -122,22 +768,47 @@
 
   <section id="about" class="about-section">
 
-    <div class="container">
+    <div class="container about-box">
 
       <h2>
-        About BuildMart
+        About Srinivasa Building Materials
       </h2>
 
       <p>
-        BuildMart makes it easy to purchase
-        construction materials online.
-        Order quality products and get them
+        We make it simple to purchase quality construction
+        materials online. Browse products, add materials to
+        your cart, place your order and get your materials
         delivered to your location.
       </p>
+
+      <div class="contact-highlight">
+        📞 Customer Support: 9000158191
+      </div>
 
     </div>
 
   </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="site-footer">
+
+    <div class="container footer-inner">
+
+      <div>
+        <strong>🧱 Srinivasa Building Materials</strong>
+        <p>Quality materials. Reliable service.</p>
+      </div>
+
+      <div>
+        <p>📞 9000158191</p>
+        <p>📍 Aravalli to Manchili Main Road</p>
+      </div>
+
+    </div>
+
+  </footer>
 
 
   <!-- ================= CART MODAL ================= -->
@@ -146,70 +817,34 @@
 
     <div class="modal-content">
 
-      <button
-        type="button"
-        class="close-button"
-        onclick="closeCart()">
-
+      <button type="button" class="close-button" onclick="closeCart()">
         ×
-
       </button>
 
-      <h2>
-        🛒 Your Cart
-      </h2>
+      <h2>🛒 Your Cart</h2>
 
-      <div
-        id="cartItems"
-        class="cart-items">
-      </div>
-
+      <div id="cartItems" class="cart-items"></div>
 
       <div class="cart-summary">
 
         <p>
-
-          <span>
-            Subtotal:
-          </span>
-
-          <strong id="cartSubtotal">
-            ₹0
-          </strong>
-
+          <span>Subtotal:</span>
+          <strong id="cartSubtotal">₹0</strong>
         </p>
-
 
         <p>
-
-          <span>
-            Delivery:
-          </span>
-
-          <strong id="deliveryCharge">
-            ₹0
-          </strong>
-
+          <span>Delivery:</span>
+          <strong id="deliveryCharge">₹0</strong>
         </p>
-
 
         <hr>
 
-
         <p class="grand-total">
-
-          <span>
-            Total:
-          </span>
-
-          <strong id="grandTotal">
-            ₹0
-          </strong>
-
+          <span>Total:</span>
+          <strong id="grandTotal">₹0</strong>
         </p>
 
       </div>
-
 
       <button
         type="button"
@@ -240,17 +875,12 @@
 
       </button>
 
-
-      <h2>
-        📦 Checkout
-      </h2>
+      <h2>📦 Checkout</h2>
 
       <p>
         Please enter your delivery details.
       </p>
 
-
-      <!-- NAME -->
 
       <label for="customerName">
         Full Name
@@ -262,8 +892,6 @@
         placeholder="Enter your name">
 
 
-      <!-- PHONE -->
-
       <label for="customerPhone">
         Phone Number
       </label>
@@ -274,8 +902,6 @@
         placeholder="Enter phone number">
 
 
-      <!-- ADDRESS -->
-
       <label for="customerAddress">
         Address
       </label>
@@ -284,8 +910,6 @@
         id="customerAddress"
         placeholder="Enter full delivery address"></textarea>
 
-
-      <!-- LOCATION -->
 
       <label for="customerLocation">
         Location / City
@@ -297,17 +921,13 @@
         placeholder="Enter city / location">
 
 
-      <!-- PAYMENT -->
-
       <h3 class="payment-heading">
         Payment Method
       </h3>
 
-
       <div class="payment-options">
 
         <label>
-
           <input
             type="radio"
             name="payment"
@@ -315,25 +935,19 @@
             checked>
 
           💵 Cash on Delivery
-
         </label>
 
-
         <label>
-
           <input
             type="radio"
             name="payment"
             value="UPI">
 
           📱 UPI Payment
-
         </label>
 
       </div>
 
-
-      <!-- TOTAL -->
 
       <div class="checkout-total">
 
@@ -347,8 +961,6 @@
 
       </div>
 
-
-      <!-- PLACE ORDER -->
 
       <button
         type="button"
@@ -370,63 +982,39 @@
 
     <div class="modal-content success-content">
 
-
       <div class="success-icon">
         ✅
       </div>
-
 
       <h2>
         Order Placed Successfully!
       </h2>
 
-
       <p>
-        Thank you for shopping with BuildMart.
+        Thank you for shopping with Srinivasa Building Materials.
       </p>
 
-
-      <!-- ORDER DETAILS -->
 
       <div class="order-details">
 
         <p>
-
           Order ID:
-
-          <strong id="orderId">
-          </strong>
-
+          <strong id="orderId"></strong>
         </p>
 
-
         <p>
-
           Customer:
-
-          <strong id="orderCustomer">
-          </strong>
-
+          <strong id="orderCustomer"></strong>
         </p>
 
-
         <p>
-
           Total:
-
-          <strong id="orderTotal">
-          </strong>
-
+          <strong id="orderTotal"></strong>
         </p>
 
-
         <p>
-
           Payment:
-
-          <strong id="orderPayment">
-          </strong>
-
+          <strong id="orderPayment"></strong>
         </p>
 
       </div>
@@ -443,27 +1031,17 @@
           📱 Pay using UPI
         </h3>
 
-
         <p>
-
           Amount:
-
-          <strong id="upiAmount">
-          </strong>
-
+          <strong id="upiAmount"></strong>
         </p>
 
-
         <p class="upi-id">
-
           UPI ID:
-
           <strong>
             9000158191@ibl
           </strong>
-
         </p>
-
 
         <button
           type="button"
@@ -474,18 +1052,12 @@
 
         </button>
 
-
         <p class="upi-note">
-
-          UPI app open ayyaka
-          payment complete cheyyandi.
-
+          UPI app open ayyaka payment complete cheyyandi.
         </p>
 
       </div>
 
-
-      <!-- CONTINUE -->
 
       <button
         type="button"
@@ -495,7 +1067,6 @@
         Continue Shopping
 
       </button>
-
 
     </div>
 
@@ -508,11 +1079,7 @@
 
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
-
-  <!-- ================= BUILDMART JS ================= -->
-
   <script src="./script.js"></script>
-
 
 </body>
 
