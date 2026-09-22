@@ -1,1388 +1,2154 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Srinivasa Building Materials</title>
-
-  <link rel="stylesheet" href="./style.css">
-
-  <style>/* ================= WHATSAPP BUTTONS ================= */
-
-.whatsapp-buttons {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 5000;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.whatsapp-button {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  text-decoration: none;
-  color: white;
-  padding: 12px 16px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 700;
-  background: #25D366;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.20);
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.whatsapp-button:hover {
-  background: #1ebe5d;
-  transform: translateY(-2px);
-}
-
-.whatsapp-icon {
-  font-size: 21px;
-  line-height: 1;
-}
-
-@media (max-width: 600px) {
-  .whatsapp-buttons {
-    right: 12px;
-    bottom: 12px;
-  }
-
-  .whatsapp-button {
-    padding: 10px 13px;
-    font-size: 12px;
-  }
-
-  .whatsapp-icon {
-    font-size: 19px;
-  }
-}
-    :root {
-      --primary: #123b63;
-      --primary-dark: #0b2945;
-      --accent: #f59e0b;
-      --light: #f5f7fa;
-      --white: #ffffff;
-      --text: #172033;
-      --muted: #667085;
-      --border: #e4e7ec;
-      --success: #16a34a;
-      --shadow: 0 12px 35px rgba(15, 23, 42, 0.10);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--light);
-      color: var(--text);
-    }
-
-    .container {
-      width: min(1180px, 92%);
-      margin: auto;
-    }
-
-    /* ================= HEADER ================= */
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.97);
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-    }
-
-    .header-inner {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--primary);
-      white-space: nowrap;
-    }
-
-    .brand-subtitle {
-      display: block;
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-      margin-top: 3px;
-    }
-
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav-menu a {
-      text-decoration: none;
-      color: #344054;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 10px 13px;
-      border-radius: 9px;
-      transition: 0.2s;
-    }
-
-    .nav-menu a:hover {
-      background: #eef5fb;
-      color: var(--primary);
-    }
-
-    #cartLink {
-      background: var(--primary);
-      color: white;
-    }
-
-    #cartLink:hover {
-      background: var(--primary-dark);
-    }
-
-    /* ================= HERO ================= */
-
-    .hero {
-      background:
-        linear-gradient(135deg, rgba(8, 39, 68, 0.96), rgba(18, 59, 99, 0.88)),
-        radial-gradient(circle at top right, #f59e0b, transparent 35%);
-      color: white;
-      padding: 90px 0;
-      min-height: 470px;
-      display: flex;
-      align-items: center;
-    }
-
-    .hero-content {
-      max-width: 800px;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 8px 14px;
-      border-radius: 30px;
-      font-size: 13px;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-size: clamp(38px, 6vw, 64px);
-      line-height: 1.05;
-      margin: 0 0 20px;
-      max-width: 760px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      line-height: 1.7;
-      color: #e5edf5;
-      max-width: 650px;
-      margin-bottom: 30px;
-    }
-
-    .hero-button {
-      display: inline-block;
-      text-decoration: none;
-      background: var(--accent);
-      color: #1f2937;
-      font-weight: 800;
-      padding: 14px 24px;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.25);
-      transition: 0.2s;
-    }
-
-    .hero-button:hover {
-      transform: translateY(-2px);
-    }
-
-    /* ================= TRUST STRIP ================= */
-
-    .trust-strip {
-      background: white;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .trust-inner {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      padding: 22px 0;
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .trust-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      background: #eef5fb;
-      border-radius: 10px;
-      font-size: 21px;
-    }
-
-    .trust-item strong {
-      display: block;
-      font-size: 14px;
-    }
-
-    .trust-item span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* ================= PRODUCTS ================= */
-
-    .products-section {
-      padding: 70px 0;
-    }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .section-heading h2 {
-      font-size: 34px;
-      margin: 0 0 10px;
-      color: var(--primary);
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      margin: 0;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
-    }
-
-    .product-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
-      transition: 0.25s;
-      padding-bottom: 18px;
-    }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
-    }
-
-    .product-image {
-      min-height: 170px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #edf3f8, #f8fafc);
-      color: var(--primary);
-      font-size: 48px;
-    }
-
-    .product-card h3,
-    .product-card p,
-    .product-card button {
-      margin-left: 18px;
-      margin-right: 18px;
-    }
-
-    .product-card h3 {
-      margin-top: 18px;
-      margin-bottom: 7px;
-      font-size: 18px;
-    }
-
-    .product-card p {
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .product-card button {
-      width: calc(100% - 36px);
-      border: 0;
-      background: var(--primary);
-      color: white;
-      padding: 12px;
-      border-radius: 9px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: 0.2s;
-    }
-
-    .product-card button:hover {
-      background: var(--primary-dark);
-    }
-
-    /* ================= ABOUT ================= */
-
-    .about-section {
-      background: white;
-      padding: 75px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .about-box {
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-    }
-
-    .about-box h2 {
-      color: var(--primary);
-      font-size: 34px;
-      margin-bottom: 15px;
-    }
-
-    .about-box p {
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.8;
-    }
-
-    .contact-highlight {
-      margin-top: 25px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #eef8f1;
-      color: #166534;
-      padding: 12px 18px;
-      border-radius: 10px;
-      font-weight: 700;
-    }
-
-    /* ================= FOOTER ================= */
-
-    .site-footer {
-      background: var(--primary-dark);
-      color: white;
-      padding: 35px 0;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    .footer-inner strong {
-      font-size: 18px;
-    }
-
-    .footer-inner p {
-      color: #cbd5e1;
-      margin: 8px 0;
-      font-size: 14px;
-    }
-
-    /* ================= MODALS ================= */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.65);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 2000;
-      overflow-y: auto;
-    }
-
-    .modal-content {
-      position: relative;
-      width: min(560px, 100%);
-      max-height: 92vh;
-      overflow-y: auto;
-      background: white;
-      border-radius: 18px;
-      padding: 30px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
-    }
-
-    .modal-content h2 {
-      margin-top: 0;
-      color: var(--primary);
-    }
-
-    .close-button {
-      position: absolute;
-      right: 18px;
-      top: 15px;
-      width: 36px;
-      height: 36px;
-      border: 0;
-      border-radius: 50%;
-      background: #f2f4f7;
-      font-size: 24px;
-      cursor: pointer;
-      color: #344054;
-    }
-
-    .cart-items {
-      margin: 20px 0;
-    }
-
-    .cart-summary {
-      border-top: 1px solid var(--border);
-      padding-top: 15px;
-    }
-
-    .cart-summary p,
-    .checkout-total {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin: 12px 0;
-    }
-
-    .grand-total {
-      font-size: 19px;
-      color: var(--primary);
-    }
-
-    .checkout-button,
-    .place-order-button,
-    .upi-pay-button,
-    .close-success-button {
-      width: 100%;
-      border: 0;
-      border-radius: 10px;
-      padding: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-top: 12px;
-    }
-
-    .checkout-button,
-    .place-order-button {
-      background: var(--primary);
-      color: white;
-    }
-
-    .checkout-button:hover,
-    .place-order-button:hover {
-      background: var(--primary-dark);
-    }
-
-    .checkout-content label {
-      display: block;
-      margin-top: 16px;
-      margin-bottom: 7px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .checkout-content input[type="text"],
-    .checkout-content input[type="tel"],
-    .checkout-content textarea {
-      width: 100%;
-      border: 1px solid #d0d5dd;
-      border-radius: 9px;
-      padding: 12px;
-      font: inherit;
-      outline: none;
-    }
-
-    .checkout-content textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .checkout-content input:focus,
-    .checkout-content textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(18, 59, 99, 0.10);
-    }
-
-    .payment-heading {
-      margin-top: 25px;
-      margin-bottom: 10px;
-    }
-
-    .payment-options {
-      display: grid;
-      gap: 10px;
-    }
-
-    .payment-options label {
-      margin: 0;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      cursor: pointer;
-    }
-
-    .checkout-total {
-      margin-top: 22px;
-      padding: 15px;
-      background: #f8fafc;
-      border-radius: 10px;
-      font-size: 18px;
-    }
-
-    .success-content {
-      text-align: center;
-    }
-
-    .success-icon {
-      font-size: 55px;
-      margin-bottom: 10px;
-    }
-
-    .order-details {
-      background: #f8fafc;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: left;
-      margin: 20px 0;
-    }
-
-    .upi-box {
-      background: #fff8e8;
-      border: 1px solid #f5d58a;
-      border-radius: 12px;
-      padding: 18px;
-      text-align: left;
-    }
-
-    .upi-id {
-      background: white;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    .upi-pay-button {
-      background: #16a34a;
-      color: white;
-    }
-
-    .upi-note {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .close-success-button {
-      background: #eef2f6;
-      color: #344054;
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 950px) {
-      .products-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 720px) {
-      .header-inner {
-        padding: 12px 0;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .nav-menu {
-        width: 100%;
-        justify-content: flex-start;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 4px;
-      }
-
-      .nav-menu a {
-        white-space: nowrap;
-      }
-
-      .hero {
-        padding: 65px 0;
-      }
-
-      .trust-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-      }
-
-      .product-image {
-        min-height: 140px;
-      }
-
-      .modal-content {
-        padding: 24px 18px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 38px;
-      }
-
-      .section-heading h2,
-      .about-box h2 {
-        font-size: 28px;
-      }
-    }
-  /* ================= BUILDING MATERIALS THEME ================= */
-
-body {
-  background:
-    linear-gradient(rgba(30,41,59,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(30,41,59,.035) 1px, transparent 1px),
-    #eef1f4;
-  background-size: 24px 24px;
-}
-
-.site-header {
-  background: #1f2937;
-  border-bottom: 5px solid #f59e0b;
-}
-
-.logo,
-.nav-menu a {
-  color: #ffffff !important;
-}
-
-.brand-subtitle {
-  color: #cbd5e1;
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(115deg, rgba(17,24,39,.98), rgba(55,65,81,.94)),
-    #1f2937;
-  padding: 75px 0 55px;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 12px;
-  background: repeating-linear-gradient(
-    -45deg,
-    #111827 0,
-    #111827 16px,
-    #f59e0b 16px,
-    #f59e0b 32px
-  );
-}
-
-.material-showcase {
-  margin-top: 35px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
-  max-width: 900px;
-}
-
-.material-tile {
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.20);
-  border-radius: 10px;
-  padding: 14px 8px;
-  text-align: center;
-  backdrop-filter: blur(4px);
-}
-
-.material-tile span {
-  display: block;
-  font-size: 34px;
-  margin-bottom: 7px;
-}
-
-.material-tile strong {
-  color: #ffffff;
-  font-size: 12px;
-}
-
-.products-section {
-  background: #eef1f4;
-}
-
-.products-section .section-heading h2 {
-  color: #1f2937;
-}
-
-.product-card {
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  border-top: 5px solid #f59e0b;
-  border-radius: 10px;
-}
-
-.product-image {
-  background:
-    linear-gradient(rgba(17,24,39,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17,24,39,.04) 1px, transparent 1px),
-    #e5e7eb;
-  background-size: 18px 18px;
-  min-height: 165px;
-}
-
-.product-card button {
-  background: #1f2937;
-  border-radius: 6px;
-}
-
-.product-card button:hover {
-  background: #111827;
-}
-
-.about-section {
-  background: #ffffff;
-  border-top: 1px solid #d1d5db;
-}
-
-.about-box h2 {
-  color: #1f2937;
-}
-
-.about-box h3 {
-  color: #f59e0b;
-}
-
-.profile-photo {
-  width: 130px;
-  height: 130px;
-  margin: 0 auto 15px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid #f59e0b;
-  background: #e5e7eb;
-  box-shadow: 0 8px 22px rgba(17,24,39,.18);
-}
-
-.profile-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.site-footer {
-  background: #111827;
-  border-top: 6px solid #f59e0b;
-}
-
-@media (max-width: 800px) {
-  .material-showcase {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .material-showcase {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* ================= UNIFORM ORIGINAL PRODUCT IMAGES ================= */
-.product-image {
-  height: 220px !important;
-  min-height: 220px !important;
-  overflow: hidden !important;
-  display: grid !important;
-  place-items: center !important;
-  padding: 10px !important;
-}
-.product-image img {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  display: block !important;
-}
-@media (max-width: 720px) {
-  .product-image {
-    height: 190px !important;
-    min-height: 190px !important;
-  }
-}
-@media (max-width: 480px) {
-  .product-image {
-    height: 210px !important;
-    min-height: 210px !important;
-  }
-}
-</style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Srinivasa Building Materials</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =====================================================
+           BASIC
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #081521;
+            color: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #061321,
+                    #102a3d
+                );
+
+            border-bottom: 3px solid #f47721;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,.35);
+        }
+
+        nav {
+            width: min(1250px, 92%);
+            margin: auto;
+
+            min-height: 82px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 27px;
+            font-weight: 900;
+
+            letter-spacing: -.5px;
+        }
+
+        .logo span {
+            color: #f47721;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            padding: 10px 14px;
+
+            border-radius: 7px;
+
+            transition: .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #f5c45e;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+
+            min-height: 680px;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            background-image:
+                url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2200&q=90");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(2,12,22,.97) 0%,
+                    rgba(3,18,32,.91) 38%,
+                    rgba(4,19,32,.62) 68%,
+                    rgba(4,19,32,.25) 100%
+                );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            width: min(1200px, 88%);
+            margin: auto;
+        }
+
+        .hero-quote {
+            display: inline-block;
+
+            color: #f5c45e;
+
+            font-size: 16px;
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            padding: 10px 16px;
+
+            margin-bottom: 24px;
+
+            border-left: 4px solid #f47721;
+
+            background:
+                rgba(245,196,94,.08);
+        }
+
+        .hero h1 {
+            max-width: 1100px;
+
+            margin: 0 0 28px;
+
+            color: white;
+
+            font-size:
+                clamp(46px, 6.5vw, 88px);
+
+            line-height: .95;
+
+            font-weight: 900;
+
+            letter-spacing: -3px;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 10px 35px rgba(0,0,0,.45);
+        }
+
+        .hero-description {
+            max-width: 680px;
+
+            color: #d7e1e8;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-button {
+            display: inline-block;
+
+            padding: 15px 25px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f47721,
+                    #ff9d3f
+                );
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 900;
+
+            letter-spacing: .5px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(244,119,33,.30);
+
+            transition: .25s ease;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(244,119,33,.42);
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            height: 10px;
+
+            background:
+                repeating-linear-gradient(
+                    -45deg,
+                    #f47721,
+                    #f47721 20px,
+                    #172633 20px,
+                    #172633 40px
+                );
+        }
+
+        /* =====================================================
+           COMMON SECTION
+        ===================================================== */
+
+        .section {
+            padding: 85px 6%;
+        }
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+
+            color: white;
+
+            font-size: 38px;
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+        .section-title p {
+            max-width: 650px;
+
+            margin: 12px auto 0;
+
+            color: #9eafbc;
+
+            line-height: 1.7;
+        }
+
+        .section-line {
+            width: 70px;
+            height: 4px;
+
+            margin: 15px auto 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #f47721,
+                    #f5c45e
+                );
+
+            border-radius: 5px;
+        }
+
+        /* =====================================================
+           PRODUCTS SECTION
+        ===================================================== */
+
+        #products {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b1b29,
+                    #162b3b
+                );
+
+            overflow: hidden;
+        }
+
+        #products::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            opacity: .06;
+
+            background-image:
+                linear-gradient(
+                    135deg,
+                    transparent 24%,
+                    white 25%,
+                    transparent 26%
+                );
+
+            background-size: 38px 38px;
+        }
+
+        .products-grid {
+            position: relative;
+            z-index: 2;
+
+            width: min(1200px, 95%);
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 28px;
+        }
+
+        /* =====================================================
+           PRODUCT CARD
+        ===================================================== */
+
+        .product-card {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #223949,
+                    #101f2b
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 16px 45px
+                rgba(0,0,0,.30);
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                border-color .25s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-7px);
+
+            border-color:
+                rgba(244,119,33,.65);
+
+            box-shadow:
+                0 25px 55px
+                rgba(0,0,0,.42);
+        }
+
+        .product-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #f47721,
+                    #f5c45e
+                );
+
+            z-index: 5;
+        }
+
+        /* =====================================================
+           PRODUCT IMAGE FRAME
+        ===================================================== */
+
+        .product-image {
+            position: relative;
+
+            height: 300px;
+
+            padding: 18px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #40515d 0%,
+                    #293c49 40%,
+                    #142633 100%
+                );
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.10);
+        }
+
+        .product-image::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 12px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            border-radius: 12px;
+
+            pointer-events: none;
+        }
+
+        .product-image::after {
+            content: "";
+
+            position: absolute;
+
+            right: 0;
+            bottom: 0;
+
+            width: 48px;
+            height: 48px;
+
+            border-right:
+                4px solid #f47721;
+
+            border-bottom:
+                4px solid #f47721;
+
+            pointer-events: none;
+        }
+
+        .product-image img {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            height: 100%;
+
+            max-width: 100%;
+            max-height: 100%;
+
+            object-fit: contain;
+
+            object-position: center;
+
+            display: block;
+
+            filter:
+                drop-shadow(
+                    0 12px 18px
+                    rgba(0,0,0,.38)
+                );
+        }
+
+        .product-info {
+            padding: 20px 22px 22px;
+        }
+
+        .product-info h3 {
+            margin: 0 0 7px;
+
+            color: white;
+
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .product-info p {
+            margin: 0;
+
+            color: #aebdc8;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           TRANSPORT
+        ===================================================== */
+
+        #transport {
+            background:
+                linear-gradient(
+                    135deg,
+                    #e9dfcf,
+                    #f6f0e7
+                );
+
+            color: #17212b;
+        }
+
+        #transport .section-title h2 {
+            color: #0b2033;
+        }
+
+        #transport .section-title p {
+            color: #5f6d78;
+        }
+
+        .transport-grid {
+            width: min(1000px, 95%);
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0,1fr));
+
+            gap: 28px;
+        }
+
+        .transport-card {
+            overflow: hidden;
+
+            background:
+                #102333;
+
+            border-radius: 18px;
+
+            border:
+                1px solid
+                rgba(7,26,51,.20);
+
+            box-shadow:
+                0 16px 40px
+                rgba(7,26,51,.18);
+        }
+
+        .transport-image {
+            height: 280px;
+
+            padding: 15px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #41515b,
+                    #172a38
+                );
+        }
+
+        .transport-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+        .transport-info {
+            padding: 20px;
+        }
+
+        .transport-info h3 {
+            color: white;
+
+            margin: 0 0 5px;
+
+            font-size: 22px;
+        }
+
+        .transport-info p {
+            color: #aebdc8;
+
+            margin: 0;
+        }
+
+        /* =====================================================
+           WHY US
+        ===================================================== */
+
+        #why-us {
+            background:
+                linear-gradient(
+                    135deg,
+                    #071522,
+                    #142c3e
+                );
+        }
+
+        .why-grid {
+            width: min(1100px, 95%);
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .why-card {
+            padding: 30px;
+
+            text-align: center;
+
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            border-radius: 16px;
+        }
+
+        .why-icon {
+            font-size: 38px;
+
+            margin-bottom: 12px;
+        }
+
+        .why-card h3 {
+            color: #f5c45e;
+
+            margin: 0 0 10px;
+        }
+
+        .why-card p {
+            color: #aebdc8;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           ABOUT
+        ===================================================== */
+
+        #about {
+            background:
+                linear-gradient(
+                    135deg,
+                    #e9dfcf,
+                    #f7f1e8
+                );
+
+            color: #17212b;
+        }
+
+        .about-box {
+            width: min(1050px, 95%);
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 45px;
+            align-items: center;
+
+            padding: 35px;
+
+            background: linear-gradient(145deg, #102638, #1b3445);
+
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 20px;
+
+            box-shadow: 0 20px 50px rgba(0,0,0,.25);
+        }
+
+        .about-photo {
+            width: 260px;
+            height: 300px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 16px;
+            background: #243b4a;
+            border: 3px solid #f47721;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+            object-position: center;
+
+            display: block;
+        }
+
+        .about-content {
+            text-align: left;
+        }
+
+        .about-content h2 {
+            margin: 0 0 10px;
+
+            color: white;
+
+            font-size: 34px;
+            font-weight: 900;
+        }
+
+        .about-content .section-line {
+            margin: 15px 0 20px;
+        }
+
+        .about-content p {
+            margin: 0;
+
+            color: #b8c6d0;
+
+            line-height: 1.8;
+
+            font-size: 16px;
+        }
+
+        .about-content h3 {
+            color: #f5c45e;
+
+            margin: 22px 0 8px;
+
+            font-size: 24px;
+        }
+
+        @media (max-width: 700px) {
+
+            .about-box {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 25px;
+                gap: 25px;
+            }
+
+            .about-photo {
+                width: 210px;
+                height: 250px;
+                margin: auto;
+            }
+
+            .about-content {
+                text-align: center;
+            }
+
+            .about-content .section-line {
+                margin: 15px auto 20px;
+            }
+        }
+
+        /* =====================================================
+           CONTACT / ENQUIRY
+        ===================================================== */
+
+        #contact {
+            padding: 85px 6%;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #061421,
+                    #102a3d
+                );
+
+            border-top:
+                4px solid #f47721;
+        }
+
+        #contact h2 {
+            margin: 0 0 12px;
+
+            color: white;
+
+            font-size: 38px;
+        }
+
+        #contact > p {
+            max-width: 700px;
+
+            margin: 0 auto 35px;
+
+            color: #aebdc8;
+
+            line-height: 1.7;
+        }
+
+        .contact-options {
+            width: min(800px, 95%);
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .contact-option {
+            min-height: 155px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #233b4c,
+                    #142735
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            color: white;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,.22);
+
+            transition: .25s ease;
+        }
+
+        .contact-option:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                #f47721;
+        }
+
+        .contact-icon {
+            font-size: 36px;
+
+            margin-bottom: 10px;
+        }
+
+        .contact-option strong {
+            font-size: 19px;
+
+            margin-bottom: 5px;
+        }
+
+        .contact-option span {
+            color: #aebdc8;
+
+            font-size: 14px;
+        }
+
+        .contact-option.whatsapp {
+            background:
+                linear-gradient(
+                    145deg,
+                    #159447,
+                    #0b6733
+                );
+        }
+
+        .contact-option.whatsapp span {
+            color: #d9ffe9;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            padding: 30px 6%;
+
+            text-align: center;
+
+            background: #030d17;
+
+            border-top:
+                3px solid #f47721;
+        }
+
+        footer h3 {
+            margin: 0 0 7px;
+
+            color: white;
+        }
+
+        footer p {
+            margin: 0;
+
+            color: #81909c;
+
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           FLOATING WHATSAPP
+        ===================================================== */
+
+        .floating-whatsapp {
+            position: fixed;
+
+            right: 18px;
+            bottom: 18px;
+
+            z-index: 5000;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .floating-whatsapp a {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 11px 16px;
+
+            border-radius: 999px;
+
+            background: #20c878;
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,.25);
+
+            transition: .2s ease;
+        }
+
+        .floating-whatsapp a:hover {
+            background: #159f60;
+
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            nav {
+                width: 94%;
+
+                min-height: auto;
+
+                padding: 13px 0;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                overflow-x: auto;
+
+                flex-wrap: nowrap;
+            }
+
+            .nav-links a {
+                white-space: nowrap;
+
+                font-size: 12px;
+
+                padding: 8px 10px;
+            }
+
+            .hero {
+                min-height: 600px;
+
+                background-position:
+                    65% center;
+            }
+
+            .hero-content {
+                width: 90%;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+
+                letter-spacing: -1.5px;
+            }
+
+            .hero-quote {
+                font-size: 12px;
+
+                letter-spacing: 1px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            /* 2 PRODUCTS PER ROW */
+
+            .products-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+
+                gap: 15px;
+
+                width: 100%;
+            }
+
+            .product-image {
+                height: 220px;
+            }
+
+            .product-info {
+                padding: 14px;
+            }
+
+            .product-info h3 {
+                font-size: 16px;
+            }
+
+            .product-info p {
+                font-size: 12px;
+            }
+
+            .transport-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+            }
+
+            .transport-image {
+                height: 210px;
+            }
+
+            .why-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .hero {
+                min-height: 570px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+
+                line-height: 1;
+            }
+
+            .hero-quote {
+                font-size: 10px;
+
+                padding: 8px 10px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .hero-button {
+                font-size: 12px;
+
+                padding: 13px 18px;
+            }
+
+            .section {
+                padding:
+                    65px 4%;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+
+            /* STILL 2 PRODUCTS */
+
+            .products-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+
+                gap: 10px;
+            }
+
+            .product-card {
+                border-radius: 12px;
+            }
+
+            .product-image {
+                height: 175px;
+                padding: 7px;
+            }
+
+            .product-image::before {
+                inset: 7px;
+            }
+
+            .product-info {
+                padding: 11px 10px 13px;
+            }
+
+            .product-info h3 {
+                font-size: 13px;
+            }
+
+            .product-info p {
+                font-size: 10px;
+            }
+
+            .transport-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+
+                gap: 10px;
+            }
+
+            .transport-image {
+                height: 150px;
+
+                padding: 7px;
+            }
+
+            .transport-info {
+                padding: 10px;
+            }
+
+            .transport-info h3 {
+                font-size: 14px;
+            }
+
+            .transport-info p {
+                font-size: 10px;
+            }
+
+            .why-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+            .why-card {
+                padding: 18px 10px;
+            }
+
+            .why-card h3 {
+                font-size: 14px;
+            }
+
+            .why-card p {
+                font-size: 10px;
+            }
+
+            .contact-options {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-whatsapp a {
+                font-size: 10px;
+
+                padding: 9px 12px;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-  <!-- ================= HEADER ================= -->
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-  <header class="site-header">
+    <header>
 
-    <div class="container header-inner">
+        <nav>
 
-      <div class="logo">
-        🧱 Srinivasa Building Materials
-        <span class="brand-subtitle">
-          Quality Construction Materials
-        </span>
-      </div>
+            <a
+                href="#home"
+                class="logo"
+            >
+                🧱 Srinivasa <span>Building Materials</span>
+            </a>
 
-      <nav class="nav-menu">
+            <div class="nav-links">
 
-        <a href="#home">Home</a>
+                <a href="#home">
+                    Home
+                </a>
 
-        <a href="#products">Products</a>
+                <a href="#products">
+                    Products
+                </a>
 
-        <a href="#about">About</a>
+                <a href="#transport">
+                    Transport
+                </a>
 
-        <a href="#" id="cartLink">
-          🛒 Cart (0)
-        </a>
+                <a href="#about">
+                    About
+                </a>
 
-        <a href="track-order.html">
-          📦 Track Orders
-        </a>
+                <a href="#contact">
+                    Contact
+                </a>
 
-      </nav>
+            </div>
 
-    </div>
+        </nav>
 
-  </header>
+    </header>
 
 
-  <!-- ================= HERO ================= -->
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
 
-  <section id="home" class="hero">
+    <section
+        class="hero"
+        id="home"
+    >
 
-    <div class="container hero-content">
+        <div class="hero-overlay"></div>
 
-      <div class="hero-badge">
-        🏠 Trusted Construction Materials
-      </div>
+        <div class="hero-content">
 
-      <h1>
-        Build Strong.<br>
-        Build Smart.
-      </h1>
+            <div class="hero-quote">
+                STRONG FOUNDATIONS. STRONGER FUTURES.
+            </div>
 
-      <p>
-        Quality construction materials for your home,
-        commercial and building projects — delivered to
-        your location.
-      </p>
+            <h1>
+                SRINIVASA<br>
+                BUILDING MATERIALS
+            </h1>
 
-      <a href="#products" class="hero-button">
-        🛒 Shop Materials
-      </a> 
-      <div class="material-showcase">
+            <p class="hero-description">
+                Quality construction materials for homes,
+                commercial projects and strong foundations.
+            </p>
 
-        <div class="material-tile">
-          <span>🏗️</span>
-          <strong>Cement</strong>
+            <a
+                href="#products"
+                class="hero-button"
+            >
+                EXPLORE PRODUCTS →
+            </a>
+
         </div>
 
-        <div class="material-tile">
-          <span>🏖️</span>
-          <strong>Sand</strong>
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCTS
+    ====================================================== -->
+
+    <section
+        class="section"
+        id="products"
+    >
+
+        <div class="section-title">
+
+            <h2>
+                Our Products
+            </h2>
+
+            <div class="section-line"></div>
+
+            <p>
+                Reliable construction materials for
+                residential and commercial projects.
+            </p>
+
         </div>
 
-        <div class="material-tile">
-          <span>🧱</span>
-          <strong>Red Bricks</strong>
+
+        <div class="products-grid">
+
+
+            <!-- 1 RAMCO CEMENT -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/ramco-cement.png"
+                        alt="Ramco Cement"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Ramco Cement
+                    </h3>
+
+                    <p>
+                        Quality cement for strong and durable construction.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 2 IRON RODS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/iron-rods.png"
+                        alt="Iron Rods"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Iron Rods
+                    </h3>
+
+                    <p>
+                        Strong reinforcement steel for construction projects.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 3 CEMENT RING WELLS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-ring-wells.png"
+                        alt="Cement Ring Wells"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Ring Wells
+                    </h3>
+
+                    <p>
+                        Durable cement rings for well and water applications.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 4 RED BRICKS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/red-bricks.png"
+                        alt="Red Bricks"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Red Bricks
+                    </h3>
+
+                    <p>
+                        Reliable bricks for walls and building construction.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 5 SAND -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/sand.png"
+                        alt="Sand"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Sand
+                    </h3>
+
+                    <p>
+                        Quality construction sand for various building needs.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 6 3/4 AGGREGATES -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/3-4-aggregates.png"
+                        alt="3/4 Aggregates"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        3/4 Aggregates
+                    </h3>
+
+                    <p>
+                        Quality aggregates for concrete and construction work.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 7 BABY CHIPS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/baby-chips.png"
+                        alt="Baby Chips"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Baby Chips
+                    </h3>
+
+                    <p>
+                        Fine aggregates suitable for construction applications.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 8 DUST -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/dust.png"
+                        alt="Dust"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Dust
+                    </h3>
+
+                    <p>
+                        Quality stone dust for construction requirements.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 9 CEMENT FLOWER POTS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-flower-pots.png"
+                        alt="Cement Flower Pots"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Flower Pots
+                    </h3>
+
+                    <p>
+                        Durable cement pots for homes and outdoor spaces.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 10 CEMENT VENTILATORS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-ventilators.png"
+                        alt="Cement Ventilators"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Ventilators
+                    </h3>
+
+                    <p>
+                        Cement ventilators for practical building ventilation.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 11 CEMENT CHULHAS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-chulhas.png"
+                        alt="Cement Chulhas"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Chulhas
+                    </h3>
+
+                    <p>
+                        Strong and durable cement cooking platforms.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 12 CEMENT DOOR FRAMES -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-door-frames.png"
+                        alt="Cement Door Frames"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Door Frames
+                    </h3>
+
+                    <p>
+                        Durable cement frames for building construction.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 13 CEMENT RING WELL PLATES -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-ring-well-plates.png"
+                        alt="Cement Ring Well Plates"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Ring Well Plates
+                    </h3>
+
+                    <p>
+                        Strong cement plates designed for ring well applications.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 14 CEMENT WINDOWS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-windows.png"
+                        alt="Cement Windows"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Windows
+                    </h3>
+
+                    <p>
+                        Durable cement window frames for construction.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- 15 CEMENT EXHAUST FAN RINGS -->
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="assets/products/cement-exhaust-fan-rings.png"
+                        alt="Cement Exhaust Fan Rings"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Cement Exhaust Fan Rings
+                    </h3>
+
+                    <p>
+                        Cement rings for exhaust fan installation.
+                    </p>
+
+                </div>
+
+            </article>
+
+
         </div>
 
-        <div class="material-tile">
-          <span>🪨</span>
-          <strong>Aggregates</strong>
+    </section>
+
+
+    <!-- =====================================================
+         TRANSPORT
+    ====================================================== -->
+
+    <section
+        class="section"
+        id="transport"
+    >
+
+        <div class="section-title">
+
+            <h2>
+                Loading & Transport
+            </h2>
+
+            <div class="section-line"></div>
+
+            <p>
+                Transport support available for construction
+                material loading and delivery requirements.
+            </p>
+
         </div>
 
-        <div class="material-tile">
-          <span>🔩</span>
-          <strong>Steel / Iron</strong>
+
+        <div class="transport-grid">
+
+
+            <!-- AUTO -->
+
+            <article class="transport-card">
+
+                <div class="transport-image">
+
+                    <img
+                        src="assets/products/auto.png"
+                        alt="Auto Loading and Transport"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="transport-info">
+
+                    <h3>
+                        Auto
+                    </h3>
+
+                    <p>
+                        Loading and transport service for suitable material requirements.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- TATA ACE -->
+
+            <article class="transport-card">
+
+                <div class="transport-image">
+
+                    <img
+                        src="assets/products/tata-ace.png"
+                        alt="Tata Ace Loading and Transport"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="transport-info">
+
+                    <h3>
+                        Tata Ace
+                    </h3>
+
+                    <p>
+                        Transport support for construction material delivery.
+                    </p>
+
+                </div>
+
+            </article>
+
+
         </div>
 
-        <div class="material-tile">
-          <span>⬛</span>
-          <strong>Dust & Varra</strong>
+    </section>
+
+
+    <!-- =====================================================
+         WHY US
+    ====================================================== -->
+
+    <section
+        class="section"
+        id="why-us"
+    >
+
+        <div class="section-title">
+
+            <h2>
+                Why Choose Us
+            </h2>
+
+            <div class="section-line"></div>
+
         </div>
 
-      </div>
 
-    </div>
-
-  </section>
+        <div class="why-grid">
 
 
-  <!-- ================= TRUST ================= -->
+            <div class="why-card">
 
-  <section class="trust-strip">
+                <div class="why-icon">
+                    🧱
+                </div>
 
-    <div class="container trust-inner">
+                <h3>
+                    Quality Materials
+                </h3>
 
-      <div class="trust-item">
-        <div class="trust-icon">🏗️</div>
-        <div>
-          <strong>Quality Materials</strong>
-          <span>Reliable construction products</span>
+                <p>
+                    Reliable construction materials
+                    for your building requirements.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    🚚
+                </div>
+
+                <h3>
+                    Local Delivery
+                </h3>
+
+                <p>
+                    Delivery and transport support
+                    based on your requirement.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    🤝
+                </div>
+
+                <h3>
+                    Direct Enquiry
+                </h3>
+
+                <p>
+                    Contact us directly for quantity,
+                    availability and latest pricing.
+                </p>
+
+            </div>
+
+
         </div>
-      </div>
 
-      <div class="trust-item">
-        <div class="trust-icon">🚚</div>
-        <div>
-          <strong>Local Delivery</strong>
-          <span>Materials delivered to your location</span>
+    </section>
+
+
+    <!-- =====================================================
+         ABOUT
+    ====================================================== -->
+
+    <section
+        class="section"
+        id="about"
+    >
+
+        <div class="about-box">
+
+            <div class="about-photo">
+
+                <img
+                    src="praveen-profile.jpeg"
+                    alt="Praveen - Srinivasa Building Materials"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="about-content">
+
+                <h2>
+                    About Srinivasa Building Materials
+                </h2>
+
+                <div class="section-line"></div>
+
+                <p>
+                    Srinivasa Building Materials provides quality
+                    construction materials for residential,
+                    commercial and building projects. Our focus is
+                    on dependable materials, practical service and
+                    supporting customers with their construction needs.
+                </p>
+
+                <h3>
+                    Praveen
+                </h3>
+
+                <p>
+                    We are committed to providing reliable materials
+                    and practical support for every construction need.
+                </p>
+
+            </div>
+
         </div>
-      </div>
 
-      <div class="trust-item">
-        <div class="trust-icon">📞</div>
-        <div>
-          <strong>Call Us</strong>
-          <span>9000158191</span>
-        </div>
-      </div>
-
-    </div>
-
-  </section>
+    </section>
 
 
-  <!-- ================= PRODUCTS ================= -->
+    <!-- =====================================================
+         CONTACT / ENQUIRY
+    ====================================================== -->
 
-  <section id="products" class="products-section">
-
-    <div class="container">
-
-      <div class="section-heading">
+    <section id="contact">
 
         <h2>
-          Our Products
+            Need Construction Materials?
         </h2>
 
         <p>
-          Quality materials for every construction project.
+            Contact Srinivasa Building Materials for
+            availability, quantity, delivery details and
+            latest pricing.
         </p>
 
-      </div>
+
+        <div class="contact-options">
 
 
-      <div id="productsContainer" class="products-grid">
+            <!-- CALL -->
 
-        <div class="product-card">
+            <a
+                href="tel:9000158191"
+                class="contact-option"
+            >
 
-          <div class="product-image">
-            ⏳
-          </div>
+                <div class="contact-icon">
+                    📞
+                </div>
 
-          <h3>
-            Loading products...
-          </h3>
+                <strong>
+                    Call Us
+                </strong>
 
-          <p>
-            Please wait.
-          </p>
+                <span>
+                    9000158191
+                </span>
+
+            </a>
+
+
+            <!-- WHATSAPP -->
+
+            <a
+                href="https://wa.me/919000158191"
+                target="_blank"
+                rel="noopener"
+                class="contact-option whatsapp"
+            >
+
+                <div class="contact-icon">
+                    💬
+                </div>
+
+                <strong>
+                    WhatsApp Us
+                </strong>
+
+                <span>
+                    Chat with Srinivasa Building Materials
+                </span>
+
+            </a>
+
 
         </div>
 
-      </div>
+    </section>
 
-    </div>
 
-  </section>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
-
-  <!-- ================= ABOUT ================= -->
-
-  <section id="about" class="about-section">
-
-    <div class="container about-box">
-
-      <div class="profile-photo">
-        <img src="praveen-profile.jpeg" alt="Praveen">
-      </div>
-
-      <h2>
-        Srinivasa Building Materials
-      </h2>
-
-      <h3>
-        Praveen
-      </h3>
-
-      <p>
-        Quality construction materials for your home,
-        commercial and building projects.
-      </p>
-
-      <div class="contact-highlight">
-        📞 Customer Support: 9000158191
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= FOOTER ================= -->
-
-  <footer class="site-footer">
-
-    <div class="container footer-inner">
-
-      <div>
-        <strong>🧱 Srinivasa Building Materials</strong>
-        <p>Quality materials. Reliable service.</p>
-      </div>
-
-      <div>
-        <p>📞 9000158191</p>
-        <p>📍 Aravalli to Manchili Main Road</p>
-      </div>
-
-    </div>
-
-  </footer>
-
-
-  <!-- ================= CART MODAL ================= -->
-
-  <div id="cartModal" class="modal">
-
-    <div class="modal-content">
-
-      <button type="button" class="close-button" onclick="closeCart()">
-        ×
-      </button>
-
-      <h2>🛒 Your Cart</h2>
-
-      <div id="cartItems" class="cart-items"></div>
-
-      <div class="cart-summary">
-
-        <p>
-          <span>Subtotal:</span>
-          <strong id="cartSubtotal">₹0</strong>
-        </p>
-
-        <p>
-          <span>Delivery:</span>
-          <strong id="deliveryCharge">₹0</strong>
-        </p>
-
-        <hr>
-
-        <p class="grand-total">
-          <span>Total:</span>
-          <strong id="grandTotal">₹0</strong>
-        </p>
-
-      </div>
-
-      <button
-        type="button"
-        class="checkout-button"
-        onclick="openCheckout()">
-
-        Proceed to Checkout
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- ================= CHECKOUT MODAL ================= -->
-
-  <div id="checkoutModal" class="modal">
-
-    <div class="modal-content checkout-content">
-
-      <button
-        type="button"
-        class="close-button"
-        onclick="closeCheckout()">
-
-        ×
-
-      </button>
-
-      <h2>📦 Checkout</h2>
-
-      <p>
-        Please enter your delivery details.
-      </p>
-
-
-      <label for="customerName">
-        Full Name
-      </label>
-
-      <input
-        type="text"
-        id="customerName"
-        placeholder="Enter your name">
-
-
-      <label for="customerPhone">
-        Phone Number
-      </label>
-
-      <input
-        type="tel"
-        id="customerPhone"
-        placeholder="Enter phone number">
-
-
-      <label for="customerAddress">
-        Address
-      </label>
-
-      <textarea
-        id="customerAddress"
-        placeholder="Enter full delivery address"></textarea>
-
-
-      <label for="customerLocation">
-        Location / City
-      </label>
-
-      <input
-        type="text"
-        id="customerLocation"
-        placeholder="Enter city / location">
-
-
-      <h3 class="payment-heading">
-        Payment Method
-      </h3>
-
-      <div class="payment-options">
-
-        <label>
-          <input
-            type="radio"
-            name="payment"
-            value="COD"
-            checked>
-
-          💵 Cash on Delivery
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            name="payment"
-            value="UPI">
-
-          📱 UPI Payment
-        </label>
-
-      </div>
-
-
-      <div class="checkout-total">
-
-        <span>
-          Order Total
-        </span>
-
-        <strong id="checkoutTotal">
-          ₹0
-        </strong>
-
-      </div>
-
-
-      <button
-        type="button"
-        class="place-order-button"
-        onclick="placeOrder()">
-
-        🛍️ Place Order
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- ================= SUCCESS MODAL ================= -->
-
-  <div id="successModal" class="modal">
-
-    <div class="modal-content success-content">
-
-      <div class="success-icon">
-        ✅
-      </div>
-
-      <h2>
-        Order Placed Successfully!
-      </h2>
-
-      <p>
-        Thank you for shopping with Srinivasa Building Materials.
-      </p>
-
-
-      <div class="order-details">
-
-        <p>
-          Order ID:
-          <strong id="orderId"></strong>
-        </p>
-
-        <p>
-          Customer:
-          <strong id="orderCustomer"></strong>
-        </p>
-
-        <p>
-          Total:
-          <strong id="orderTotal"></strong>
-        </p>
-
-        <p>
-          Payment:
-          <strong id="orderPayment"></strong>
-        </p>
-
-      </div>
-
-
-      <!-- ================= UPI ================= -->
-
-      <div
-        id="upiPaymentBox"
-        class="upi-box"
-        style="display:none;">
+    <footer>
 
         <h3>
-          📱 Pay using UPI
+            Srinivasa Building Materials
         </h3>
 
         <p>
-          Amount:
-          <strong id="upiAmount"></strong>
+            Strong Foundations. Stronger Futures.
         </p>
 
-        <p class="upi-id">
-          UPI ID:
-          <strong>
-            9000158191@ibl
-          </strong>
+        <p>
+            © 2026 Srinivasa Building Materials. All rights reserved.
         </p>
 
-        <button
-          type="button"
-          onclick="payWithUPI()"
-          class="upi-pay-button">
-
-          💳 Pay Now with UPI
-
-        </button>
-
-        <p class="upi-note">
-          UPI app open ayyaka payment complete cheyyandi.
-        </p>
-
-      </div>
+    </footer>
 
 
-      <button
-        type="button"
-        class="close-success-button"
-        onclick="closeSuccess()">
+    <!-- =====================================================
+         FLOATING WHATSAPP
+    ====================================================== -->
 
-        Continue Shopping
+    <div class="floating-whatsapp">
 
-      </button>
+        <a
+            href="https://wa.me/919000158191"
+            target="_blank"
+            rel="noopener"
+        >
+            💬 WhatsApp 1
+        </a>
+
+        <a
+            href="https://wa.me/919848676751"
+            target="_blank"
+            rel="noopener"
+        >
+            💬 WhatsApp 2
+        </a>
 
     </div>
 
-  </div>
 
-
-  <!-- ================= FIREBASE ================= -->
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-
-  <script src="./script.js"></script>
-<!-- ================= WHATSAPP ================= -->
-
-<div class="whatsapp-buttons">
-
-  <a
-    class="whatsapp-button"
-    href="https://wa.me/919000158191?text=Hello%20Srinivasa%20Building%20Materials,%20I%20need%20construction%20materials."
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <span class="whatsapp-icon">🟢</span>
-    WhatsApp 1
-  </a>
-
-  <a
-    class="whatsapp-button"
-    href="https://wa.me/919848676751?text=Hello%20Srinivasa%20Building%20Materials,%20I%20need%20construction%20materials."
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <span class="whatsapp-icon">🟢</span>
-    WhatsApp 2
-  </a>
-
-</div>
 </body>
 
 </html>
-
