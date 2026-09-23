@@ -1688,6 +1688,93 @@
 
 
 </style>
+
+<style id="dark-products-theme">
+/* ===== DARK PREMIUM PRODUCTS THEME ===== */
+#products {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(230,122,47,.13), transparent 26%),
+    radial-gradient(circle at 88% 22%, rgba(217,173,82,.10), transparent 28%),
+    linear-gradient(135deg, #07141f 0%, #0b1f2f 48%, #102b3d 100%);
+  color: #f7f3eb;
+}
+
+#products::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .12;
+  background-image:
+    linear-gradient(135deg, rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 42px 42px, 42px 42px;
+}
+
+#products > * { position: relative; z-index: 1; }
+
+#products .section-title h2 {
+  color: #ffffff;
+  text-shadow: 0 4px 22px rgba(0,0,0,.28);
+}
+
+#products .section-title p {
+  color: #b9c7cf;
+}
+
+#products .section-line {
+  background: linear-gradient(90deg, #f47721, #f5c45e, #f47721);
+  box-shadow: 0 0 18px rgba(244,119,33,.25);
+}
+
+#products .products-grid {
+  gap: 26px;
+}
+
+#products .product-card {
+  background: linear-gradient(145deg, rgba(21,43,57,.98), rgba(11,29,42,.98));
+  border: 1px solid rgba(245,196,94,.16);
+  box-shadow: 0 18px 50px rgba(0,0,0,.28);
+}
+
+#products .product-card::before {
+  background: linear-gradient(90deg, #f47721, #f5c45e);
+}
+
+#products .product-card:hover {
+  border-color: rgba(245,196,94,.55);
+  box-shadow: 0 28px 70px rgba(0,0,0,.40), 0 0 0 1px rgba(245,196,94,.08);
+}
+
+#products .product-image {
+  background:
+    radial-gradient(circle at 50% 42%, #f7f4ee 0%, #e7e0d5 62%, #cfc5b7 100%);
+  border-bottom: 1px solid rgba(245,196,94,.16);
+}
+
+#products .product-image::before {
+  border-color: rgba(11,31,47,.16);
+}
+
+#products .product-info h3 {
+  color: #ffffff;
+}
+
+#products .product-info p {
+  color: #aebcc5;
+}
+
+@media (max-width: 700px) {
+  #products {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(230,122,47,.12), transparent 32%),
+      linear-gradient(160deg, #07141f, #0d2638);
+  }
+}
+</style>
+
 </head>
 
 
